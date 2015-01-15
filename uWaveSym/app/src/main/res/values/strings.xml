@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">uWaveSym</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">\u03BCWaveSym</string>
     <string name="action_settings">Settings</string>
+    <string name="button_createNew">Create New Circuit</string>
+    <string name="button_simulate">Simulate</string>
+    <string name="button_results">Results</string>
+    <string name="button_save">Save</string>
 
 </resources>
