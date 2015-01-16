@@ -23,17 +23,17 @@ import java.util.List;
 
 
 public class WorkspaceActivity extends ActionBarActivity {
-    private String[] componentCategories;
-    private String[] antennas;
-    private String[] twoPortComponents;
-    private String[] onePortComponents;
-    private DrawerLayout componentsDrawer;
-    private ExpandableListView componentsListView;
-    private LinearLayout antennasList;
-    private LinearLayout twoPortCompsList;
-    private LinearLayout onePortCompsList;
-    private BaseExpandableListAdapter expListAdapter;
-    private HashMap<String, List<String> > componentsData;
+    String[] componentCategories;
+    String[] antennas;
+    String[] twoPortComponents;
+    String[] onePortComponents;
+    DrawerLayout componentsDrawer;
+    ExpandableListView componentsListView;
+    LinearLayout antennasList;
+    LinearLayout twoPortCompsList;
+    LinearLayout onePortCompsList;
+    BaseExpandableListAdapter expListAdapter;
+    HashMap<String, List<String> > componentsData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +62,8 @@ public class WorkspaceActivity extends ActionBarActivity {
         componentsData.put(catsList.get(2), onePortCompsList);
         expListAdapter = new ExpandableListAdapter(this, catsList, componentsData);
         componentsListView.setAdapter(expListAdapter);
+
+
     }
 
 
