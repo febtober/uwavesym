@@ -80,9 +80,6 @@ public class WorkspaceActivity extends ActionBarActivity {
         expListAdapter = new ExpandableListAdapter(this, catsList, componentsData);
         componentsListView.setAdapter(expListAdapter);
 
-        final Context context = getApplicationContext();
-        final int duration = Toast.LENGTH_SHORT;
-
         componentsListView.setOnChildClickListener(new OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -91,65 +88,48 @@ public class WorkspaceActivity extends ActionBarActivity {
                     case 0: // Antennas
                         switch (childPosition) {
                             case 0: // Patch
-                                Toast.makeText(context, "Patch short", duration).show();
                                 break;
                             case 1: // Dipole
-                                Toast.makeText(context, "Dipole short", duration).show();
                                 break;
                             case 2: // Monopole
-                                Toast.makeText(context, "Monopole short", duration).show();
                                 break;
                             case 3: // Loop
-                                Toast.makeText(context, "Loop short", duration).show();
                                 break;
                             default: // Error code
-                                Toast.makeText(context, "Antenna error short", duration).show();
                                 break;
                         }
                         break;
                     case 1: // Two-port components
                         switch (childPosition) {
                             case 0: // Balun
-                                Toast.makeText(context, "Balun short", duration).show();
                                 break;
                             case 1: // pi/4 transformer
-                                Toast.makeText(context, "\u03BB/4 transformer short", duration).show();
                                 break;
                             case 2: // T-line
-                                Toast.makeText(context, "T-line short", duration).show();
                                 break;
                             case 3: // Resistor
-                                Toast.makeText(context, "Resistor short", duration).show();
                                 break;
                             case 4: // Inductor
-                                Toast.makeText(context, "Inductor short", duration).show();
                                 break;
                             case 5: // Capacitor
-                                Toast.makeText(context, "Capacitor short", duration).show();
                                 break;
                             case 6: // Termination
-                                Toast.makeText(context, "Termination short", duration).show();
                                 break;
                             case 7: // Substrate
-                                Toast.makeText(context, "Substrate short", duration).show();
                                 break;
                             default: // Error code
-                                Toast.makeText(context, "Two-port error short", duration).show();
                                 break;
                         }
                         break;
                     case 2: // One-port components
                         switch (childPosition) {
                             case 0: // empty
-                                Toast.makeText(context, "empty short", duration).show();
                                 break;
                             default:
-                                Toast.makeText(context, "One-port error short", duration).show();
                                 break;
                         }
                         break;
                     default: // Error code
-                        Toast.makeText(context, "Error short", duration).show();
                         break;
                 }
                 return true;
@@ -169,65 +149,48 @@ public class WorkspaceActivity extends ActionBarActivity {
                         case 0: // Antennas
                             switch (childPosition) {
                                 case 0: // Patch
-                                    Toast.makeText(context, "Patch long", duration).show();
                                     break;
                                 case 1: // Dipole
-                                    Toast.makeText(context, "Dipole long", duration).show();
                                     break;
                                 case 2: // Monopole
-                                    Toast.makeText(context, "Monopole long", duration).show();
                                     break;
                                 case 3: // Loop
-                                    Toast.makeText(context, "Loop long", duration).show();
                                     break;
                                 default: // Error code
-                                    Toast.makeText(context, "Antennas error long", duration).show();
                                     break;
                             }
                             break;
                         case 1: // Two-port components
                             switch (childPosition) {
                                 case 0: // Balun
-                                    Toast.makeText(context, "Balun long", duration).show();
                                     break;
                                 case 1: // pi/4 transformer
-                                    Toast.makeText(context, "\u03BB/4 transformer long", duration).show();
                                     break;
                                 case 2: // T-line
-                                    Toast.makeText(context, "T-line long", duration).show();
                                     break;
                                 case 3: // Resistor
-                                    Toast.makeText(context, "Resistor long", duration).show();
                                     break;
                                 case 4: // Inductor
-                                    Toast.makeText(context, "Inductor long", duration).show();
                                     break;
                                 case 5: // Capacitor
-                                    Toast.makeText(context, "Capacitor long", duration).show();
                                     break;
                                 case 6: // Termination
-                                    Toast.makeText(context, "Termination long", duration).show();
                                     break;
                                 case 7: // Substrate
-                                    Toast.makeText(context, "Substrate long", duration).show();
                                     break;
                                 default: // Error code
-                                    Toast.makeText(context, "Two-port error long", duration).show();
                                     break;
                             }
                             break;
                         case 2: // One-port components
                             switch (childPosition) {
                                 case 0: // empty
-                                    Toast.makeText(context, "empty long", duration).show();
                                     break;
                                 default:
-                                    Toast.makeText(context, "One-port error long", duration).show();
                                     break;
                             }
                             break;
                         default: // Error code
-                            Toast.makeText(context, "Error long", duration).show();
                             break;
                     }
                     return true;
