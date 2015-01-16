@@ -37,8 +37,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/button_save"
                 android:id="@+id/button_save"
-                android:layout_weight="1"
-                android:enabled="false" />
+                android:layout_weight="1" />
 
         </LinearLayout>
     </LinearLayout>
