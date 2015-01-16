@@ -7,5 +7,29 @@
     <string name="button_simulate">Simulate</string>
     <string name="button_results">Results</string>
     <string name="button_save">Save</string>
+    <string-array name="drawer_componentCategories">
+        <item>Antennas</item>
+        <item>2-Port Components</item>
+        <item>1-Port Sources</item>
+    </string-array>
+    <string-array name="drawer_antennas">
+        <item>Patch</item>
+        <item>Dipole</item>
+        <item>Monopole</item>
+        <item>Loop</item>
+    </string-array>
+    <string-array name="drawer_twoPortComponents">
+        <item>Balun</item>
+        <item>\u03BB/4 transformer</item>
+        <item>T-line</item>
+        <item>Resistor</item>
+        <item>Inductor</item>
+        <item>Capacitor</item>
+        <item>Termination (50 \u03A9)</item>
+        <item>Substrate</item>
+    </string-array>
+    <string-array name="drawer_onePortComponents">
+        <item>empty</item>
+    </string-array>
 
 </resources>

@@ -1,18 +1,67 @@
 package org.febtober.uwavesym;
 
 import android.app.Activity;
+import android.app.ExpandableListActivity;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class WorkspaceActivity extends ActionBarActivity {
+    private String[] componentCategories;
+    private String[] antennas;
+    private String[] twoPortComponents;
+    private String[] onePortComponents;
+    private DrawerLayout componentsDrawer;
+    private ExpandableListView componentsListView;
+    private LinearLayout antennasList;
+    private LinearLayout twoPortCompsList;
+    private LinearLayout onePortCompsList;
+    private BaseExpandableListAdapter expListAdapter;
+    private HashMap<String, List<String> > componentsData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace);
+
+        setUpComponentsDrawer();
+    }
+
+    private void setUpComponentsDrawer() {
+        Resources res = getResources();
+        componentCategories = res.getStringArray(R.array.drawer_componentCategories);
+        antennas = res.getStringArray(R.array.drawer_antennas);
+        twoPortComponents = res.getStringArray(R.array.drawer_twoPortComponents);
+        onePortComponents = res.getStringArray(R.array.drawer_onePortComponents);
+        componentsDrawer = (DrawerLayout) findViewById(R.id.workspace_drawerLayout);
+        componentsListView = (ExpandableListView) findViewById(R.id.workspace_leftDrawer);
+
+        List<String> catsList = new ArrayList<String>(Arrays.asList(componentCategories));
+        List<String> antennasList = new ArrayList<String>(Arrays.asList(antennas));
+        List<String> twoPortCompsList = new ArrayList<String>(Arrays.asList(twoPortComponents));
+        List<String> onePortCompsList = new ArrayList<String>(Arrays.asList(onePortComponents));
+        componentsData = new HashMap<String, List<String> >();
+        componentsData.put(catsList.get(0), antennasList);
+        componentsData.put(catsList.get(1), twoPortCompsList);
+        componentsData.put(catsList.get(2), onePortCompsList);
+        expListAdapter = new ExpandableListAdapter(this, catsList, componentsData);
+        componentsListView.setAdapter(expListAdapter);
     }
 
 
