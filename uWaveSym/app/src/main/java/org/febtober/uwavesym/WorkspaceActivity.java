@@ -142,8 +142,11 @@ public class WorkspaceActivity extends ActionBarActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ExpandableListView.getPackedPositionType(id) ==
                         ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-                    int groupPosition = ExpandableListView.getPackedPositionGroup(id);
-                    int childPosition = ExpandableListView.getPackedPositionChild(id);
+                    final ExpandableListAdapter adapter =
+                            (ExpandableListAdapter) ((ExpandableListView) parent).getExpandableListAdapter();
+                    long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
+                    int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
+                    int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
 
                     switch (groupPosition) {
                         case 0: // Antennas
@@ -193,6 +196,7 @@ public class WorkspaceActivity extends ActionBarActivity {
                         default: // Error code
                             break;
                     }
+                    componentsDrawer.closeDrawer(componentsListView);
                     return true;
                 }
                 return false;
