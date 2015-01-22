@@ -1,27 +1,17 @@
 package org.febtober.uwavesym;
 
-import android.app.Activity;
-import android.app.ExpandableListActivity;
-import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Point;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,11 +26,8 @@ public class WorkspaceActivity extends ActionBarActivity {
     String[] onePortComponents;
     DrawerLayout componentsDrawer;
     ExpandableListView componentsListView;
-    LinearLayout antennasList;
-    LinearLayout twoPortCompsList;
-    LinearLayout onePortCompsList;
-    BaseExpandableListAdapter expListAdapter;
-    HashMap<String, List<String> > componentsData;
+    ExpandableListAdapter expListAdapter;
+    HashMap<String, List<String>> componentsData;
     Button simulateButton;
     Button resultsButton;
     Button saveButton;
@@ -69,11 +56,11 @@ public class WorkspaceActivity extends ActionBarActivity {
         componentsDrawer = (DrawerLayout) findViewById(R.id.workspace_drawerLayout);
         componentsListView = (ExpandableListView) findViewById(R.id.workspace_leftDrawer);
 
-        List<String> catsList = new ArrayList<String>(Arrays.asList(componentCategories));
-        List<String> antennasList = new ArrayList<String>(Arrays.asList(antennas));
-        List<String> twoPortCompsList = new ArrayList<String>(Arrays.asList(twoPortComponents));
-        List<String> onePortCompsList = new ArrayList<String>(Arrays.asList(onePortComponents));
-        componentsData = new HashMap<String, List<String> >();
+        List<String> catsList = new ArrayList<>(Arrays.asList(componentCategories));
+        List<String> antennasList = new ArrayList<>(Arrays.asList(antennas));
+        List<String> twoPortCompsList = new ArrayList<>(Arrays.asList(twoPortComponents));
+        List<String> onePortCompsList = new ArrayList<>(Arrays.asList(onePortComponents));
+        componentsData = new HashMap<>();
         componentsData.put(catsList.get(0), antennasList);
         componentsData.put(catsList.get(1), twoPortCompsList);
         componentsData.put(catsList.get(2), onePortCompsList);
@@ -142,8 +129,6 @@ public class WorkspaceActivity extends ActionBarActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 if (ExpandableListView.getPackedPositionType(id) ==
                         ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
-                    final ExpandableListAdapter adapter =
-                            (ExpandableListAdapter) ((ExpandableListView) parent).getExpandableListAdapter();
                     long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
                     int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
                     int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
