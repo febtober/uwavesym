@@ -2,42 +2,42 @@ package org.febtober.uwavesym;
 
 public class Component {
     private String name;
-    private float attr1;
-    private float attr2;
-    private String attr1String;
-    private String attr2String;
-    private float attr1Min;
-    private float attr2Min;
-    private float attr1Max;
-    private float attr2Max;
-    private String attr1Unit;
-    private String attr2Unit;
+    private float param1;
+    private float param2;
+    private String param1String;
+    private String param2String;
+    private float param1Min;
+    private float param2Min;
+    private float param1Max;
+    private float param2Max;
+    private String param1Unit;
+    private String param2Unit;
     private String info;
 
     public Component() { }
 
     public void setName(String a) {name = a;}
-    public void setAttr1(float a) {attr1 = a;}
-    public void setAttr2(float a) {attr2 = a;}
-    public void setAttr1String(String a) {attr1String = a;}
-    public void setAttr2String(String a) {attr2String = a;}
-    public void setAttr1Min(float a) {attr1Min = a;}
-    public void setAttr2Min(float a) {attr2Min = a;}
-    public void setAttr1Max(float a) {attr1Max = a;}
-    public void setAttr2Max(float a) {attr2Max = a;}
-    public void setAttr1Unit(String a) {attr1Unit = a;}
-    public void setAttr2Unit(String a) {attr2Unit = a;}
+    public void setParam1(float a) {param1 = a;}
+    public void setParam2(float a) {param2 = a;}
+    public void setParam1String(String a) {param1String = a;}
+    public void setParam2String(String a) {param2String = a;}
+    public void setParam1Min(float a) {param1Min = a;}
+    public void setParam2Min(float a) {param2Min = a;}
+    public void setParam1Max(float a) {param1Max = a;}
+    public void setParam2Max(float a) {param2Max = a;}
+    public void setParam1Unit(String a) {param1Unit = a;}
+    public void setParam2Unit(String a) {param2Unit = a;}
     public void setInfo(String a) {info = a;}
 
-    public float getAttr1() {return attr1;}
-    public float getAttr2() {return attr2;}
-    public String getAttr1String() {return attr1String;}
-    public String getAttr2String() {return attr2String;}
-    public float getAttr1Min() {return attr1Min;}
-    public float getAttr2Min() {return attr2Min;}
-    public float getAttr1Max() {return attr1Max;}
-    public float getAttr2Max() {return attr2Max;}
-    public String getAttr1Unit() {return attr1Unit;}
-    public String getAttr2Unit() {return attr2Unit;}
+    public float getParam1() {return param1;}
+    public float getParam2() {return param2;}
+    public String getParam1String() {return param1String;}
+    public String getParam2String() {return param2String;}
+    public float getParam1Min() {return param1Min;}
+    public float getParam2Min() {return param2Min;}
+    public float getParam1Max() {return param1Max;}
+    public float getParam2Max() {return param2Max;}
+    public String getParam1Unit() {return param1Unit;}
+    public String getParam2Unit() {return param2Unit;}
     public String getInfo() {return info;}
 }

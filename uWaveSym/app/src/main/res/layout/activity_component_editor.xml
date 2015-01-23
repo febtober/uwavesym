@@ -23,7 +23,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/layout_attributeInput"
+        android:layout_above="@+id/layout_parameterInput"
         android:layout_below="@+id/text_componentName" >
 
         <ImageView
@@ -51,20 +51,20 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/layout_attributeInput"
+        android:id="@+id/layout_parameterInput"
         android:layout_above="@+id/layout_editorBottomButtons" >
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:id="@+id/attr1"
+            android:id="@+id/param1"
             android:layout_weight="4" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="unit1"
-            android:id="@+id/attr1Unit"
+            android:id="@+id/param1Unit"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:gravity="center_horizontal" />
@@ -72,13 +72,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
-            android:id="@+id/attr2"
+            android:id="@+id/param2"
             android:layout_weight="4" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="unit2"
-            android:id="@+id/attr2Unit"
+            android:id="@+id/param2Unit"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:gravity="center_horizontal" />
