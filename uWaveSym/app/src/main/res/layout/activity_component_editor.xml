@@ -59,11 +59,12 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:id="@+id/param1"
-            android:layout_weight="4" />
+            android:layout_weight="4"
+            android:hint="@string/frequency" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="unit1"
+            android:text="@string/unit_mhz"
             android:id="@+id/param1Unit"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
@@ -73,11 +74,12 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:id="@+id/param2"
-            android:layout_weight="4" />
+            android:layout_weight="4"
+            android:hint="@string/length" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="unit2"
+            android:text="@string/unit_mm"
             android:id="@+id/param2Unit"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
