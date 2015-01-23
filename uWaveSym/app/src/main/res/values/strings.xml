@@ -7,6 +7,8 @@
     <string name="button_simulate">Simulate</string>
     <string name="button_results">Results</string>
     <string name="button_save">Save</string>
+    <string name="button_update">Update</string>
+    <string name="button_cancel">Cancel</string>
 
     <string name="antennas">Antennas</string>
     <string name="twoPortComponents">2-Port Components</string>
