@@ -13,8 +13,13 @@ public class Component {
     private String param1Unit;
     private String param2Unit;
     private String info;
+    private Component connection1;
+    private Component connection2;
 
-    public Component() { }
+    public Component() {
+        connection1 = null;
+        connection2 = null;
+    }
 
     public void setName(String a) {name = a;}
     public void setParam1(float a) {param1 = a;}
@@ -28,6 +33,8 @@ public class Component {
     public void setParam1Unit(String a) {param1Unit = a;}
     public void setParam2Unit(String a) {param2Unit = a;}
     public void setInfo(String a) {info = a;}
+    public void setConnection1(Component a) {connection1 = a;}
+    public void setConnection2(Component a) {connection2 = a;}
 
     public float getParam1() {return param1;}
     public float getParam2() {return param2;}
@@ -40,4 +47,6 @@ public class Component {
     public String getParam1Unit() {return param1Unit;}
     public String getParam2Unit() {return param2Unit;}
     public String getInfo() {return info;}
+    public Component getConnection1() {return connection1;}
+    public Component getConnection2() {return connection2;}
 }
