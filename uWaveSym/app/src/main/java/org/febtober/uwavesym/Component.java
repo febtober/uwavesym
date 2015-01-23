@@ -1,6 +1,9 @@
 package org.febtober.uwavesym;
 
-public class Component {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Component implements Parcelable {
     private String name;
     private float param1;
     private float param2;
@@ -49,4 +52,58 @@ public class Component {
     public String getInfo() {return info;}
     public Component getConnection1() {return connection1;}
     public Component getConnection2() {return connection2;}
+
+    // Parcelling part. Pulled from parcelabler.com
+    protected Component(Parcel in) {
+        name = in.readString();
+        param1 = in.readFloat();
+        param2 = in.readFloat();
+        param1String = in.readString();
+        param2String = in.readString();
+        param1Min = in.readFloat();
+        param2Min = in.readFloat();
+        param1Max = in.readFloat();
+        param2Max = in.readFloat();
+        param1Unit = in.readString();
+        param2Unit = in.readString();
+        info = in.readString();
+        connection1 = (Component) in.readValue(Component.class.getClassLoader());
+        connection2 = (Component) in.readValue(Component.class.getClassLoader());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeFloat(param1);
+        dest.writeFloat(param2);
+        dest.writeString(param1String);
+        dest.writeString(param2String);
+        dest.writeFloat(param1Min);
+        dest.writeFloat(param2Min);
+        dest.writeFloat(param1Max);
+        dest.writeFloat(param2Max);
+        dest.writeString(param1Unit);
+        dest.writeString(param2Unit);
+        dest.writeString(info);
+        dest.writeValue(connection1);
+        dest.writeValue(connection2);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Component> CREATOR = new Parcelable.Creator<Component>() {
+        @Override
+        public Component createFromParcel(Parcel in) {
+            return new Component(in);
+        }
+
+        @Override
+        public Component[] newArray(int size) {
+            return new Component[size];
+        }
+    };
 }
