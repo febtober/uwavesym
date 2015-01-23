@@ -7,29 +7,49 @@
     <string name="button_simulate">Simulate</string>
     <string name="button_results">Results</string>
     <string name="button_save">Save</string>
+
+    <string name="antennas">Antennas</string>
+    <string name="twoPortComponents">2-Port Components</string>
+    <string name="onePortSources">1-Port Sources</string>
     <string-array name="drawer_componentCategories">
-        <item>Antennas</item>
-        <item>2-Port Components</item>
-        <item>1-Port Sources</item>
+        <item>@string/antennas</item>
+        <item>@string/twoPortComponents</item>
+        <item>@string/onePortSources</item>
     </string-array>
+
+    <string name="patch">Patch</string>
+    <string name="dipole">Dipole</string>
+    <string name="monopole">Monopole</string>
+    <string name="loop">Loop</string>
     <string-array name="drawer_antennas">
-        <item>Patch</item>
-        <item>Dipole</item>
-        <item>Monopole</item>
-        <item>Loop</item>
+        <item>@string/patch</item>
+        <item>@string/dipole</item>
+        <item>@string/monopole</item>
+        <item>@string/loop</item>
     </string-array>
+
+    <string name="balun">Balun</string>
+    <string name="quarter_transformer">\u03BB/4 transformer</string>
+    <string name="tLine">T-line</string>
+    <string name="resistor">Resistor</string>
+    <string name="inductor">Inductor</string>
+    <string name="capacitor">Capacitor</string>
+    <string name="termination">Termination (50 \u03A9)</string>
+    <string name="substrate">Substrate</string>
     <string-array name="drawer_twoPortComponents">
-        <item>Balun</item>
-        <item>\u03BB/4 transformer</item>
-        <item>T-line</item>
-        <item>Resistor</item>
-        <item>Inductor</item>
-        <item>Capacitor</item>
-        <item>Termination (50 \u03A9)</item>
-        <item>Substrate</item>
+        <item>@string/balun</item>
+        <item>@string/quarter_transformer</item>
+        <item>@string/tLine</item>
+        <item>@string/resistor</item>
+        <item>@string/inductor</item>
+        <item>@string/capacitor</item>
+        <item>@string/termination</item>
+        <item>@string/substrate</item>
     </string-array>
+
+    <string name="empty">empty</string>
     <string-array name="drawer_onePortComponents">
-        <item>empty</item>
+        <item>@string/empty</item>
     </string-array>
 
 </resources>
