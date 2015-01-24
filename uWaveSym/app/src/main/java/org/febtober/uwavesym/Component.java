@@ -1,9 +1,24 @@
 package org.febtober.uwavesym;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Component implements Parcelable {
+    public static final int PATCH = 1;
+    public static final int DIPOLE = 2;
+    public static final int MONOPOLE = 3;
+    public static final int LOOP = 4;
+    public static final int BALUN = 5;
+    public static final int QUARTER_TRANSFORMER = 6;
+    public static final int T_LINE = 7;
+    public static final int RESISTOR = 8;
+    public static final int INDUCTOR = 9;
+    public static final int CAPACITOR = 10;
+    public static final int SUBSTRATE = 11;
+    public static final int TERMINATION = 12;
+
     private String name;
     private float param1;
     private float param2;
@@ -19,9 +34,149 @@ public class Component implements Parcelable {
     private Component connection1;
     private Component connection2;
 
-    public Component() {
+    private static Context context;
+
+    public Component(int componentId) {
         connection1 = null;
         connection2 = null;
+        Resources res = context.getResources();
+
+        switch (componentId) {
+            case PATCH:
+                name = res.getString(R.string.patch);
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mm);
+                param2Unit = res.getString(R.string.unit_mm);
+                break;
+            case DIPOLE:
+                name = res.getString(R.string.dipole);
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mm);
+                param2Unit = res.getString(R.string.unit_mm);
+                break;
+            case MONOPOLE:
+                name = res.getString(R.string.monopole);
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mm);
+                param2Unit = res.getString(R.string.unit_mm);
+                break;
+            case LOOP:
+                name = res.getString(R.string.loop);
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mm);
+                param2Unit = res.getString(R.string.unit_mm);
+                break;
+            case BALUN:
+                name = res.getString(R.string.balun);
+                param1String = res.getString(R.string.resistance);
+                param2String = res.getString(R.string.capacitance);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_ohm);
+                param2Unit = res.getString(R.string.unit_pf);
+                break;
+            case QUARTER_TRANSFORMER:
+                name = res.getString(R.string.quarter_transformer);
+                param1String = res.getString(R.string.frequency);
+                param2String = res.getString(R.string.frequency);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mhz);
+                param2Unit = res.getString(R.string.unit_ghz);
+                break;
+            case T_LINE:
+                name = res.getString(R.string.tLine);
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mm);
+                param2Unit = res.getString(R.string.unit_mm);
+                break;
+            case RESISTOR:
+                name = res.getString(R.string.resistor);
+                param1String = res.getString(R.string.resistance);
+                param2String = res.getString(R.string.resistance);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mohm);
+                param2Unit = res.getString(R.string.unit_megaohm);
+                break;
+            case INDUCTOR:
+                name = res.getString(R.string.inductor);
+                param1String = res.getString(R.string.inductance);
+                param2String = res.getString(R.string.inductance);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mhenry);
+                param2Unit = res.getString(R.string.unit_uhenry);
+                break;
+            case CAPACITOR:
+                name = res.getString(R.string.capacitor);
+                param1String = res.getString(R.string.capacitance);
+                param2String = res.getString(R.string.capacitance);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_pf);
+                param2Unit = res.getString(R.string.unit_uf);
+                break;
+            case SUBSTRATE:
+                name = res.getString(R.string.substrate);
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mm);
+                param2Unit = res.getString(R.string.unit_mm);
+                break;
+            case TERMINATION:
+                name = res.getString(R.string.termination);
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Unit = res.getString(R.string.unit_mm);
+                param2Unit = res.getString(R.string.unit_mm);
+                break;
+            default:
+                break;
+        }
     }
 
     public void setName(String a) {name = a;}
@@ -52,6 +207,11 @@ public class Component implements Parcelable {
     public String getInfo() {return info;}
     public Component getConnection1() {return connection1;}
     public Component getConnection2() {return connection2;}
+
+    public static void setContext(Context mcontext) {
+        if (context == null)
+            context = mcontext;
+    }
 
     // Parcelling part. Pulled from parcelabler.com
     protected Component(Parcel in) {
