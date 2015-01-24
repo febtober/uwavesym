@@ -143,10 +143,13 @@ public class WorkspaceActivity extends ActionBarActivity {
                                     comp = new Component(Component.PATCH);
                                     break;
                                 case 1: // Dipole
+                                    comp = new Component(Component.DIPOLE);
                                     break;
                                 case 2: // Monopole
+                                    comp = new Component(Component.MONOPOLE);
                                     break;
                                 case 3: // Loop
+                                    comp = new Component(Component.LOOP);
                                     break;
                                 default: // Error code
                                     break;
@@ -155,20 +158,28 @@ public class WorkspaceActivity extends ActionBarActivity {
                         case 1: // Two-port components
                             switch (childPosition) {
                                 case 0: // Balun
+                                    comp = new Component(Component.BALUN);
                                     break;
                                 case 1: // pi/4 transformer
+                                    comp = new Component(Component.QUARTER_TRANSFORMER);
                                     break;
                                 case 2: // T-line
+                                    comp = new Component(Component.T_LINE);
                                     break;
                                 case 3: // Resistor
+                                    comp = new Component(Component.RESISTOR);
                                     break;
                                 case 4: // Inductor
+                                    comp = new Component(Component.INDUCTOR);
                                     break;
                                 case 5: // Capacitor
+                                    comp = new Component(Component.CAPACITOR);
                                     break;
                                 case 6: // Termination
+                                    comp = new Component(Component.TERMINATION);
                                     break;
                                 case 7: // Substrate
+                                    comp = new Component(Component.SUBSTRATE);
                                     break;
                                 default: // Error code
                                     break;

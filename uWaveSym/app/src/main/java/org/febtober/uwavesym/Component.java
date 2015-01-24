@@ -194,6 +194,7 @@ public class Component implements Parcelable {
     public void setConnection1(Component a) {connection1 = a;}
     public void setConnection2(Component a) {connection2 = a;}
 
+    public String getName() {return name;}
     public float getParam1() {return param1;}
     public float getParam2() {return param2;}
     public String getParam1String() {return param1String;}

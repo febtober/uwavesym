@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class ComponentEditor extends ActionBarActivity {
     Button button_update;
     Button button_cancel;
+    TextView tv_componentName;
     EditText etv_param1;
     TextView tv_param1Unit;
     EditText etv_param2;
@@ -43,12 +44,16 @@ public class ComponentEditor extends ActionBarActivity {
             }
         });
 
+        tv_componentName = (TextView) findViewById(R.id.text_componentName);
         etv_param1 = (EditText) findViewById(R.id.param1);
         tv_param1Unit = (TextView) findViewById(R.id.param1Unit);
         etv_param2 = (EditText) findViewById(R.id.param2);
         tv_param2Unit = (TextView) findViewById(R.id.param2Unit);
 
+        tv_componentName.setText(componentIn.getName());
+        etv_param1.setHint(componentIn.getParam1String());
         tv_param1Unit.setText(componentIn.getParam1Unit());
+        etv_param2.setHint(componentIn.getParam2String());
         tv_param2Unit.setText(componentIn.getParam2Unit());
     }
 
