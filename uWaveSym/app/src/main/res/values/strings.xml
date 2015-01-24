@@ -31,8 +31,8 @@
     </string-array>
 
     <string name="balun">Balun</string>
-    <string name="quarter_transformer">\u03BB/4 transformer</string>
-    <string name="tLine">T-line</string>
+    <string name="quarterTransformer">\u03BB/4 transformer</string>
+    <string name="tLine">Transmission line</string>
     <string name="resistor">Resistor</string>
     <string name="inductor">Inductor</string>
     <string name="capacitor">Capacitor</string>
@@ -40,7 +40,7 @@
     <string name="substrate">Substrate</string>
     <string-array name="drawer_twoPortComponents">
         <item>@string/balun</item>
-        <item>@string/quarter_transformer</item>
+        <item>@string/quarterTransformer</item>
         <item>@string/tLine</item>
         <item>@string/resistor</item>
         <item>@string/inductor</item>

@@ -98,7 +98,7 @@ public class Component implements Parcelable {
                 param2Unit = res.getString(R.string.unit_pf);
                 break;
             case QUARTER_TRANSFORMER:
-                name = res.getString(R.string.quarter_transformer);
+                name = res.getString(R.string.quarterTransformer);
                 param1String = res.getString(R.string.frequency);
                 param2String = res.getString(R.string.frequency);
                 param1Min = 0;
