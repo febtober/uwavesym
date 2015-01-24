@@ -52,14 +52,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layout_parameterInput"
-        android:layout_above="@+id/layout_editorBottomButtons" >
+        android:layout_above="@+id/layout_editorBottomButtons"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
 
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="number"
             android:id="@+id/param1"
-            android:layout_weight="4" />
+            android:layout_weight="4"
+            android:gravity="right" />
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -72,7 +75,8 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:id="@+id/param2"
-            android:layout_weight="4" />
+            android:layout_weight="4"
+            android:gravity="right"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
