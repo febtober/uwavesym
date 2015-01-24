@@ -1,5 +1,6 @@
 package org.febtober.uwavesym;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -43,8 +44,8 @@ public class WorkspaceActivity extends ActionBarActivity {
         resultsButton.setEnabled(false);
         saveButton.setEnabled(false);
         setButtonOnClickListeners();
-
         setUpComponentsDrawer();
+        Component.setContext(getApplicationContext());
     }
 
     private void setUpComponentsDrawer() {
@@ -132,11 +133,14 @@ public class WorkspaceActivity extends ActionBarActivity {
                     long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
                     int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
                     int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
+                    Resources res = getResources();
+                    Component comp = null;
 
                     switch (groupPosition) {
                         case 0: // Antennas
                             switch (childPosition) {
                                 case 0: // Patch
+                                    comp = new Component(Component.PATCH);
                                     break;
                                 case 1: // Dipole
                                     break;
@@ -182,6 +186,11 @@ public class WorkspaceActivity extends ActionBarActivity {
                             break;
                     }
                     componentsDrawer.closeDrawer(componentsListView);
+                    if (comp != null) {
+                        Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
+                        intent.putExtra("component", comp);
+                        startActivity(intent);
+                    }
                     return true;
                 }
                 return false;
