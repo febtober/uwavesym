@@ -34,6 +34,9 @@ public class Component implements Parcelable {
     private Component connection1;
     private Component connection2;
 
+    private boolean param1Valid = false;
+    private boolean param2Valid = false;
+
     private static Context context;
 
     public Component(int componentId) {
@@ -52,6 +55,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mm);
                 param2Unit = res.getString(R.string.unit_mm);
+                info = res.getString(R.string.info_patch);
                 break;
             case DIPOLE:
                 name = res.getString(R.string.dipole);
@@ -63,6 +67,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mm);
                 param2Unit = res.getString(R.string.unit_mm);
+                info = res.getString(R.string.info_dipole);
                 break;
             case MONOPOLE:
                 name = res.getString(R.string.monopole);
@@ -74,6 +79,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mm);
                 param2Unit = res.getString(R.string.unit_mm);
+                info = res.getString(R.string.info_monopole);
                 break;
             case LOOP:
                 name = res.getString(R.string.loop);
@@ -85,6 +91,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mm);
                 param2Unit = res.getString(R.string.unit_mm);
+                info = res.getString(R.string.info_loop);
                 break;
             case BALUN:
                 name = res.getString(R.string.balun);
@@ -96,6 +103,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_ohm);
                 param2Unit = res.getString(R.string.unit_pf);
+                info = res.getString(R.string.info_balun);
                 break;
             case QUARTER_TRANSFORMER:
                 name = res.getString(R.string.quarterTransformer);
@@ -107,6 +115,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mhz);
                 param2Unit = res.getString(R.string.unit_ghz);
+                info = res.getString(R.string.info_quarterTransformer);
                 break;
             case T_LINE:
                 name = res.getString(R.string.tLine);
@@ -118,6 +127,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mm);
                 param2Unit = res.getString(R.string.unit_mm);
+                info = res.getString(R.string.info_tLine);
                 break;
             case RESISTOR:
                 name = res.getString(R.string.resistor);
@@ -129,6 +139,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mohm);
                 param2Unit = res.getString(R.string.unit_megaohm);
+                info = res.getString(R.string.info_resistor);
                 break;
             case INDUCTOR:
                 name = res.getString(R.string.inductor);
@@ -140,6 +151,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mhenry);
                 param2Unit = res.getString(R.string.unit_uhenry);
+                info = res.getString(R.string.info_inductor);
                 break;
             case CAPACITOR:
                 name = res.getString(R.string.capacitor);
@@ -151,6 +163,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_pf);
                 param2Unit = res.getString(R.string.unit_uf);
+                info = res.getString(R.string.info_capacitor);
                 break;
             case SUBSTRATE:
                 name = res.getString(R.string.substrate);
@@ -162,6 +175,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mm);
                 param2Unit = res.getString(R.string.unit_mm);
+                info = res.getString(R.string.info_substrate);
                 break;
             case TERMINATION:
                 name = res.getString(R.string.termination);
@@ -173,6 +187,7 @@ public class Component implements Parcelable {
                 param2Max = 10;
                 param1Unit = res.getString(R.string.unit_mm);
                 param2Unit = res.getString(R.string.unit_mm);
+                info = res.getString(R.string.info_termination);
                 break;
             default:
                 break;
@@ -180,8 +195,8 @@ public class Component implements Parcelable {
     }
 
     public void setName(String a) {name = a;}
-    public void setParam1(float a) {param1 = a;}
-    public void setParam2(float a) {param2 = a;}
+    public void setParam1(float a) {param1 = a; param1Valid = true;}
+    public void setParam2(float a) {param2 = a; param2Valid = true;}
     public void setParam1String(String a) {param1String = a;}
     public void setParam2String(String a) {param2String = a;}
     public void setParam1Min(float a) {param1Min = a;}
@@ -208,6 +223,8 @@ public class Component implements Parcelable {
     public String getInfo() {return info;}
     public Component getConnection1() {return connection1;}
     public Component getConnection2() {return connection2;}
+    public boolean getParam1Valid() {return param1Valid;}
+    public boolean getParam2Valid() {return param2Valid;}
 
     public static void setContext(Context mcontext) {
         if (context == null)
@@ -230,6 +247,8 @@ public class Component implements Parcelable {
         info = in.readString();
         connection1 = (Component) in.readValue(Component.class.getClassLoader());
         connection2 = (Component) in.readValue(Component.class.getClassLoader());
+        param1Valid = in.readInt() != 0;
+        param2Valid = in.readInt() != 0;
     }
 
     @Override
@@ -253,6 +272,8 @@ public class Component implements Parcelable {
         dest.writeString(info);
         dest.writeValue(connection1);
         dest.writeValue(connection2);
+        dest.writeInt(param1Valid ? 1 : 0);
+        dest.writeInt(param2Valid ? 1 : 0);
     }
 
     @SuppressWarnings("unused")

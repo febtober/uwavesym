@@ -200,7 +200,7 @@ public class WorkspaceActivity extends ActionBarActivity {
                     if (comp != null) {
                         Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
                         intent.putExtra("component", comp);
-                        startActivity(intent);
+                        startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
                     }
                     return true;
                 }
@@ -250,5 +250,19 @@ public class WorkspaceActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        if (requestCode == ComponentEditor.EDIT_COMPONENT) {
+            if (resultCode == RESULT_OK) {
+                // update button pressed
+                Component comp = intent.getParcelableExtra("component");
+            } else if (resultCode == RESULT_CANCELED) {
+                // cancel button pressed
+            }
+        }
+        else {
+            // finish() called from some other activity
+        }
     }
 }

@@ -1,5 +1,6 @@
 package org.febtober.uwavesym;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -19,42 +20,62 @@ public class ComponentEditor extends ActionBarActivity {
     TextView tv_param1Unit;
     EditText etv_param2;
     TextView tv_param2Unit;
+    TextView tv_info;
+    Component comp;
+
+    public static final int EDIT_COMPONENT = 0x20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_component_editor);
 
-        Bundle componentData = getIntent().getExtras();
-        Component componentIn = (Component) componentData.getParcelable("component");
-
-        button_update = (Button) findViewById(R.id.button_update);
-        button_cancel = (Button) findViewById(R.id.button_cancel);
-
-        button_update.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        button_cancel.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
         tv_componentName = (TextView) findViewById(R.id.text_componentName);
         etv_param1 = (EditText) findViewById(R.id.param1);
         tv_param1Unit = (TextView) findViewById(R.id.param1Unit);
         etv_param2 = (EditText) findViewById(R.id.param2);
         tv_param2Unit = (TextView) findViewById(R.id.param2Unit);
+        tv_info = (TextView) findViewById(R.id.text_componentInfo);
 
-        tv_componentName.setText(componentIn.getName());
-        etv_param1.setHint(componentIn.getParam1String());
-        tv_param1Unit.setText(componentIn.getParam1Unit());
-        etv_param2.setHint(componentIn.getParam2String());
-        tv_param2Unit.setText(componentIn.getParam2Unit());
+        button_update = (Button) findViewById(R.id.button_update);
+        button_cancel = (Button) findViewById(R.id.button_cancel);
+
+        comp = (Component) getIntent().getExtras().getParcelable("component");
+
+        tv_componentName.setText(comp.getName());
+        etv_param1.setHint(comp.getParam1String());
+        if (comp.getParam1Valid()) {etv_param1.setText(String.valueOf(comp.getParam1()));}
+        tv_param1Unit.setText(comp.getParam1Unit());
+        etv_param2.setHint(comp.getParam2String());
+        if (comp.getParam2Valid()) {etv_param2.setText(String.valueOf(comp.getParam2()));}
+        tv_param2Unit.setText(comp.getParam2Unit());
+        tv_info.setText(comp.getInfo());
+
+        button_update.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String param1String = etv_param1.getText().toString();
+                if (param1String.length() > 0) {
+                    comp.setParam1(Float.valueOf(param1String));
+                }
+                String param2String = etv_param2.getText().toString();
+                if (param2String.length() > 0) {
+                    comp.setParam2(Float.valueOf(param2String));
+                }
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("component", comp);
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
+        });
+        button_cancel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent returnIntent = new Intent();
+                setResult(RESULT_CANCELED, returnIntent);
+                finish();
+            }
+        });
     }
 
 

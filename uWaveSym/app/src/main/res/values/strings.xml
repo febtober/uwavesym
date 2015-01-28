@@ -29,6 +29,10 @@
         <item>@string/monopole</item>
         <item>@string/loop</item>
     </string-array>
+    <string name="info_patch">Patch antenna info.</string>
+    <string name="info_dipole">Dipole antenna info.</string>
+    <string name="info_monopole">Monopole antenna info.</string>
+    <string name="info_loop">Loop antenna info.</string>
 
     <string name="balun">Balun</string>
     <string name="quarterTransformer">\u03BB/4 transformer</string>
@@ -48,6 +52,14 @@
         <item>@string/termination</item>
         <item>@string/substrate</item>
     </string-array>
+    <string name="info_balun">Balun info.</string>
+    <string name="info_quarterTransformer">Quarter-wave transformer info.</string>
+    <string name="info_tLine">Transmission line info.</string>
+    <string name="info_resistor">It\'s a resistor, duh.</string>
+    <string name="info_inductor">It inducts things.</string>
+    <string name="info_capacitor">Decapitates people. Well, not really.</string>
+    <string name="info_termination">I\'ll be back...</string>
+    <string name="info_substrate">Who cares about this guy?</string>
 
     <string name="empty">empty</string>
     <string-array name="drawer_onePortComponents">
