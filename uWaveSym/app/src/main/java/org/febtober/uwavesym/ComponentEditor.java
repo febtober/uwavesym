@@ -3,6 +3,7 @@ package org.febtober.uwavesym;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,7 +50,8 @@ public class ComponentEditor extends ActionBarActivity {
         etv_param2.setHint(comp.getParam2String());
         if (comp.getParam2Valid()) {etv_param2.setText(String.valueOf(comp.getParam2()));}
         tv_param2Unit.setText(comp.getParam2Unit());
-        tv_info.setText(comp.getInfo());
+
+        tv_info.setText(Html.fromHtml(comp.getInfo()));
 
         button_update.setOnClickListener(new OnClickListener() {
             @Override

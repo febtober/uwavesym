@@ -31,8 +31,27 @@
     </string-array>
     <string name="info_patch">Patch antenna info.</string>
     <string name="info_dipole">Dipole antenna info.</string>
-    <string name="info_monopole">Monopole antenna info.</string>
-    <string name="info_loop">Loop antenna info.</string>
+    <string name="info_monopole">
+        <![CDATA[
+        A <b>monopole</b> antenna is a very popular and commonly used antenna due to it’s compact size and
+        favorable radiation characteristics. A simple monopole antenna is constructed by extending
+        the signal line of a coaxial cable a quarter wavelength through a ground plane. The ground
+        plane acts as a reflector, in the case of a monopole, and directs the radiation
+        perpendicular to the antenna with a directivity of about 5 dB and creating a null along the
+        direction of the antenna. A monopole is used for vehicle radios, cell phones, and most hand
+        to hand communications.
+        ]]>
+    </string>
+    <string name="info_loop">
+        <![CDATA[
+        This section will guide you through the design of a resonant <b>loop</b> antenna. A resonant loop
+        antenna has a circumference of one wavelength with an input resistance of around 130 ohms.
+        Due to the current distribution, a resonant loop antenna radiates normal to the plane of the
+        loop with a directivity of about 3.4 dB and does not radiate along the plane of the loop.
+        This current distribution also requires a balanced transmission line as a feed. A loop
+        antenna can be either circular or square and can easily be made with copper wire.
+        ]]>
+    </string>
 
     <string name="balun">Balun</string>
     <string name="quarterTransformer">\u03BB/4 transformer</string>
@@ -52,14 +71,72 @@
         <item>@string/termination</item>
         <item>@string/substrate</item>
     </string-array>
-    <string name="info_balun">Balun info.</string>
-    <string name="info_quarterTransformer">Quarter-wave transformer info.</string>
+    <string name="info_balun">
+       <![CDATA[
+        A <b>balun</b> is an electrical device that converts between a balanced
+        signal (two signals working against each other where ground is irrelevant) and an unbalanced
+        signal (a single signal working against ground or pseudo-ground). A balun can take many forms
+        and may include devices that also transform impedances but need not do so. Transformer baluns
+        can also be used to connect lines of differing impedance. The origin of the word balun is
+        \“<b>bal</b>anced to <b>un</b>balanced\”.
+       ]]>
+    </string>
+    <string name="info_quarterTransformer">
+        <![CDATA[
+        A <b>quarter-wave impedance transformer</b>, often written as <b>\u03BB/4 impedance transformer</b>, is a
+        component consisting of a length of transmission line or waveguide exactly one-quarter of a
+        wavelength (\u03BB) long and terminated in some known impedance.
+        ]]>
+    </string>
     <string name="info_tLine">Transmission line info.</string>
-    <string name="info_resistor">It\'s a resistor, duh.</string>
-    <string name="info_inductor">It inducts things.</string>
-    <string name="info_capacitor">Decapitates people. Well, not really.</string>
+    <string name="info_resistor">
+        <![CDATA[
+        A <b>resistor</b> is a passive two-terminal electrical component that implements electrical
+        resistance as a circuit element. Resistors act to reduce current flow, and, at the same
+        time, act to lower voltage levels within circuits. In electronic circuits resistors are used
+        to limit current flow, to adjust signal levels, bias active elements, terminate transmission
+        lines among other uses. High-power resistors that can dissipate many watts of electrical
+        power as heat may be used as part of motor controls, in power distribution systems, or as
+        test loads for generators. Fixed resistors have resistances that only change slightly with
+        temperature, time or operating voltage. Variable resistors can be used to adjust circuit
+        elements (such as a volume control or a lamp dimmer), or as sensing devices for heat, light,
+        humidity, force, or chemical activity.
+        ]]>
+    </string>
+    <string name="info_inductor">
+        <![CDATA[
+        An <b>inductor</b> is a passive two-terminal electrical component which resists changes in electric
+        current passing through it. It consists of a conductor such as a wire, usually wound into a
+        coil. When a current flows through it, energy is stored temporarily in a magnetic field
+        within the coil. Inductors have no effect at DC but as frequency increases an ideal inductor
+        starts to look like an open circuit.
+        ]]>
+    </string>
+    <string name="info_capacitor">
+        <![CDATA[
+        A <b>capacitor</b> is a passive two-terminal electrical component used to
+        store energy electrostatically in an electric field. At DC a capacitor appears as an open
+        circuit and as frequency increases it approaches a short circuit. The forms of practical
+        capacitors vary widely, but all contain at least two electrical conductors (plates)
+        separated by a dielectric (i.e. insulator). The conductors can be thin films, foils or
+        sintered beads of metal or conductive electrolyte, etc. The nonconducting dielectric acts to
+        increase the capacitor\'s charge capacity. A dielectric can be glass, ceramic, plastic film,
+        air, vacuum, paper, mica, oxide layer etc. Capacitors are widely used as parts of electrical
+        circuits in many common electrical devices. Unlike a resistor, an ideal capacitor does not
+        dissipate energy. Instead, a capacitor stores energy in the form of an electrostatic field
+        between its plates.
+        ]]>
+    </string>
     <string name="info_termination">I\'ll be back...</string>
-    <string name="info_substrate">Who cares about this guy?</string>
+    <string name="info_substrate">
+        <![CDATA[
+        A <b>substrate</b> is the mechanical support of a printed circuit board (PCB). Substrates have
+        varying electrical properties, such as relative permittivity and loss tangent, that have a
+        direct effect on the velocity of propagation and attenuation. Common substrates have a
+        relative permittivity varying from 2-13 which in turn has an effect on the transmission line
+        impedance (line width).
+        ]]>
+    </string>
 
     <string name="empty">empty</string>
     <string-array name="drawer_onePortComponents">
