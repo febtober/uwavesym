@@ -143,26 +143,28 @@
         <item>@string/empty</item>
     </string-array>
 
-    <string name="unit_hz">Hz</string>
-    <string name="unit_khz">kHz</string>
-    <string name="unit_mhz">MHz</string>
-    <string name="unit_ghz">GHz</string>
-    <string name="unit_um">\u03BCm</string>
-    <string name="unit_mm">mm</string>
-    <string name="unit_cm">cm</string>
-    <string name="unit_m">m</string>
-    <string name="unit_mohm">m\u03A9</string>
-    <string name="unit_ohm">\u03A9</string>
-    <string name="unit_kohm">k\u03A9</string>
-    <string name="unit_megaohm">M\u03A9</string>
-    <string name="unit_uhenry">\u03BCH</string>
-    <string name="unit_mhenry">mH</string>
-    <string name="unit_henry">H</string>
-    <string name="unit_pf">pF</string>
-    <string name="unit_nf">nF</string>
-    <string name="unit_uf">\u03BCF</string>
-    <string name="unit_mf">mF</string>
-    <string name="unit_f">F</string>
+    <string name="unit_abbrev_hertz">Hz</string>
+    <string name="unit_abbrev_meter">m</string>
+    <string name="unit_abbrev_ohm">\u03A9</string>
+    <string name="unit_abbrev_henry">H</string>
+    <string name="unit_abbrev_farad">F</string>
+
+    <string name="prefix_abbrev_pico">p</string>
+    <string name="prefix_abbrev_nano">n</string>
+    <string name="prefix_abbrev_micro">\u03BC</string>
+    <string name="prefix_abbrev_milli">m</string>
+    <string name="prefix_abbrev_kilo">k</string>
+    <string name="prefix_abbrev_mega">M</string>
+    <string name="prefix_abbrev_giga">G</string>
+    <string-array name="prefixes_abbrev">
+        <item>@string/prefix_abbrev_pico</item>
+        <item>@string/prefix_abbrev_nano</item>
+        <item>@string/prefix_abbrev_micro</item>
+        <item>@string/prefix_abbrev_milli</item>
+        <item>@string/prefix_abbrev_kilo</item>
+        <item>@string/prefix_abbrev_mega</item>
+        <item>@string/prefix_abbrev_giga</item>
+    </string-array>
 
     <string name="resistance">Resistance</string>
     <string name="capacitance">Capacitance</string>

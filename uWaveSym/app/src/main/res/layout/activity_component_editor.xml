@@ -50,7 +50,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:id="@+id/layout_parameterInput"
         android:layout_above="@+id/layout_editorBottomButtons"
         android:focusable="true"
@@ -59,31 +59,32 @@
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
             android:inputType="numberDecimal"
             android:id="@+id/param1"
-            android:layout_weight="4"
             android:gravity="right" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/param1Unit"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal" />
+        <Spinner
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:id="@+id/param1Units"
+            android:layout_gravity="bottom"
+
+            android:spinnerMode="dropdown" />
         <EditText
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
             android:id="@+id/param2"
-            android:layout_weight="4"
             android:gravity="right"
             android:inputType="numberDecimal" />
-        <TextView
-            android:layout_width="0dp"
+        <Spinner
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:id="@+id/param2Unit"
-            android:layout_weight="1"
+            android:id="@+id/param2Units"
             android:layout_gravity="center_vertical"
-            android:gravity="center_horizontal" />
+            />
 
     </LinearLayout>
 

@@ -8,8 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 
@@ -18,9 +21,9 @@ public class ComponentEditor extends ActionBarActivity {
     Button button_cancel;
     TextView tv_componentName;
     EditText etv_param1;
-    TextView tv_param1Unit;
+    Spinner sp_param1Units;
     EditText etv_param2;
-    TextView tv_param2Unit;
+    Spinner sp_param2Units;
     TextView tv_info;
     Component comp;
 
@@ -33,9 +36,9 @@ public class ComponentEditor extends ActionBarActivity {
 
         tv_componentName = (TextView) findViewById(R.id.text_componentName);
         etv_param1 = (EditText) findViewById(R.id.param1);
-        tv_param1Unit = (TextView) findViewById(R.id.param1Unit);
+        sp_param1Units = (Spinner) findViewById(R.id.param1Units);
         etv_param2 = (EditText) findViewById(R.id.param2);
-        tv_param2Unit = (TextView) findViewById(R.id.param2Unit);
+        sp_param2Units = (Spinner) findViewById(R.id.param2Units);
         tv_info = (TextView) findViewById(R.id.text_componentInfo);
 
         button_update = (Button) findViewById(R.id.button_update);
@@ -46,10 +49,15 @@ public class ComponentEditor extends ActionBarActivity {
         tv_componentName.setText(comp.getName());
         etv_param1.setHint(comp.getParam1String());
         if (comp.getParam1Valid()) {etv_param1.setText(String.valueOf(comp.getParam1()));}
-        tv_param1Unit.setText(comp.getParam1Unit());
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, comp.getParam1Units());
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_param1Units.setAdapter(spinnerAdapter);
         etv_param2.setHint(comp.getParam2String());
         if (comp.getParam2Valid()) {etv_param2.setText(String.valueOf(comp.getParam2()));}
-        tv_param2Unit.setText(comp.getParam2Unit());
+        spinnerAdapter.clear();
+        spinnerAdapter.addAll(comp.getParam2Units());
+        sp_param2Units.setAdapter(spinnerAdapter);
 
         tv_info.setText(Html.fromHtml(comp.getInfo()));
 
