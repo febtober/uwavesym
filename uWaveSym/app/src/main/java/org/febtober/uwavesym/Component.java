@@ -23,6 +23,7 @@ public class Component implements Parcelable {
     public static final int SUBSTRATE = 11;
     public static final int TERMINATION = 12;
 
+    private int componentId;
     private String name;
     private float param1;
     private float param2;
@@ -45,6 +46,7 @@ public class Component implements Parcelable {
     private static Context context;
 
     public Component(int componentId) {
+        this.componentId = componentId;
         connection1 = null;
         connection2 = null;
         Resources res = context.getResources();
@@ -210,6 +212,7 @@ public class Component implements Parcelable {
         return units;
     }
 
+    public void setComponentId(int a) {componentId = a;}
     public void setName(String a) {name = a;}
     public void setParam1(float a) {param1 = a; param1Valid = true;}
     public void setParam2(float a) {param2 = a; param2Valid = true;}
@@ -225,6 +228,7 @@ public class Component implements Parcelable {
     public void setConnection1(Component a) {connection1 = a;}
     public void setConnection2(Component a) {connection2 = a;}
 
+    public int getComponentId() {return componentId;}
     public String getName() {return name;}
     public float getParam1() {return param1;}
     public float getParam2() {return param2;}
@@ -249,6 +253,7 @@ public class Component implements Parcelable {
 
     // Parcelling part. Pulled from parcelabler.com
     protected Component(Parcel in) {
+        componentId = in.readInt();
         name = in.readString();
         param1 = in.readFloat();
         param2 = in.readFloat();
@@ -274,6 +279,7 @@ public class Component implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(componentId);
         dest.writeString(name);
         dest.writeFloat(param1);
         dest.writeFloat(param2);

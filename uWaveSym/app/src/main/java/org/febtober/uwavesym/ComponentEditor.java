@@ -1,6 +1,8 @@
 package org.febtober.uwavesym;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -11,7 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ public class ComponentEditor extends ActionBarActivity {
     EditText etv_param2;
     Spinner sp_param2Units;
     TextView tv_info;
+    ImageView iv_image;
     Component comp;
 
     public static final int EDIT_COMPONENT = 0x20;
@@ -33,6 +36,7 @@ public class ComponentEditor extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_component_editor);
+        Resources res = getResources();
 
         tv_componentName = (TextView) findViewById(R.id.text_componentName);
         etv_param1 = (EditText) findViewById(R.id.param1);
@@ -40,6 +44,7 @@ public class ComponentEditor extends ActionBarActivity {
         etv_param2 = (EditText) findViewById(R.id.param2);
         sp_param2Units = (Spinner) findViewById(R.id.param2Units);
         tv_info = (TextView) findViewById(R.id.text_componentInfo);
+        iv_image = (ImageView) findViewById(R.id.image_component);
 
         button_update = (Button) findViewById(R.id.button_update);
         button_cancel = (Button) findViewById(R.id.button_cancel);
@@ -60,6 +65,44 @@ public class ComponentEditor extends ActionBarActivity {
         sp_param2Units.setAdapter(spinnerAdapter);
 
         tv_info.setText(Html.fromHtml(comp.getInfo()));
+
+        Drawable drw_image = null;
+        Drawable drw_equation;
+        switch(comp.getComponentId()) {
+            case(Component.PATCH):
+                break;
+            case(Component.DIPOLE):
+                break;
+            case(Component.MONOPOLE):
+                drw_image = res.getDrawable(R.drawable.img_monopole);
+                break;
+            case(Component.LOOP):
+                drw_image = res.getDrawable(R.drawable.img_loop);
+                break;
+            case(Component.BALUN):
+                break;
+            case(Component.QUARTER_TRANSFORMER):
+                break;
+            case(Component.T_LINE):
+                break;
+            case(Component.RESISTOR):
+                drw_image = res.getDrawable(R.drawable.img_resistor);
+                break;
+            case(Component.INDUCTOR):
+                drw_image = res.getDrawable(R.drawable.img_inductor);
+                break;
+            case(Component.CAPACITOR):
+                drw_image = res.getDrawable(R.drawable.img_capacitor);
+                break;
+            case(Component.SUBSTRATE):
+                drw_image = res.getDrawable(R.drawable.img_substrate);
+                break;
+            case(Component.TERMINATION):
+                break;
+        }
+        if (iv_image != null) {
+            iv_image.setImageDrawable(drw_image);
+        }
 
         button_update.setOnClickListener(new OnClickListener() {
             @Override
