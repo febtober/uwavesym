@@ -9,6 +9,9 @@
     <string name="button_save">Save</string>
     <string name="button_update">Update</string>
     <string name="button_cancel">Cancel</string>
+    <string name="components">Components</string>
+    <string name="drawer_open">Components open</string>
+    <string name="drawer_close">Components close</string>
 
     <string name="antennas">Antennas</string>
     <string name="twoPortComponents">2-Port Components</string>

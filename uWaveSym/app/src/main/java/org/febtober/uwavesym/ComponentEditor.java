@@ -1,9 +1,9 @@
 package org.febtober.uwavesym;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Menu;
@@ -18,7 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
-public class ComponentEditor extends ActionBarActivity {
+public class ComponentEditor extends Activity {
     Button button_update;
     Button button_cancel;
     TextView tv_componentName;

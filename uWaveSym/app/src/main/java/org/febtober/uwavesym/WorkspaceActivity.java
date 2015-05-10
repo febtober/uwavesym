@@ -1,10 +1,11 @@
 package org.febtober.uwavesym;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +20,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-
-public class WorkspaceActivity extends ActionBarActivity {
+public class WorkspaceActivity extends Activity {
     String[] componentCategories;
     String[] antennas;
     String[] twoPortComponents;
     String[] onePortComponents;
     DrawerLayout componentsDrawer;
+    ActionBarDrawerToggle drawerToggle;
     ExpandableListView componentsListView;
     ExpandableListAdapter expListAdapter;
     HashMap<String, List<String>> componentsData;
@@ -56,6 +57,28 @@ public class WorkspaceActivity extends ActionBarActivity {
         onePortComponents = res.getStringArray(R.array.drawer_onePortComponents);
         componentsDrawer = (DrawerLayout) findViewById(R.id.workspace_drawerLayout);
         componentsListView = (ExpandableListView) findViewById(R.id.workspace_leftDrawer);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        drawerToggle = new ActionBarDrawerToggle(
+                this,
+                componentsDrawer,
+                R.string.drawer_close,
+                R.string.drawer_open
+        ) {
+            public void onDrawerClosed(View view) {
+                getActionBar().setTitle(R.string.app_name);
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View view) {
+                getActionBar().setTitle(R.string.components);
+                invalidateOptionsMenu();
+            }
+        };
+
+        componentsDrawer.setDrawerListener(drawerToggle);
 
         List<String> catsList = new ArrayList<>(Arrays.asList(componentCategories));
         List<String> antennasList = new ArrayList<>(Arrays.asList(antennas));
@@ -231,24 +254,18 @@ public class WorkspaceActivity extends ActionBarActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_workspace, menu);
-        return true;
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        // The action bar home/up action should open or close the drawer.
+        // ActionBarDrawerToggle will take care of this.
+        if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

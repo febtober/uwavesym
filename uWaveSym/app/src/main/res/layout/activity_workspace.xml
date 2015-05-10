@@ -7,40 +7,45 @@
     tools:context="org.febtober.uwavesym.WorkspaceActivity"
     android:id="@+id/workspace_drawerLayout">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <FrameLayout
         android:layout_height="match_parent"
-        android:gravity="bottom" >
+        android:layout_width="match_parent" >
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:gravity="bottom" >
 
-            <Button
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:text="@string/button_simulate"
-                android:id="@+id/button_simulate"
-                android:layout_weight="1" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
 
-            <Button
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:text="@string/button_results"
-                android:id="@+id/button_results"
-                android:layout_weight="1" />
+                <Button
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_simulate"
+                    android:id="@+id/button_simulate"
+                    android:layout_weight="1" />
 
-            <Button
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:text="@string/button_save"
-                android:id="@+id/button_save"
-                android:layout_weight="1" />
+                <Button
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_results"
+                    android:id="@+id/button_results"
+                    android:layout_weight="1" />
 
+                <Button
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button_save"
+                    android:id="@+id/button_save"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </FrameLayout>
 
     <ExpandableListView
         android:layout_width="240dp"
