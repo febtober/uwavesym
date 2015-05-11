@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +35,8 @@ public class WorkspaceActivity extends Activity {
     Button simulateButton;
     Button resultsButton;
     Button saveButton;
+
+    List<Component> workspaceComponents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,58 +99,19 @@ public class WorkspaceActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                switch (groupPosition) {
-                    case 0: // Antennas
-                        switch (childPosition) {
-                            case 0: // Patch
-                                break;
-                            case 1: // Dipole
-                                break;
-                            case 2: // Monopole
-                                break;
-                            case 3: // Loop
-                                break;
-                            default: // Error code
-                                break;
-                        }
-                        break;
-                    case 1: // Two-port components
-                        switch (childPosition) {
-                            case 0: // Balun
-                                break;
-                            case 1: // pi/4 transformer
-                                break;
-                            case 2: // T-line
-                                break;
-                            case 3: // Resistor
-                                break;
-                            case 4: // Inductor
-                                break;
-                            case 5: // Capacitor
-                                break;
-                            case 6: // Termination
-                                break;
-                            case 7: // Substrate
-                                break;
-                            default: // Error code
-                                break;
-                        }
-                        break;
-                    case 2: // One-port components
-                        switch (childPosition) {
-                            case 0: // empty
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    default: // Error code
-                        break;
-                }
-                return true;
-            }
-        });
+                int index = workspaceComponents.size();
+                Component comp = createComponentFromPositions(groupPosition, childPosition);
 
+                Log.d("", comp.getName() + " clicked");
+
+                if (comp != null) {
+                    ImageView img0 = (ImageView) findViewById(R.id.image_component0);
+                    img0.setImageResource(R.drawable.sym_balun);
+                }
+                componentsDrawer.closeDrawer(componentsListView);
+                return true;
+
+        }});
 
         componentsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -157,68 +122,7 @@ public class WorkspaceActivity extends Activity {
                     int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
                     int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
                     Resources res = getResources();
-                    Component comp = null;
-
-                    switch (groupPosition) {
-                        case 0: // Antennas
-                            switch (childPosition) {
-                                case 0: // Patch
-                                    comp = new Component(Component.PATCH);
-                                    break;
-                                case 1: // Dipole
-                                    comp = new Component(Component.DIPOLE);
-                                    break;
-                                case 2: // Monopole
-                                    comp = new Component(Component.MONOPOLE);
-                                    break;
-                                case 3: // Loop
-                                    comp = new Component(Component.LOOP);
-                                    break;
-                                default: // Error code
-                                    break;
-                            }
-                            break;
-                        case 1: // Two-port components
-                            switch (childPosition) {
-                                case 0: // Balun
-                                    comp = new Component(Component.BALUN);
-                                    break;
-                                case 1: // pi/4 transformer
-                                    comp = new Component(Component.QUARTER_TRANSFORMER);
-                                    break;
-                                case 2: // T-line
-                                    comp = new Component(Component.T_LINE);
-                                    break;
-                                case 3: // Resistor
-                                    comp = new Component(Component.RESISTOR);
-                                    break;
-                                case 4: // Inductor
-                                    comp = new Component(Component.INDUCTOR);
-                                    break;
-                                case 5: // Capacitor
-                                    comp = new Component(Component.CAPACITOR);
-                                    break;
-                                case 6: // Termination
-                                    comp = new Component(Component.TERMINATION);
-                                    break;
-                                case 7: // Substrate
-                                    comp = new Component(Component.SUBSTRATE);
-                                    break;
-                                default: // Error code
-                                    break;
-                            }
-                            break;
-                        case 2: // One-port components
-                            switch (childPosition) {
-                                case 0: // empty
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        default: // Error code
-                            break;
-                    }
+                    Component comp = createComponentFromPositions(groupPosition, childPosition);
                     componentsDrawer.closeDrawer(componentsListView);
                     if (comp != null) {
                         Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
@@ -230,6 +134,71 @@ public class WorkspaceActivity extends Activity {
                 return false;
             }
         });
+    }
+
+    private Component createComponentFromPositions(int groupPosition, int childPosition) {
+        Component comp = null;
+        switch (groupPosition) {
+            case 0: // Antennas
+                switch (childPosition) {
+                    case 0: // Patch
+                        comp = new Component(Component.PATCH);
+                        break;
+                    case 1: // Dipole
+                        comp = new Component(Component.DIPOLE);
+                        break;
+                    case 2: // Monopole
+                        comp = new Component(Component.MONOPOLE);
+                        break;
+                    case 3: // Loop
+                        comp = new Component(Component.LOOP);
+                        break;
+                    default: // Error code
+                        break;
+                }
+                break;
+            case 1: // Two-port components
+                switch (childPosition) {
+                    case 0: // Balun
+                        comp = new Component(Component.BALUN);
+                        break;
+                    case 1: // pi/4 transformer
+                        comp = new Component(Component.QUARTER_TRANSFORMER);
+                        break;
+                    case 2: // T-line
+                        comp = new Component(Component.T_LINE);
+                        break;
+                    case 3: // Resistor
+                        comp = new Component(Component.RESISTOR);
+                        break;
+                    case 4: // Inductor
+                        comp = new Component(Component.INDUCTOR);
+                        break;
+                    case 5: // Capacitor
+                        comp = new Component(Component.CAPACITOR);
+                        break;
+                    case 6: // Termination
+                        comp = new Component(Component.TERMINATION);
+                        break;
+                    case 7: // Substrate
+                        comp = new Component(Component.SUBSTRATE);
+                        break;
+                    default: // Error code
+                        break;
+                }
+                break;
+            case 2: // One-port components
+                switch (childPosition) {
+                    case 0: // empty
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            default: // Error code
+                break;
+        }
+        return comp;
     }
 
     private void setButtonOnClickListeners() {
