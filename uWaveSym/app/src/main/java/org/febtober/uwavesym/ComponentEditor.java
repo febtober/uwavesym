@@ -66,40 +66,8 @@ public class ComponentEditor extends Activity {
 
         tv_info.setText(Html.fromHtml(comp.getInfo()));
 
-        Drawable drw_image = null;
+        Drawable drw_image = res.getDrawable(comp.getImgId());
         Drawable drw_equation;
-        switch(comp.getComponentId()) {
-            case(Component.PATCH):
-                break;
-            case(Component.DIPOLE):
-                break;
-            case(Component.MONOPOLE):
-                drw_image = res.getDrawable(R.drawable.img_monopole);
-                break;
-            case(Component.LOOP):
-                drw_image = res.getDrawable(R.drawable.img_loop);
-                break;
-            case(Component.BALUN):
-                break;
-            case(Component.QUARTER_TRANSFORMER):
-                break;
-            case(Component.T_LINE):
-                break;
-            case(Component.RESISTOR):
-                drw_image = res.getDrawable(R.drawable.img_resistor);
-                break;
-            case(Component.INDUCTOR):
-                drw_image = res.getDrawable(R.drawable.img_inductor);
-                break;
-            case(Component.CAPACITOR):
-                drw_image = res.getDrawable(R.drawable.img_capacitor);
-                break;
-            case(Component.SUBSTRATE):
-                drw_image = res.getDrawable(R.drawable.img_substrate);
-                break;
-            case(Component.TERMINATION):
-                break;
-        }
         if (iv_image != null) {
             iv_image.setImageDrawable(drw_image);
         }

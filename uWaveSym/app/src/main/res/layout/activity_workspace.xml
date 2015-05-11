@@ -11,37 +11,17 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent" >
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/layout_componentWorkspace"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom|center_horizontal" >
-            
-            <ImageView
-                android:id="@+id/image_component0"
-                android:layout_width="100dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/sym_blank" />
-
-            <ImageView
-                android:id="@+id/image_component1"
-                android:layout_width="100dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/sym_blank" />
-
-            <ImageView
-                android:id="@+id/image_component2"
-                android:layout_width="100dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/sym_blank" />
+            android:layout_height="match_parent" >
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" >
 
                 <Button
                     android:layout_width="0px"
@@ -65,7 +45,7 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </FrameLayout>
 
     <ExpandableListView

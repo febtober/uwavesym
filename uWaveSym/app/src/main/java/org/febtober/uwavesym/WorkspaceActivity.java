@@ -1,13 +1,13 @@
 package org.febtober.uwavesym;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ public class WorkspaceActivity extends Activity {
     String[] twoPortComponents;
     String[] onePortComponents;
     DrawerLayout componentsDrawer;
+    RelativeLayout workspaceLayout;
     ActionBarDrawerToggle drawerToggle;
     ExpandableListView componentsListView;
     ExpandableListAdapter expListAdapter;
@@ -37,12 +39,14 @@ public class WorkspaceActivity extends Activity {
     Button saveButton;
 
     List<Component> workspaceComponents = new ArrayList<>();
+    List<ImageView> workspaceViews = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace);
 
+        workspaceLayout = (RelativeLayout) findViewById(R.id.layout_componentWorkspace);
         simulateButton = (Button) findViewById(R.id.button_simulate);
         resultsButton = (Button) findViewById(R.id.button_results);
         saveButton = (Button) findViewById(R.id.button_save);
@@ -99,19 +103,45 @@ public class WorkspaceActivity extends Activity {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                int index = workspaceComponents.size();
-                Component comp = createComponentFromPositions(groupPosition, childPosition);
-
-                Log.d("", comp.getName() + " clicked");
-
-                if (comp != null) {
-                    ImageView img0 = (ImageView) findViewById(R.id.image_component0);
-                    img0.setImageResource(R.drawable.sym_balun);
+                int compId = componentIdFromPositions(groupPosition, childPosition);
+                if (compId == 0) {
+                    return false;
                 }
+
+                Context context = getApplicationContext();
+                Component comp = new Component(compId);
+                int numComponents = workspaceComponents.size();
+                ImageView iv_compSym = new ImageView(context);
+                iv_compSym.setId(numComponents + 1);
+                comp.setSymViewId(iv_compSym.getId());
+                iv_compSym.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                iv_compSym.setImageResource(comp.getSymId());
+                RelativeLayout.LayoutParams iv_lp = new RelativeLayout.LayoutParams(500, 500);
+                iv_lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+                if (numComponents > 0) {
+                    iv_lp.addRule(
+                            RelativeLayout.BELOW,
+                            workspaceComponents.get(numComponents - 1).getSymViewId()
+                    );
+                }
+                iv_compSym.setLayoutParams(iv_lp);
+
+                final Component comp_final = comp;
+                iv_compSym.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
+                        intent.putExtra("component", comp_final);
+                        startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
+                    }
+                });
+                workspaceComponents.add(comp);
+                workspaceViews.add(iv_compSym);
+                workspaceLayout.addView(iv_compSym);
                 componentsDrawer.closeDrawer(componentsListView);
                 return true;
-
-        }});
+            }
+        });
 
         componentsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -121,14 +151,15 @@ public class WorkspaceActivity extends Activity {
                     long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
                     int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
                     int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
-                    Resources res = getResources();
-                    Component comp = createComponentFromPositions(groupPosition, childPosition);
+                    Component comp = new Component(componentIdFromPositions(groupPosition, childPosition));
                     componentsDrawer.closeDrawer(componentsListView);
-                    if (comp != null) {
-                        Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
-                        intent.putExtra("component", comp);
-                        startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
+                    int compId = componentIdFromPositions(groupPosition, childPosition);
+                    if (compId == 0) {
+                        return false;
                     }
+                    Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
+                    intent.putExtra("component", comp);
+                    startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
                     return true;
                 }
                 return false;
@@ -136,22 +167,22 @@ public class WorkspaceActivity extends Activity {
         });
     }
 
-    private Component createComponentFromPositions(int groupPosition, int childPosition) {
-        Component comp = null;
+    private int componentIdFromPositions(int groupPosition, int childPosition) {
+        int compId = 0 ;
         switch (groupPosition) {
             case 0: // Antennas
                 switch (childPosition) {
                     case 0: // Patch
-                        comp = new Component(Component.PATCH);
+                        compId = Component.PATCH;
                         break;
                     case 1: // Dipole
-                        comp = new Component(Component.DIPOLE);
+                        compId = Component.DIPOLE;
                         break;
                     case 2: // Monopole
-                        comp = new Component(Component.MONOPOLE);
+                        compId = Component.MONOPOLE;
                         break;
                     case 3: // Loop
-                        comp = new Component(Component.LOOP);
+                        compId = Component.LOOP;
                         break;
                     default: // Error code
                         break;
@@ -160,28 +191,28 @@ public class WorkspaceActivity extends Activity {
             case 1: // Two-port components
                 switch (childPosition) {
                     case 0: // Balun
-                        comp = new Component(Component.BALUN);
+                        compId = Component.BALUN;
                         break;
                     case 1: // pi/4 transformer
-                        comp = new Component(Component.QUARTER_TRANSFORMER);
+                        compId = Component.QUARTER_TRANSFORMER;
                         break;
                     case 2: // T-line
-                        comp = new Component(Component.T_LINE);
+                        compId = Component.T_LINE;
                         break;
                     case 3: // Resistor
-                        comp = new Component(Component.RESISTOR);
+                        compId = Component.RESISTOR;
                         break;
                     case 4: // Inductor
-                        comp = new Component(Component.INDUCTOR);
+                        compId = Component.INDUCTOR;
                         break;
                     case 5: // Capacitor
-                        comp = new Component(Component.CAPACITOR);
+                        compId = Component.CAPACITOR;
                         break;
                     case 6: // Termination
-                        comp = new Component(Component.TERMINATION);
+                        compId = Component.TERMINATION;
                         break;
                     case 7: // Substrate
-                        comp = new Component(Component.SUBSTRATE);
+                        compId = Component.SUBSTRATE;
                         break;
                     default: // Error code
                         break;
@@ -198,7 +229,7 @@ public class WorkspaceActivity extends Activity {
             default: // Error code
                 break;
         }
-        return comp;
+        return compId;
     }
 
     private void setButtonOnClickListeners() {

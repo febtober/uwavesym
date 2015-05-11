@@ -24,6 +24,9 @@ public class Component implements Parcelable {
     public static final int TERMINATION = 12;
 
     private int componentId;
+    private int imgId;
+    private int symId;
+    private int symViewId = -1;
     private String name;
     private float param1;
     private float param2;
@@ -55,6 +58,8 @@ public class Component implements Parcelable {
 
         switch (componentId) {
             case PATCH:
+                imgId = R.drawable.img_blank;
+                symId = R.drawable.sym_blank;
                 name = res.getString(R.string.patch);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -67,6 +72,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_patch);
                 break;
             case DIPOLE:
+                imgId = R.drawable.img_blank;
+                symId = R.drawable.sym_blank;
                 name = res.getString(R.string.dipole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -79,6 +86,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_dipole);
                 break;
             case MONOPOLE:
+                imgId = R.drawable.img_monopole;
+                symId = R.drawable.sym_blank;
                 name = res.getString(R.string.monopole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -91,6 +100,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_monopole);
                 break;
             case LOOP:
+                imgId = R.drawable.img_loop;
+                symId = R.drawable.sym_blank;
                 name = res.getString(R.string.loop);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -103,6 +114,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_loop);
                 break;
             case BALUN:
+                imgId = R.drawable.img_blank;
+                symId = R.drawable.sym_balun;
                 name = res.getString(R.string.balun);
                 param1String = res.getString(R.string.resistance);
                 param2String = res.getString(R.string.capacitance);
@@ -115,6 +128,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_balun);
                 break;
             case QUARTER_TRANSFORMER:
+                imgId = R.drawable.img_blank;
+                symId = R.drawable.sym_quarter_transformer;
                 name = res.getString(R.string.quarterTransformer);
                 param1String = res.getString(R.string.frequency);
                 param2String = res.getString(R.string.frequency);
@@ -127,6 +142,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_quarterTransformer);
                 break;
             case T_LINE:
+                imgId = R.drawable.img_blank;
+                symId = R.drawable.sym_tline;
                 name = res.getString(R.string.tLine);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -139,6 +156,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_tLine);
                 break;
             case RESISTOR:
+                imgId = R.drawable.img_resistor;
+                symId = R.drawable.sym_resistor;
                 name = res.getString(R.string.resistor);
                 param1String = res.getString(R.string.resistance);
                 param2String = res.getString(R.string.resistance);
@@ -151,6 +170,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_resistor);
                 break;
             case INDUCTOR:
+                imgId = R.drawable.img_inductor;
+                symId = R.drawable.sym_inductor;
                 name = res.getString(R.string.inductor);
                 param1String = res.getString(R.string.inductance);
                 param2String = res.getString(R.string.inductance);
@@ -163,6 +184,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_inductor);
                 break;
             case CAPACITOR:
+                imgId = R.drawable.img_capacitor;
+                symId = R.drawable.sym_capacitor;
                 name = res.getString(R.string.capacitor);
                 param1String = res.getString(R.string.capacitance);
                 param2String = res.getString(R.string.capacitance);
@@ -175,6 +198,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_capacitor);
                 break;
             case SUBSTRATE:
+                imgId = R.drawable.img_substrate;
+                symId = R.drawable.sym_blank;
                 name = res.getString(R.string.substrate);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -187,6 +212,8 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_substrate);
                 break;
             case TERMINATION:
+                imgId = R.drawable.img_blank;
+                symId = R.drawable.sym_termination;
                 name = res.getString(R.string.termination);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -213,6 +240,9 @@ public class Component implements Parcelable {
     }
 
     public void setComponentId(int a) {componentId = a;}
+    public void setImgId(int a) {imgId = a;}
+    public void setSymId(int a) {symId = a;}
+    public void setSymViewId(int a) {symViewId = a;}
     public void setName(String a) {name = a;}
     public void setParam1(float a) {param1 = a; param1Valid = true;}
     public void setParam2(float a) {param2 = a; param2Valid = true;}
@@ -229,6 +259,9 @@ public class Component implements Parcelable {
     public void setConnection2(Component a) {connection2 = a;}
 
     public int getComponentId() {return componentId;}
+    public int getImgId() {return imgId;}
+    public int getSymId() {return symId;}
+    public int getSymViewId() {return symViewId;}
     public String getName() {return name;}
     public float getParam1() {return param1;}
     public float getParam2() {return param2;}
@@ -254,6 +287,9 @@ public class Component implements Parcelable {
     // Parcelling part. Pulled from parcelabler.com
     protected Component(Parcel in) {
         componentId = in.readInt();
+        imgId = in.readInt();
+        symId = in.readInt();
+        symViewId = in.readInt();
         name = in.readString();
         param1 = in.readFloat();
         param2 = in.readFloat();
@@ -280,6 +316,9 @@ public class Component implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(componentId);
+        dest.writeInt(imgId);
+        dest.writeInt(symId);
+        dest.writeInt(symViewId);
         dest.writeString(name);
         dest.writeFloat(param1);
         dest.writeFloat(param2);
