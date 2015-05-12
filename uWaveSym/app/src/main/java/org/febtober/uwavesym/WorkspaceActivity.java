@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 public class WorkspaceActivity extends Activity {
@@ -273,7 +274,31 @@ public class WorkspaceActivity extends Activity {
         if (requestCode == ComponentEditor.EDIT_COMPONENT) {
             if (resultCode == RESULT_OK) {
                 // update button pressed
-                Component comp = intent.getParcelableExtra("component");
+                Component modifiedComp = intent.getParcelableExtra("component");
+                int compType = modifiedComp.getComponentId();
+
+                Component wsComponent = null;
+                Iterator<Component> it = workspaceComponents.iterator();
+                while (it.hasNext()) {
+                    Component tmpComp = it.next();
+                    if (tmpComp.getComponentId() == modifiedComp.getComponentId()) {
+                        wsComponent = tmpComp;
+                        break;
+                    }
+                }
+
+                if (wsComponent == null) {
+                    // Component was not found in List
+                    return;
+                }
+
+                if (modifiedComp.getParam1Valid()) {
+                    wsComponent.setParam1(modifiedComp.getParam1());
+                }
+                if (modifiedComp.getParam2Valid()) {
+                    wsComponent.setParam2(modifiedComp.getParam2());
+                }
+
             } else if (resultCode == RESULT_CANCELED) {
                 // cancel button pressed
             }
