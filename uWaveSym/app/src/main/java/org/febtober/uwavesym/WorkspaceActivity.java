@@ -194,7 +194,16 @@ public class WorkspaceActivity extends Activity {
                     case 6: // Termination
                         compId = Component.TERMINATION;
                         break;
-                    case 7: // Substrate
+                    case 7: // Shunt resistor
+                        compId = Component.RESISTOR_SHUNT;
+                        break;
+                    case 8: // Shunt inductor
+                        compId = Component.INDUCTOR_SHUNT;
+                        break;
+                    case 9: // Shunt capacitor
+                        compId = Component.CAPACITOR_SHUNT;
+                        break;
+                    case 10: // Substrate
                         compId = Component.SUBSTRATE;
                         break;
                     default: // Error code

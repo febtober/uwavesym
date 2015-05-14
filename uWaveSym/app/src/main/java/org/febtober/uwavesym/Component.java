@@ -22,6 +22,9 @@ public class Component implements Parcelable {
     public static final int CAPACITOR = 10;
     public static final int SUBSTRATE = 11;
     public static final int TERMINATION = 12;
+    public static final int RESISTOR_SHUNT = 13;
+    public static final int INDUCTOR_SHUNT = 14;
+    public static final int CAPACITOR_SHUNT = 15;
 
     private int componentId;
     private int imgId;
@@ -171,6 +174,20 @@ public class Component implements Parcelable {
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
                 info = res.getString(R.string.info_resistor);
                 break;
+            case RESISTOR_SHUNT:
+                imgId = R.drawable.img_resistor;
+                symId = R.drawable.sym_resistor_shunt;
+                name = res.getString(R.string.resistor_shunt);
+                param1String = res.getString(R.string.resistance);
+                param2String = res.getString(R.string.resistance);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
+                param2Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
+                info = res.getString(R.string.info_resistor);
+                break;
             case INDUCTOR:
                 imgId = R.drawable.img_inductor;
                 symId = R.drawable.sym_inductor;
@@ -185,10 +202,38 @@ public class Component implements Parcelable {
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
                 info = res.getString(R.string.info_inductor);
                 break;
+            case INDUCTOR_SHUNT:
+                imgId = R.drawable.img_inductor;
+                symId = R.drawable.sym_inductor_shunt;
+                name = res.getString(R.string.inductor_shunt);
+                param1String = res.getString(R.string.inductance);
+                param2String = res.getString(R.string.inductance);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
+                param2Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
+                info = res.getString(R.string.info_inductor);
+                break;
             case CAPACITOR:
                 imgId = R.drawable.img_capacitor;
                 symId = R.drawable.sym_capacitor;
                 name = res.getString(R.string.capacitor);
+                param1String = res.getString(R.string.capacitance);
+                param2String = res.getString(R.string.capacitance);
+                param1Min = 0;
+                param2Min = 0;
+                param1Max = 10;
+                param2Max = 10;
+                param1Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
+                param2Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
+                info = res.getString(R.string.info_capacitor);
+                break;
+            case CAPACITOR_SHUNT:
+                imgId = R.drawable.img_capacitor;
+                symId = R.drawable.sym_capacitor_shunt;
+                name = res.getString(R.string.capacitor_shunt);
                 param1String = res.getString(R.string.capacitance);
                 param2String = res.getString(R.string.capacitance);
                 param1Min = 0;

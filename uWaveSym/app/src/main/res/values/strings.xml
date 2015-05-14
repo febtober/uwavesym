@@ -60,8 +60,11 @@
     <string name="quarterTransformer">\u03BB/4 transformer</string>
     <string name="tLine">Transmission line</string>
     <string name="resistor">Resistor</string>
+    <string name="resistor_shunt">Shunt Resistor</string>
     <string name="inductor">Inductor</string>
+    <string name="inductor_shunt">Shunt Inductor</string>
     <string name="capacitor">Capacitor</string>
+    <string name="capacitor_shunt">Shunt Capacitor</string>
     <string name="termination">Termination (50 \u03A9)</string>
     <string name="substrate">Substrate</string>
     <string-array name="drawer_twoPortComponents">
@@ -72,6 +75,9 @@
         <item>@string/inductor</item>
         <item>@string/capacitor</item>
         <item>@string/termination</item>
+        <item>@string/resistor_shunt</item>
+        <item>@string/inductor_shunt</item>
+        <item>@string/capacitor_shunt</item>
         <item>@string/substrate</item>
     </string-array>
     <string name="info_balun">
