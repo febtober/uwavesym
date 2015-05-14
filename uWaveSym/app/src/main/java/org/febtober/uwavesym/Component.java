@@ -26,7 +26,8 @@ public class Component implements Parcelable {
     private int componentId;
     private int imgId;
     private int symId;
-    private int symViewId = -1;
+    private int symViewId;
+    private static int currSymViewId = 1;
     private String name;
     private float param1;
     private float param2;
@@ -55,6 +56,7 @@ public class Component implements Parcelable {
         Resources res = context.getResources();
         String[] prefixesArray = res.getStringArray(R.array.prefixes_abbrev);
         prefixes = new ArrayList<String>(Arrays.asList(prefixesArray));
+        symViewId = currSymViewId++;
 
         switch (componentId) {
             case PATCH:

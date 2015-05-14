@@ -13,9 +13,16 @@
 
         <RelativeLayout
             android:id="@+id/layout_componentWorkspace"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
+
+            <GridView
+                android:id="@+id/view_workspaceGrid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="4"
+                android:stretchMode="columnWidth"
+                android:gravity="center_horizontal|center_vertical" />
 
             <LinearLayout
                 android:orientation="horizontal"

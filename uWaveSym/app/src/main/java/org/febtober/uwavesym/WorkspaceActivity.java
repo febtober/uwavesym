@@ -4,19 +4,19 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +30,7 @@ public class WorkspaceActivity extends Activity {
     String[] twoPortComponents;
     String[] onePortComponents;
     DrawerLayout componentsDrawer;
-    RelativeLayout workspaceLayout;
+    GridView v_workspaceGrid;
     ActionBarDrawerToggle drawerToggle;
     ExpandableListView componentsListView;
     ExpandableListAdapter expListAdapter;
@@ -42,12 +42,17 @@ public class WorkspaceActivity extends Activity {
     List<Component> workspaceComponents = new ArrayList<>();
     List<ImageView> workspaceViews = new ArrayList<>();
 
+    private BaseAdapter workspaceAdapter;
+
+    Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_workspace);
+        context = getApplicationContext();
 
-        workspaceLayout = (RelativeLayout) findViewById(R.id.layout_componentWorkspace);
+        v_workspaceGrid = (GridView) findViewById(R.id.view_workspaceGrid);
         simulateButton = (Button) findViewById(R.id.button_simulate);
         resultsButton = (Button) findViewById(R.id.button_results);
         saveButton = (Button) findViewById(R.id.button_save);
@@ -55,7 +60,11 @@ public class WorkspaceActivity extends Activity {
         saveButton.setEnabled(false);
         setButtonOnClickListeners();
         setUpComponentsDrawer();
-        Component.setContext(getApplicationContext());
+        setComponentOnClickListeners();
+        Component.setContext(context);
+
+        workspaceAdapter = new ComponentAdapter(context, workspaceComponents);
+        v_workspaceGrid.setAdapter(workspaceAdapter);
     }
 
     private void setUpComponentsDrawer() {
@@ -112,33 +121,34 @@ public class WorkspaceActivity extends Activity {
                 Context context = getApplicationContext();
                 Component comp = new Component(compId);
                 int numComponents = workspaceComponents.size();
-                ImageView iv_compSym = new ImageView(context);
-                iv_compSym.setId(numComponents + 1);
-                comp.setSymViewId(iv_compSym.getId());
-                iv_compSym.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-                iv_compSym.setImageResource(comp.getSymId());
-                RelativeLayout.LayoutParams iv_lp = new RelativeLayout.LayoutParams(500, 500);
-                iv_lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                if (numComponents > 0) {
-                    iv_lp.addRule(
-                            RelativeLayout.BELOW,
-                            workspaceComponents.get(numComponents - 1).getSymViewId()
-                    );
-                }
-                iv_compSym.setLayoutParams(iv_lp);
+//                ImageView iv_compSym = new ImageView(context);
+//                iv_compSym.setId(numComponents + 1);
+//                comp.setSymViewId(iv_compSym.getId());
+//                iv_compSym.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+//                iv_compSym.setImageResource(comp.getSymId());
+//                RelativeLayout.LayoutParams iv_lp = new RelativeLayout.LayoutParams(500, 500);
+//                iv_lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+//                if (numComponents > 0) {
+//                    iv_lp.addRule(
+//                            RelativeLayout.BELOW,
+//                            workspaceComponents.get(numComponents - 1).getSymViewId()
+//                    );
+//                }
+//                iv_compSym.setLayoutParams(iv_lp);
 
-                final Component comp_final = comp;
-                iv_compSym.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
-                        intent.putExtra("component", comp_final);
-                        startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
-                    }
-                });
+//                final Component comp_final = comp;
+//                iv_compSym.setOnClickListener(new OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
+//                        intent.putExtra("component", comp_final);
+//                        startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
+//                    }
+//                });
                 workspaceComponents.add(comp);
-                workspaceViews.add(iv_compSym);
-                workspaceLayout.addView(iv_compSym);
+//                workspaceViews.add(iv_compSym);
+//                v_workspaceGrid.addView(iv_compSym);
+                workspaceAdapter.notifyDataSetChanged();
                 componentsDrawer.closeDrawer(componentsListView);
                 return true;
             }
@@ -306,5 +316,13 @@ public class WorkspaceActivity extends Activity {
         else {
             // finish() called from some other activity
         }
+    }
+
+    private void setComponentOnClickListeners() {
+//        v_workspaceGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
     }
 }
