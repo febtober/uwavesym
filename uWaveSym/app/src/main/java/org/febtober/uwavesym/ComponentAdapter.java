@@ -18,18 +18,22 @@ public class ComponentAdapter extends BaseAdapter {
         circuit = mCircuit;
     }
 
+    @Override
     public int getCount() {
         return circuit.size();
     }
 
+    @Override
     public Object getItem(int position) {
         return circuit.getComponent(position);
     }
 
+    @Override
     public long getItemId(int position) {
         return position;
     }
 
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
         Component currComponent = circuit.getComponent(position);
