@@ -7,25 +7,23 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import java.util.List;
-
 public class ComponentAdapter extends BaseAdapter {
     private Context context;
-    private List<Component> components;
+    private Circuit circuit;
     private LayoutInflater inflater;
 
-    public ComponentAdapter(Context mContext, List<Component> mComponents) {
+    public ComponentAdapter(Context mContext, Circuit mCircuit) {
         context = mContext;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        components = mComponents;
+        circuit = mCircuit;
     }
 
     public int getCount() {
-        return components.size();
+        return circuit.size();
     }
 
     public Object getItem(int position) {
-        return components.get(position);
+        return circuit.getComponent(position);
     }
 
     public long getItemId(int position) {
@@ -34,7 +32,7 @@ public class ComponentAdapter extends BaseAdapter {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageView imageView;
-        Component currComponent = components.get(position);
+        Component currComponent = circuit.getComponent(position);
         if (convertView == null) {
             imageView = (ImageView) inflater.inflate(R.layout.view_symbol, parent, false);
 //            imageView.setLayoutParams(new GridView.LayoutParams(200, 200));

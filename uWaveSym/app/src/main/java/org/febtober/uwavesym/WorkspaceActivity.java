@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 public class WorkspaceActivity extends Activity {
@@ -39,7 +38,7 @@ public class WorkspaceActivity extends Activity {
     Button resultsButton;
     Button saveButton;
 
-    List<Component> workspaceComponents = new ArrayList<>();
+    Circuit circuit = new Circuit(0, 0);
     List<ImageView> workspaceViews = new ArrayList<>();
 
     private BaseAdapter workspaceAdapter;
@@ -63,7 +62,7 @@ public class WorkspaceActivity extends Activity {
         setComponentOnClickListeners();
         Component.setContext(context);
 
-        workspaceAdapter = new ComponentAdapter(context, workspaceComponents);
+        workspaceAdapter = new ComponentAdapter(context, circuit);
         v_workspaceGrid.setAdapter(workspaceAdapter);
     }
 
@@ -119,7 +118,7 @@ public class WorkspaceActivity extends Activity {
                 }
 
                 Component comp = new Component(compId);
-                workspaceComponents.add(comp);
+                circuit.addComponent(comp);
                 workspaceAdapter.notifyDataSetChanged();
                 componentsDrawer.closeDrawer(componentsListView);
                 return true;
@@ -266,30 +265,7 @@ public class WorkspaceActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 // update button pressed
                 Component modifiedComp = intent.getParcelableExtra("component");
-                int compType = modifiedComp.getComponentId();
-
-                Component wsComponent = null;
-                Iterator<Component> it = workspaceComponents.iterator();
-                while (it.hasNext()) {
-                    Component tmpComp = it.next();
-                    if (tmpComp.getComponentId() == modifiedComp.getComponentId()) {
-                        wsComponent = tmpComp;
-                        break;
-                    }
-                }
-
-                if (wsComponent == null) {
-                    // Component was not found in List
-                    return;
-                }
-
-                if (modifiedComp.getParam1Valid()) {
-                    wsComponent.setParam1(modifiedComp.getParam1());
-                }
-                if (modifiedComp.getParam2Valid()) {
-                    wsComponent.setParam2(modifiedComp.getParam2());
-                }
-
+                circuit.updateComponent(modifiedComp);
             } else if (resultCode == RESULT_CANCELED) {
                 // cancel button pressed
             }
@@ -302,7 +278,7 @@ public class WorkspaceActivity extends Activity {
     private void setComponentOnClickListeners() {
         v_workspaceGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Component comp = workspaceComponents.get(position);
+                Component comp = circuit.getComponent(position);
                 Intent intent = new Intent(context, ComponentEditor.class);
                 intent.putExtra("component", comp);
                 startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
