@@ -118,36 +118,8 @@ public class WorkspaceActivity extends Activity {
                     return false;
                 }
 
-                Context context = getApplicationContext();
                 Component comp = new Component(compId);
-                int numComponents = workspaceComponents.size();
-//                ImageView iv_compSym = new ImageView(context);
-//                iv_compSym.setId(numComponents + 1);
-//                comp.setSymViewId(iv_compSym.getId());
-//                iv_compSym.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-//                iv_compSym.setImageResource(comp.getSymId());
-//                RelativeLayout.LayoutParams iv_lp = new RelativeLayout.LayoutParams(500, 500);
-//                iv_lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
-//                if (numComponents > 0) {
-//                    iv_lp.addRule(
-//                            RelativeLayout.BELOW,
-//                            workspaceComponents.get(numComponents - 1).getSymViewId()
-//                    );
-//                }
-//                iv_compSym.setLayoutParams(iv_lp);
-
-//                final Component comp_final = comp;
-//                iv_compSym.setOnClickListener(new OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
-//                        intent.putExtra("component", comp_final);
-//                        startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
-//                    }
-//                });
                 workspaceComponents.add(comp);
-//                workspaceViews.add(iv_compSym);
-//                v_workspaceGrid.addView(iv_compSym);
                 workspaceAdapter.notifyDataSetChanged();
                 componentsDrawer.closeDrawer(componentsListView);
                 return true;
@@ -319,10 +291,13 @@ public class WorkspaceActivity extends Activity {
     }
 
     private void setComponentOnClickListeners() {
-//        v_workspaceGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
+        v_workspaceGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Component comp = workspaceComponents.get(position);
+                Intent intent = new Intent(context, ComponentEditor.class);
+                intent.putExtra("component", comp);
+                startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
+            }
+        });
     }
 }
