@@ -38,7 +38,7 @@ public class WorkspaceActivity extends Activity {
     Button resultsButton;
     Button saveButton;
 
-    Circuit circuit = new Circuit(0, 0);
+    Circuit circuit = new Circuit(0, 0, 0);
     List<ImageView> workspaceViews = new ArrayList<>();
 
     private BaseAdapter workspaceAdapter;

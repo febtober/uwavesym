@@ -7,12 +7,14 @@ import java.util.List;
 public class Circuit {
     private List<Component> components = new ArrayList<>();
 
-    private float frequency;
-    private float dielectric;
+    private double frequency;
+    private double substrateH;
+    private double substrateP;
 
-    public Circuit(float freq, float diel) {
+    public Circuit(double freq, double subH, double subP) {
         frequency = freq;
-        dielectric = diel;
+        substrateH = subH;
+        substrateP = subP;
     }
 
     public void addComponent(Component comp) {
@@ -45,20 +47,28 @@ public class Circuit {
             wsComponent.setParam2(modifiedComp.getParam2());
     }
 
-    public float getFrequency() {
+    public double getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(float frequency) {
+    public void setFrequency(double frequency) {
         this.frequency = frequency;
     }
 
-    public float getDielectric() {
-        return dielectric;
+    public double getSubstrateH() {
+        return substrateH;
     }
 
-    public void setDielectric(float dielectric) {
-        this.dielectric = dielectric;
+    public void setSubstrateH(double subH) {
+        this.substrateH = subH;
+    }
+
+    public double getSubstrateP() {
+        return substrateP;
+    }
+
+    public void setSubstrateP(double substrateP) {
+        this.substrateP = substrateP;
     }
 
     public int size() {
