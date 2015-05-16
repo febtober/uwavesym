@@ -1,6 +1,7 @@
 package org.febtober.uwavesym;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -16,7 +17,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,9 +38,10 @@ public class WorkspaceActivity extends Activity {
     Button simulateButton;
     Button resultsButton;
     Button saveButton;
+    ProgressDialog progress_simulation;
 
-    Circuit circuit = new Circuit(0, 0, 0);
-    List<ImageView> workspaceViews = new ArrayList<>();
+    Circuit circuit = new Circuit(500000, 0, 0);
+    Simulator sim;
 
     private BaseAdapter workspaceAdapter;
 
@@ -55,8 +57,6 @@ public class WorkspaceActivity extends Activity {
         simulateButton = (Button) findViewById(R.id.button_simulate);
         resultsButton = (Button) findViewById(R.id.button_results);
         saveButton = (Button) findViewById(R.id.button_save);
-        resultsButton.setEnabled(false);
-        saveButton.setEnabled(false);
         setButtonOnClickListeners();
         setUpComponentsDrawer();
         setComponentOnClickListeners();
@@ -64,6 +64,14 @@ public class WorkspaceActivity extends Activity {
 
         workspaceAdapter = new ComponentAdapter(context, circuit);
         v_workspaceGrid.setAdapter(workspaceAdapter);
+
+        sim = new Simulator(this);
+
+        progress_simulation = new ProgressDialog(this);
+        progress_simulation.setTitle(R.string.simulating);
+        progress_simulation.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progress_simulation.setProgress(0);
+        progress_simulation.setMax(100);
     }
 
     private void setUpComponentsDrawer() {
@@ -227,13 +235,19 @@ public class WorkspaceActivity extends Activity {
         simulateButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                progress_simulation.show();
+                sim.execute(circuit);
             }
         });
         resultsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                List<Double> results = sim.getResults();
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Real: " + results.get(0) + " Imag: " + results.get(1),
+                        Toast.LENGTH_LONG
+                ).show();
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -284,5 +298,16 @@ public class WorkspaceActivity extends Activity {
                 startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
             }
         });
+    }
+
+    public void updateSimulationProgress(int progress) {
+        progress_simulation.setProgress(progress);
+    }
+
+
+
+    public void simulationComplete() {
+        progress_simulation.dismiss();
+        resultsButton.setEnabled(true);
     }
 }

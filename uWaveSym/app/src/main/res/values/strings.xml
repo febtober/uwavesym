@@ -13,6 +13,8 @@
     <string name="drawer_open">Components open</string>
     <string name="drawer_close">Components close</string>
 
+    <string name="simulating">Simulating circuit...</string>
+
     <string name="antennas">Antennas</string>
     <string name="twoPortComponents">2-Port Components</string>
     <string name="onePortSources">1-Port Sources</string>

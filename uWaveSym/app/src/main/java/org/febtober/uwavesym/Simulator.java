@@ -1,27 +1,35 @@
 package org.febtober.uwavesym;
 
-import java.lang.Math;
+import android.os.AsyncTask;
 
-public class Simulator implements Runnable {
+import java.util.Arrays;
+import java.util.List;
+
+public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     private Circuit circuit;
-    double impedance_r, impedance_i, frequency, freq_radian, w, substrateH, substrateP;
+    private double impedance_r, impedance_i, frequency, freq_radian, w, substrateH, substrateP;
+    WorkspaceActivity parentActivity;
 
-    public Simulator(Circuit mCircuit) {
-        circuit = mCircuit;
+    public Simulator(WorkspaceActivity pActivity) {
+        parentActivity = pActivity;
+    }
+
+    // params contains [Context, Circuit, WorkspaceActivity]
+    @Override
+    protected Circuit doInBackground(Object... params) {
+        circuit = (Circuit) params[0];
         impedance_r = impedance_i = 0;
         frequency = circuit.getFrequency();
         freq_radian = 2 * Math.PI * frequency;
         w = 2 * Math.PI * frequency;
         substrateH = circuit.getSubstrateH();
         substrateP = circuit.getSubstrateP();
-    }
 
-    @Override
-    public void run() {
         int numComps = circuit.size();
         int i = 0;
         for (; i < numComps; i++) {
             Component currComp = circuit.getComponent(i);
+            publishProgress(i);
 
             switch (currComp.getComponentId()) {
                 case Component.PATCH:
@@ -61,6 +69,22 @@ public class Simulator implements Runnable {
                     break;
             }
         }
+        return circuit;
+    }
+
+    @Override
+    protected void onProgressUpdate(Integer... statuses) {
+        parentActivity.updateSimulationProgress(statuses[0]);
+    }
+
+    @Override
+    protected void onPostExecute(Circuit c) {
+        parentActivity.simulationComplete();
+        super.onPostExecute(c);
+    }
+
+    public List<Double> getResults() {
+        return Arrays.asList(impedance_r, impedance_i);
     }
 
     private void resistor(Component comp) {

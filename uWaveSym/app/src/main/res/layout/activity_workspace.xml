@@ -44,6 +44,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/button_results"
                     android:id="@+id/button_results"
+                    android:enabled="false"
                     android:layout_weight="1" />
 
                 <Button
@@ -51,6 +52,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/button_save"
                     android:id="@+id/button_save"
+                    android:enabled="false"
                     android:layout_weight="1" />
 
             </LinearLayout>
