@@ -42,7 +42,6 @@ public class WorkspaceActivity extends Activity {
 
     Circuit circuit = new Circuit(500000, 0, 0);
     Simulator sim;
-
     private BaseAdapter workspaceAdapter;
 
     Context context;
@@ -64,8 +63,6 @@ public class WorkspaceActivity extends Activity {
 
         workspaceAdapter = new ComponentAdapter(context, circuit);
         v_workspaceGrid.setAdapter(workspaceAdapter);
-
-        sim = new Simulator(this);
 
         progress_simulation = new ProgressDialog(this);
         progress_simulation.setTitle(R.string.simulating);
@@ -236,6 +233,7 @@ public class WorkspaceActivity extends Activity {
             @Override
             public void onClick(View view) {
                 progress_simulation.show();
+                sim = new Simulator(WorkspaceActivity.this);
                 sim.execute(circuit);
             }
         });
@@ -303,8 +301,6 @@ public class WorkspaceActivity extends Activity {
     public void updateSimulationProgress(int progress) {
         progress_simulation.setProgress(progress);
     }
-
-
 
     public void simulationComplete() {
         progress_simulation.dismiss();

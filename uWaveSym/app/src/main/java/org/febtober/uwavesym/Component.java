@@ -26,27 +26,27 @@ public class Component implements Parcelable {
     public static final int INDUCTOR_SHUNT = 14;
     public static final int CAPACITOR_SHUNT = 15;
 
-    private int componentId;
-    private int imgId;
-    private int symId;
-    private int symViewId;
+    private int componentId = 0;
+    private int imgId = 0;
+    private int symId = 0;
+    private int symViewId = 0;
     private static int currSymViewId = 1;
     private String name;
-    private float param1;
-    private float param2;
+    private float param1 = 0;
+    private float param2 = 0;
     private String param1String;
     private String param2String;
     private int param1Prefix = 0;   // index into param1Units list. is selected prefix.
     private int param2Prefix = 0;   // index into param2Units list. is selected prefix.
-    private int param1MinPrefix;
-    private int param2MinPrefix;
-    private int param1MaxPrefix;
-    private int param2MaxPrefix;
+    private int param1MinPrefix = 0;
+    private int param1MaxPrefix = 0;
+    private int param2MinPrefix = 0;
+    private int param2MaxPrefix = 0;
     private List<String> param1Units = new ArrayList<>(); // list of appropriate prefixes
     private List<String> param2Units = new ArrayList<>();
     private String info;
-    private Component connection1;
-    private Component connection2;
+    private Component connection1 = null;
+    private Component connection2 = null;
     private List<String> prefixes;
 
     private boolean param1Valid = false;
@@ -58,8 +58,6 @@ public class Component implements Parcelable {
 
     public Component(int componentId) {
         this.componentId = componentId;
-        connection1 = null;
-        connection2 = null;
         Resources res = context.getResources();
         String[] prefixesArray = res.getStringArray(R.array.prefixes_abbrev);
         prefixes = new ArrayList<String>(Arrays.asList(prefixesArray));
