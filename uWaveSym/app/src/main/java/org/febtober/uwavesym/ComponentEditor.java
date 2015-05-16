@@ -10,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -52,17 +54,31 @@ public class ComponentEditor extends Activity {
         comp = (Component) getIntent().getExtras().getParcelable("component");
 
         tv_componentName.setText(comp.getName());
+
         etv_param1.setHint(comp.getParam1String());
         if (comp.getParam1Valid()) {etv_param1.setText(String.valueOf(comp.getParam1()));}
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> param1UnitsAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, comp.getParam1Units());
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_param1Units.setAdapter(spinnerAdapter);
-        etv_param2.setHint(comp.getParam2String());
-        if (comp.getParam2Valid()) {etv_param2.setText(String.valueOf(comp.getParam2()));}
-        spinnerAdapter.clear();
-        spinnerAdapter.addAll(comp.getParam2Units());
-        sp_param2Units.setAdapter(spinnerAdapter);
+        param1UnitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sp_param1Units.setAdapter(param1UnitsAdapter);
+        sp_param1Units.setSelection(comp.getParam1Prefix());
+
+        if (comp.getParam2Exists()) {
+            etv_param2.setHint(comp.getParam2String());
+            if (comp.getParam2Valid()) {
+                etv_param2.setText(String.valueOf(comp.getParam2()));
+            }
+            ArrayAdapter<String> param2UnitsAdapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_spinner_item, comp.getParam2Units());
+            param2UnitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sp_param2Units.setAdapter(param2UnitsAdapter);
+            sp_param2Units.setSelection(comp.getParam2Prefix());
+        }
+        else {
+            LinearLayout editorButtons = (LinearLayout) findViewById(R.id.layout_editorBottomButtons);
+            ((ViewManager) etv_param2.getParent()).removeView(etv_param2);
+            ((ViewManager) sp_param2Units.getParent()).removeView(sp_param2Units);
+        }
 
         tv_info.setText(Html.fromHtml(comp.getInfo()));
 
@@ -83,6 +99,11 @@ public class ComponentEditor extends Activity {
                 if (param2String.length() > 0) {
                     comp.setParam2(Float.valueOf(param2String));
                 }
+
+                comp.setParam1Prefix(sp_param1Units.getSelectedItemPosition());
+                if (comp.getParam2Exists())
+                    comp.setParam2Prefix(sp_param2Units.getSelectedItemPosition());
+
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("component", comp);
                 setResult(RESULT_OK, returnIntent);

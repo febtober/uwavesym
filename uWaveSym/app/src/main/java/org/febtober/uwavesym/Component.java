@@ -36,11 +36,13 @@ public class Component implements Parcelable {
     private float param2;
     private String param1String;
     private String param2String;
-    private float param1Min;
-    private float param2Min;
-    private float param1Max;
-    private float param2Max;
-    private List<String> param1Units = new ArrayList<>();
+    private int param1Prefix = 0;   // index into param1Units list. is selected prefix.
+    private int param2Prefix = 0;   // index into param2Units list. is selected prefix.
+    private int param1MinPrefix;
+    private int param2MinPrefix;
+    private int param1MaxPrefix;
+    private int param2MaxPrefix;
+    private List<String> param1Units = new ArrayList<>(); // list of appropriate prefixes
     private List<String> param2Units = new ArrayList<>();
     private String info;
     private Component connection1;
@@ -49,6 +51,7 @@ public class Component implements Parcelable {
 
     private boolean param1Valid = false;
     private boolean param2Valid = false;
+    private boolean param2Exists = true;
 
     private static Context context;
 
@@ -68,10 +71,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.patch);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_patch);
@@ -82,10 +85,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.dipole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_dipole);
@@ -96,10 +99,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.monopole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_monopole);
@@ -110,10 +113,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.loop);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_loop);
@@ -124,10 +127,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.balun);
                 param1String = res.getString(R.string.resistance);
                 param2String = res.getString(R.string.capacitance);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
                 info = res.getString(R.string.info_balun);
@@ -138,10 +141,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.quarterTransformer);
                 param1String = res.getString(R.string.frequency);
                 param2String = res.getString(R.string.frequency);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_hertz));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_hertz));
                 info = res.getString(R.string.info_quarterTransformer);
@@ -152,10 +155,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.tLine);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_tLine);
@@ -166,12 +169,11 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.resistor);
                 param1String = res.getString(R.string.resistance);
                 param2String = res.getString(R.string.resistance);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 4;
+                param1MaxPrefix = 6;
+                param2Exists = false;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
+                param1Units = param1Units.subList(param1MinPrefix, param1MaxPrefix+1);
                 info = res.getString(R.string.info_resistor);
                 break;
             case RESISTOR_SHUNT:
@@ -180,10 +182,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.resistor_shunt);
                 param1String = res.getString(R.string.resistance);
                 param2String = res.getString(R.string.resistance);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
                 info = res.getString(R.string.info_resistor);
@@ -194,10 +196,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.inductor);
                 param1String = res.getString(R.string.inductance);
                 param2String = res.getString(R.string.inductance);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
                 info = res.getString(R.string.info_inductor);
@@ -208,10 +210,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.inductor_shunt);
                 param1String = res.getString(R.string.inductance);
                 param2String = res.getString(R.string.inductance);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
                 info = res.getString(R.string.info_inductor);
@@ -222,10 +224,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.capacitor);
                 param1String = res.getString(R.string.capacitance);
                 param2String = res.getString(R.string.capacitance);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
                 info = res.getString(R.string.info_capacitor);
@@ -236,10 +238,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.capacitor_shunt);
                 param1String = res.getString(R.string.capacitance);
                 param2String = res.getString(R.string.capacitance);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
                 info = res.getString(R.string.info_capacitor);
@@ -250,10 +252,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.substrate);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_substrate);
@@ -264,10 +266,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.termination);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1Min = 0;
-                param2Min = 0;
-                param1Max = 10;
-                param2Max = 10;
+                param1MinPrefix = 0;
+                param2MinPrefix = 0;
+                param1MaxPrefix = 10;
+                param2MaxPrefix = 10;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_termination);
@@ -295,10 +297,16 @@ public class Component implements Parcelable {
     public void setParam2(float a) {param2 = a; param2Valid = true;}
     public void setParam1String(String a) {param1String = a;}
     public void setParam2String(String a) {param2String = a;}
-    public void setParam1Min(float a) {param1Min = a;}
-    public void setParam2Min(float a) {param2Min = a;}
-    public void setParam1Max(float a) {param1Max = a;}
-    public void setParam2Max(float a) {param2Max = a;}
+    public void setParam1Prefix(int a) {param1Prefix = a;}
+    public void setParam2Prefix(int a) {param2Prefix = a;}
+    public void setParam1MinPrefix(int a) {
+        param1MinPrefix = a;}
+    public void setParam2MinPrefix(int a) {
+        param2MinPrefix = a;}
+    public void setParam1MaxPrefix(int a) {
+        param1MaxPrefix = a;}
+    public void setParam2MaxPrefix(int a) {
+        param2MaxPrefix = a;}
     public void setParam1Units(List<String> a) {param1Units = a;}
     public void setParam2Units(List<String> a) {param2Units = a;}
     public void setInfo(String a) {info = a;}
@@ -314,10 +322,12 @@ public class Component implements Parcelable {
     public float getParam2() {return param2;}
     public String getParam1String() {return param1String;}
     public String getParam2String() {return param2String;}
-    public float getParam1Min() {return param1Min;}
-    public float getParam2Min() {return param2Min;}
-    public float getParam1Max() {return param1Max;}
-    public float getParam2Max() {return param2Max;}
+    public int getParam1Prefix() {return param1Prefix;}
+    public int getParam2Prefix() {return param2Prefix;}
+    public int getParam1MinPrefix() {return param1MinPrefix;}
+    public int getParam2MinPrefix() {return param2MinPrefix;}
+    public int getParam1MaxPrefix() {return param1MaxPrefix;}
+    public int getParam2MaxPrefix() {return param2MaxPrefix;}
     public List<String> getParam1Units() {return param1Units;}
     public List<String> getParam2Units() {return param2Units;}
     public String getInfo() {return info;}
@@ -325,6 +335,7 @@ public class Component implements Parcelable {
     public Component getConnection2() {return connection2;}
     public boolean getParam1Valid() {return param1Valid;}
     public boolean getParam2Valid() {return param2Valid;}
+    public boolean getParam2Exists() {return param2Exists;}
 
     public static void setContext(Context mcontext) {
         if (context == null)
@@ -342,10 +353,12 @@ public class Component implements Parcelable {
         param2 = in.readFloat();
         param1String = in.readString();
         param2String = in.readString();
-        param1Min = in.readFloat();
-        param2Min = in.readFloat();
-        param1Max = in.readFloat();
-        param2Max = in.readFloat();
+        param1Prefix = in.readInt();
+        param2Prefix = in.readInt();
+        param1MinPrefix = in.readInt();
+        param2MinPrefix = in.readInt();
+        param1MaxPrefix = in.readInt();
+        param2MaxPrefix = in.readInt();
         in.readStringList(param1Units);
         in.readStringList(param2Units);
         info = in.readString();
@@ -353,6 +366,7 @@ public class Component implements Parcelable {
         connection2 = (Component) in.readValue(Component.class.getClassLoader());
         param1Valid = in.readInt() != 0;
         param2Valid = in.readInt() != 0;
+        param2Exists = in.readInt() != 0;
     }
 
     @Override
@@ -371,10 +385,12 @@ public class Component implements Parcelable {
         dest.writeFloat(param2);
         dest.writeString(param1String);
         dest.writeString(param2String);
-        dest.writeFloat(param1Min);
-        dest.writeFloat(param2Min);
-        dest.writeFloat(param1Max);
-        dest.writeFloat(param2Max);
+        dest.writeInt(param1Prefix);
+        dest.writeInt(param2Prefix);
+        dest.writeInt(param1MinPrefix);
+        dest.writeInt(param2MinPrefix);
+        dest.writeInt(param1MaxPrefix);
+        dest.writeInt(param2MaxPrefix);
         dest.writeStringList(param1Units);
         dest.writeStringList(param2Units);
         dest.writeString(info);
@@ -382,6 +398,7 @@ public class Component implements Parcelable {
         dest.writeValue(connection2);
         dest.writeInt(param1Valid ? 1 : 0);
         dest.writeInt(param2Valid ? 1 : 0);
+        dest.writeInt(param2Exists ? 1 : 0);
     }
 
     @SuppressWarnings("unused")

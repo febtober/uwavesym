@@ -162,17 +162,19 @@
     <string name="prefix_abbrev_nano">n</string>
     <string name="prefix_abbrev_micro">\u03BC</string>
     <string name="prefix_abbrev_milli">m</string>
+    <string name="prefix_abbrev_none"/>
     <string name="prefix_abbrev_kilo">k</string>
     <string name="prefix_abbrev_mega">M</string>
     <string name="prefix_abbrev_giga">G</string>
     <string-array name="prefixes_abbrev">
-        <item>@string/prefix_abbrev_pico</item>
-        <item>@string/prefix_abbrev_nano</item>
-        <item>@string/prefix_abbrev_micro</item>
-        <item>@string/prefix_abbrev_milli</item>
-        <item>@string/prefix_abbrev_kilo</item>
-        <item>@string/prefix_abbrev_mega</item>
-        <item>@string/prefix_abbrev_giga</item>
+        <item>@string/prefix_abbrev_pico</item>     <!-- index 0 -->
+        <item>@string/prefix_abbrev_nano</item>     <!-- index 1 -->
+        <item>@string/prefix_abbrev_micro</item>    <!-- index 2 -->
+        <item>@string/prefix_abbrev_milli</item>    <!-- index 3 -->
+        <item>@string/prefix_abbrev_none</item>     <!-- index 4 -->
+        <item>@string/prefix_abbrev_kilo</item>     <!-- index 5 -->
+        <item>@string/prefix_abbrev_mega</item>     <!-- index 6 -->
+        <item>@string/prefix_abbrev_giga</item>     <!-- index 7 -->
     </string-array>
 
     <string name="resistance">Resistance</string>

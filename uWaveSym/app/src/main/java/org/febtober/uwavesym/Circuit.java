@@ -43,8 +43,11 @@ public class Circuit {
 
         if (modifiedComp.getParam1Valid())
             wsComponent.setParam1(modifiedComp.getParam1());
-        if (modifiedComp.getParam2Valid())
-            wsComponent.setParam2(modifiedComp.getParam2());
+        wsComponent.setParam1Prefix(modifiedComp.getParam1Prefix());
+        if (modifiedComp.getParam2Exists())
+            if (modifiedComp.getParam2Valid())
+                wsComponent.setParam2(modifiedComp.getParam2());
+            wsComponent.setParam2Prefix(modifiedComp.getParam2Prefix());
     }
 
     public double getFrequency() {
