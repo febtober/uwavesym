@@ -51,6 +51,7 @@ public class Component implements Parcelable {
 
     private boolean param1Valid = false;
     private boolean param2Valid = false;
+    private boolean param1Exists = true;
     private boolean param2Exists = true;
 
     private static Context context;
@@ -71,10 +72,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.patch);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MinPrefix = 2;
+                param1MaxPrefix = 4;
+                param2MinPrefix = 2;
+                param2MaxPrefix = 4;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_patch);
@@ -84,13 +85,10 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.dipole);
                 param1String = res.getString(R.string.length);
-                param2String = res.getString(R.string.width);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MinPrefix = 2;
+                param1MaxPrefix = 4;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
+                param2Exists = false;
                 info = res.getString(R.string.info_dipole);
                 break;
             case MONOPOLE:
@@ -98,55 +96,42 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.monopole);
                 param1String = res.getString(R.string.length);
-                param2String = res.getString(R.string.width);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MinPrefix = 2;
+                param1MaxPrefix = 4;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
+                param2Exists = false;
                 info = res.getString(R.string.info_monopole);
                 break;
             case LOOP:
                 imgId = R.drawable.img_loop;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.loop);
-                param1String = res.getString(R.string.length);
-                param2String = res.getString(R.string.width);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1String = res.getString(R.string.radius);
+                param1MinPrefix = 2;
+                param1MaxPrefix = 4;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
+                param2Exists = false;
                 info = res.getString(R.string.info_loop);
                 break;
             case BALUN:
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_balun;
                 name = res.getString(R.string.balun);
-                param1String = res.getString(R.string.resistance);
-                param2String = res.getString(R.string.capacitance);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
-                param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
+                param1Exists = param2Exists = false;
                 info = res.getString(R.string.info_balun);
                 break;
             case QUARTER_TRANSFORMER:
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_quarter_transformer;
                 name = res.getString(R.string.quarterTransformer);
-                param1String = res.getString(R.string.frequency);
-                param2String = res.getString(R.string.frequency);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
-                param1Units = appendUnit(res.getString(R.string.unit_abbrev_hertz));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_hertz));
+                param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.width);
+                param1MinPrefix = 2;
+                param1MaxPrefix = 4;
+                param2MinPrefix = 2;
+                param2MaxPrefix = 4;
+                param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
+                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_quarterTransformer);
                 break;
             case T_LINE:
@@ -155,10 +140,10 @@ public class Component implements Parcelable {
                 name = res.getString(R.string.tLine);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MinPrefix = 2;
+                param1MaxPrefix = 4;
+                param2MinPrefix = 2;
+                param2MaxPrefix = 4;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_tLine);
@@ -168,12 +153,10 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_resistor;
                 name = res.getString(R.string.resistor);
                 param1String = res.getString(R.string.resistance);
-                param2String = res.getString(R.string.resistance);
                 param1MinPrefix = 4;
                 param1MaxPrefix = 6;
                 param2Exists = false;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
-                param1Units = param1Units.subList(param1MinPrefix, param1MaxPrefix+1);
                 info = res.getString(R.string.info_resistor);
                 break;
             case RESISTOR_SHUNT:
@@ -181,13 +164,10 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_resistor_shunt;
                 name = res.getString(R.string.resistor_shunt);
                 param1String = res.getString(R.string.resistance);
-                param2String = res.getString(R.string.resistance);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MinPrefix = 4;
+                param1MaxPrefix = 6;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
+                param2Exists = false;
                 info = res.getString(R.string.info_resistor);
                 break;
             case INDUCTOR:
@@ -195,13 +175,10 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_inductor;
                 name = res.getString(R.string.inductor);
                 param1String = res.getString(R.string.inductance);
-                param2String = res.getString(R.string.inductance);
                 param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MaxPrefix = 2;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
+                param2Exists = false;
                 info = res.getString(R.string.info_inductor);
                 break;
             case INDUCTOR_SHUNT:
@@ -209,13 +186,10 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_inductor_shunt;
                 name = res.getString(R.string.inductor_shunt);
                 param1String = res.getString(R.string.inductance);
-                param2String = res.getString(R.string.inductance);
                 param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MaxPrefix = 2;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_henry));
+                param2Exists = false;
                 info = res.getString(R.string.info_inductor);
                 break;
             case CAPACITOR:
@@ -223,13 +197,10 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_capacitor;
                 name = res.getString(R.string.capacitor);
                 param1String = res.getString(R.string.capacitance);
-                param2String = res.getString(R.string.capacitance);
                 param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MaxPrefix = 2;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
+                param2Exists = false;
                 info = res.getString(R.string.info_capacitor);
                 break;
             case CAPACITOR_SHUNT:
@@ -237,46 +208,44 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_capacitor_shunt;
                 name = res.getString(R.string.capacitor_shunt);
                 param1String = res.getString(R.string.capacitance);
-                param2String = res.getString(R.string.capacitance);
                 param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
+                param1MaxPrefix = 2;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_farad));
+                param2Exists = false;
                 info = res.getString(R.string.info_capacitor);
                 break;
             case SUBSTRATE:
                 imgId = R.drawable.img_substrate;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.substrate);
-                param1String = res.getString(R.string.length);
-                param2String = res.getString(R.string.width);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
-                param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
+                param1String = res.getString(R.string.permittivity);
+                param2String = res.getString(R.string.height);
+                param1MinPrefix = 4;
+                param1MaxPrefix = 4;
+                param2MinPrefix = 4;
+                param2MaxPrefix = 4;
+                param1Units = appendUnit(res.getString(R.string.blank));
+                param2Units = appendUnit(res.getString(R.string.blank));
                 info = res.getString(R.string.info_substrate);
                 break;
             case TERMINATION:
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_termination;
                 name = res.getString(R.string.termination);
-                param1String = res.getString(R.string.length);
-                param2String = res.getString(R.string.width);
-                param1MinPrefix = 0;
-                param2MinPrefix = 0;
-                param1MaxPrefix = 10;
-                param2MaxPrefix = 10;
-                param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
+                param1String = res.getString(R.string.resistance);
+                param1MinPrefix = 2;
+                param1MaxPrefix = 4;
+                param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
+                param2Exists = false;
                 info = res.getString(R.string.info_termination);
                 break;
             default:
                 break;
         }
+        if (param1Exists)
+            param1Units = param1Units.subList(param1MinPrefix, param1MaxPrefix+1);
+        if (param2Exists)
+            param2Units = param2Units.subList(param2MinPrefix, param2MaxPrefix+1);
     }
 
     private List<String> appendUnit(String unit) {
@@ -335,6 +304,7 @@ public class Component implements Parcelable {
     public Component getConnection2() {return connection2;}
     public boolean getParam1Valid() {return param1Valid;}
     public boolean getParam2Valid() {return param2Valid;}
+    public boolean getParam1Exists() {return param1Exists;}
     public boolean getParam2Exists() {return param2Exists;}
 
     public static void setContext(Context mcontext) {
@@ -366,6 +336,7 @@ public class Component implements Parcelable {
         connection2 = (Component) in.readValue(Component.class.getClassLoader());
         param1Valid = in.readInt() != 0;
         param2Valid = in.readInt() != 0;
+        param1Exists = in.readInt() != 0;
         param2Exists = in.readInt() != 0;
     }
 
@@ -398,6 +369,7 @@ public class Component implements Parcelable {
         dest.writeValue(connection2);
         dest.writeInt(param1Valid ? 1 : 0);
         dest.writeInt(param2Valid ? 1 : 0);
+        dest.writeInt(param1Exists ? 1 : 0);
         dest.writeInt(param2Exists ? 1 : 0);
     }
 

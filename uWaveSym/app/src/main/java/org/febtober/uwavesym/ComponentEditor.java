@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -55,13 +54,25 @@ public class ComponentEditor extends Activity {
 
         tv_componentName.setText(comp.getName());
 
-        etv_param1.setHint(comp.getParam1String());
-        if (comp.getParam1Valid()) {etv_param1.setText(String.valueOf(comp.getParam1()));}
-        ArrayAdapter<String> param1UnitsAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, comp.getParam1Units());
-        param1UnitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp_param1Units.setAdapter(param1UnitsAdapter);
-        sp_param1Units.setSelection(comp.getParam1Prefix());
+        if (!(comp.getParam1Exists() || comp.getParam2Exists()))
+            ((ViewManager) button_update.getParent()).removeView(button_update);
+
+        if (comp.getParam1Exists()) {
+            etv_param1.setHint(comp.getParam1String());
+            if (comp.getParam1Valid()) {
+                etv_param1.setText(String.valueOf(comp.getParam1()));
+            }
+            ArrayAdapter<String> param1UnitsAdapter = new ArrayAdapter<>(
+                    this, android.R.layout.simple_spinner_item, comp.getParam1Units());
+            param1UnitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            sp_param1Units.setAdapter(param1UnitsAdapter);
+            sp_param1Units.setSelection(comp.getParam1Prefix());
+        }
+        else {
+            ((ViewManager) etv_param1.getParent()).removeView(etv_param1);
+            ((ViewManager) sp_param1Units.getParent()).removeView(sp_param1Units);
+        }
+
 
         if (comp.getParam2Exists()) {
             etv_param2.setHint(comp.getParam2String());
@@ -75,7 +86,6 @@ public class ComponentEditor extends Activity {
             sp_param2Units.setSelection(comp.getParam2Prefix());
         }
         else {
-            LinearLayout editorButtons = (LinearLayout) findViewById(R.id.layout_editorBottomButtons);
             ((ViewManager) etv_param2.getParent()).removeView(etv_param2);
             ((ViewManager) sp_param2Units.getParent()).removeView(sp_param2Units);
         }
