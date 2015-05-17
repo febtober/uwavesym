@@ -83,10 +83,13 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.dipole);
                 param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.radius);
                 param1MinPrefix = 2;
                 param1MaxPrefix = 4;
+                param2MinPrefix = 3;
+                param2MaxPrefix = 3;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                param2Exists = false;
+                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_dipole);
                 break;
             case MONOPOLE:
@@ -94,10 +97,13 @@ public class Component implements Parcelable {
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.monopole);
                 param1String = res.getString(R.string.length);
+                param2String = res.getString(R.string.radius);
                 param1MinPrefix = 2;
                 param1MaxPrefix = 4;
+                param2MinPrefix = 3;
+                param2MaxPrefix = 3;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                param2Exists = false;
+                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_monopole);
                 break;
             case LOOP:
