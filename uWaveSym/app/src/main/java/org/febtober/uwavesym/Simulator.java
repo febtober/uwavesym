@@ -2,34 +2,51 @@ package org.febtober.uwavesym;
 
 import android.os.AsyncTask;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Simulator extends AsyncTask<Object, Integer, Circuit> {
-    private Circuit circuit;
-    private double impedance_r = 0;
-    private double impedance_i = 0;
+    // Constants
+    private double w;
+    private double c = 2.99792458e8;        // Speed of light
+    private double Zfo = 120*Math.PI;       // Free space impedance
+    private double t = 1.4 * 2.54e-5;       // Conductor thickness for 1 oz copper
+    private double e = Math.exp(1);
+    private double permitivity_free_space = 4e-7 * Math.PI;
+    private double E = 120.0*Math.PI;       // free space impedance
+    double THETA = Math.PI/180.0;           // 1 degree increment in radians
+    double UMAX = 0.0;
+    double PRAD = 0.0;
+    private int pts = 40;                   // number of freq points in simulation
+    private int linspace_pts = 500;
+
     private double frequency;
     private double freq_radian;
-    private double w;
-    private double c = 2.99792458e8;    // Speed of light
-    double Zfo = 120*Math.PI;           // Free space impedance
-    double t = 1.4 * 2.54e-5;           // Conductor thickness for 1 oz copper
-    double e = Math.exp(1);
-    double permitivity_free_space = 4e-7 * Math.PI;
     private double substrateH;
     private double substrateP;
-    WorkspaceActivity parentActivity;
+
+
+    private Circuit circuit;
+    private double[] impedance_r = new double[pts+2];;
+    private double[] impedance_i = new double[pts+2];;
+    private double[] D = new double[pts+2];
+    private double[] DDB = new double[pts+2];
+    private double[] I = new double[linspace_pts+2];
+    double[] mag_S11 = new double[pts+2];
+    double[] VSWR = new double[pts+2];
+    double[] ang_S11 = new double[pts+2];
+    double[] S11_dB = new double[pts+2];
+    double[] Gain_dB = new double[pts+2];
+
+    private WorkspaceActivity parentActivity;
 
     public Simulator(WorkspaceActivity pActivity) {
         parentActivity = pActivity;
     }
 
-    // params contains [Context, Circuit, WorkspaceActivity]
+    // params contains [Circuit]
     @Override
     protected Circuit doInBackground(Object... params) {
         circuit = (Circuit) params[0];
         frequency = circuit.getFrequency();
+        // pts+2 for 1-indexing array (matlab compliance)
         freq_radian = 2 * Math.PI * frequency;
         w = 2 * Math.PI * frequency;
         substrateH = circuit.getSubstrateH();
@@ -122,20 +139,20 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         super.onPostExecute(c);
     }
 
-    public List<Double> getResults() {
-        return Arrays.asList(impedance_r, impedance_i);
+    public double[][] getResults() {
+        return new double[][] {impedance_r, impedance_i};
     }
 
     private void resistor(double param1) {
         double r = param1;
-        impedance_r += r;
+        matrixIncrement(impedance_r, r);
     }
     
     private void resistorShunt(double param1) {
         // inputs
         double R = param1;                    // Resistance in ohms
-        double re_Zin = impedance_r;                // Real Zout from previous component in ohms
-        double im_Zin = impedance_i;                 // Imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[0];                // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[0];                 // Imaginary Zout from previous component in ohms
 
         // Calculation
         double Yr = 1/R;                   // Given the inputs this is 0.01
@@ -149,21 +166,21 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.cos(-Math.atan(B/A));    // For given inputs 33
         double im_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.sin(-Math.atan(B/A));    // For given inputs j0
 
-        impedance_r += re_Zout;
-        impedance_i += im_Zout;
+        matrixIncrement(impedance_r, re_Zout);
+        matrixIncrement(impedance_i, im_Zout);
     }
 
     private void capacitor(double param1) {
         double c = param1;
         double z = -1 / (w * c);
-        impedance_i += z;
+        matrixIncrement(impedance_i, z);
     }
     
     private void capacitorShunt(double param1) {
         double freq = frequency;        // frequency in Hertz
         double C = param1;              // Capacitance in farads
-        double re_Zin = impedance_r;    // Real Zout from previous component in ohms
-        double im_Zin = impedance_i;    // Imaginary Zout from previous component
+        double re_Zin = impedance_r[0];    // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[0];    // Imaginary Zout from previous component
                 
 //        w = 2*Math.PI*freq;              // frequency in radians (automatic)
         double Yc = w*C;                   // Given the inputs this is j6.283 mS
@@ -177,21 +194,21 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.cos(-Math.atan(B/A));    // For given inputs 45
         double im_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.sin(-Math.atan(B/A));    // For given inputs -j14
 
-        impedance_r += re_Zout;
-        impedance_i += im_Zout;
+        matrixIncrement(impedance_r, re_Zout);
+        matrixIncrement(impedance_i, im_Zout);
     }
 
     private void inductor(double param1) {
         double l = param1;
         double z = w * l;
-        impedance_i += z;
+        matrixIncrement(impedance_i, z);
     }
     
     private void inductorShunt(double param1) {
         double freq = frequency;        // frequency in Hertz
         double L = param1;              // Inductance in Henrys
-        double re_Zin = impedance_r;    // Real Zout from previous component in ohms
-        double im_Zin = impedance_i;    // Imaginary Zout from previous component
+        double re_Zin = impedance_r[0];    // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[0];    // Imaginary Zout from previous component
 
         // Calculation
         w = 2*Math.PI*freq;             // frequency in radians (automatic)
@@ -206,20 +223,20 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.cos(-Math.atan(B/A));    // For given inputs 50
         double im_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.sin(-Math.atan(B/A));    // For given inputs j0.4
 
-        impedance_r += re_Zout;
-        impedance_i += im_Zout;
+        matrixIncrement(impedance_r, re_Zout);
+        matrixIncrement(impedance_i, im_Zout);
     }
 
     // param1 = length, param2 = width
     private void quarterTransformer(double param1, double param2) {
         // inputs
-        double H = 20 * 2.54e-5;        // Substrate height in meters
-        double Er = 4;                  // Permittivity of substrate
+        double H = substrateH;        // Substrate height in meters
+        double Er = substrateP;                  // Permittivity of substrate
         double freq = frequency;        // frequency in Hertz
         double l = param1;              // Length of xmfr in meters
         double W = param2;              // Width in meters
-        double re_Zin = impedance_r;    // real Zout from previous component in ohms
-        double im_Zin = impedance_i;    // Imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[0];    // real Zout from previous component in ohms
+        double im_Zin = impedance_i[0];    // Imaginary Zout from previous component in ohms
 
         // Calculations
 //        w = 2*pi*freq;              // frequency in radians
@@ -259,14 +276,14 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = Zo*(top_mag/bot_mag*Math.cos(top_ang-bot_ang));
         double im_Zout = Zo*(top_mag/bot_mag*Math.sin(top_ang-bot_ang));
 
-        impedance_r += re_Zout;
-        impedance_i += im_Zout;
+        matrixIncrement(impedance_r, re_Zout);
+        matrixIncrement(impedance_i, im_Zout);
     }
     
     private void termination(double param1) {
         // inputs
-        double re_Zin = impedance_r;    // real Zout from previous component in ohms
-        double im_Zin = impedance_i;    // imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[0];    // real Zout from previous component in ohms
+        double im_Zin = impedance_i[0];    // imaginary Zout from previous component in ohms
         double re_Zo = param1;          // real Impedance of termination (50 ohms)
         double im_Zo = 0;               // imaginary Impedance of termination
 
@@ -291,24 +308,13 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
 
     // param1 = length, param2 = radius
     private void dipole(double param1, double param2) {
-        // Definition of constants and initialization---
-
-//        PI = 4*atan(1);             // redundant coefficient. PI = pi
-        double E = 120.0*Math.PI;               // free space impedance
-        double THETA = Math.PI/180.0;   // 1 degree increment in radians
-        double UMAX = 0.0;
-        double PRAD = 0.0;
-        int pts = 40;                // number of freq points in simulation
-
-        double D = 0;
-        double[] DDB = new double[pts+2];
         double[] RIN = new double[pts+2];
         double[] RR = new double[pts+2];
         double[] Xin = new double[pts+2];
         double A = 0;
 
         // Input the length of the dipole---
-                // freq = input('\nFrequency of operation in Hertz = ');
+        // freq = input('\nFrequency of operation in Hertz = ');
         double freq = frequency;
         double lambda = c/freq;
         // l = input('\nLength of dipole in meters = ','s');
@@ -349,8 +355,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
                 PRAD = PRAD + UA;
                 I = I + 1;
             }
-            D = (4.0 * Math.PI * UMAX) / PRAD;//directivity
-            DDB[x] = 10.0 * Math.log10(D);//directivity in dB(this is our output)
+            D[x] = (4.0 * Math.PI * UMAX) / PRAD;//directivity
+            DDB[x] = 10.0 * Math.log10(D[x]);//directivity in dB(this is our output)
             RR[x] = 2.0 * PRAD;
             PRAD = 0;
             if (A != Math.PI)
@@ -370,15 +376,16 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         }
     }
 
+    // helper function for dipole()
     private double si(double x) {
-        double[] v = linspace(0, x / Math.PI, 500);
+        double[] v = linspace(0, x / Math.PI, linspace_pts);
         double dv = v[2] - v[1];
 
 //        double y = Math.PI * sum(sinc(v) * dv);
         int i = 1;
         double sum = 0;
         // loop is sum(sinc(x))
-        for(; i < 500+1; i++) {
+        for(; i < linspace_pts+1; i++) {
             // sinc(x) = sin(x) / x
             double sinc = Math.sin(v[i]) / v[i];
             sinc *= dv;
@@ -388,16 +395,16 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         return y;
     }
 
-
+    // helper function for dipole()
     private double ci(double x) {
-        double[] v = linspace(0, x / (2 * Math.PI), 500);
+        double[] v = linspace(0, x / (2 * Math.PI), linspace_pts);
         double dv = v[2] - v[1];
 
 //        y1 = 2 * pi * sum(sinc(v). * sin(pi * v) * dv);
         int i = 1;
         double sum = 0;
         // loop is sum(sinc(v) .* sin(pi * v) * dv)
-        for(; i < 500+1; i++) {
+        for(; i < linspace_pts+1; i++) {
             // sinc(x) = sin(x) / x
             double sinc = Math.sin(v[i]) / v[i];
             sinc *= Math.sin(Math.PI * v[i]);
@@ -410,8 +417,9 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         return y;
     }
 
+    // helper function for dipole()
     private double[] linspace(double x1, double x2, int steps) {
-        // matlab is 0-indexed. do same here to retain compliance
+        // matlab is 1-indexed. do same here to retain compliance
         double[] res = new double[steps+1];
         double step = (x2 - x1) / (steps - 1);
         res[1] = x1;
@@ -423,16 +431,6 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     }
 
     private void loop(double param1) {
-        // Definition of constants and initialization---
-
-//        PI = 4*atan(1);             // redundant coefficient. PI = pi
-        double E = 120.0*Math.PI;               // free space impedance
-        double THETA = Math.PI/180.0;           // 1 degree increment in radians
-        double UMAX = 0.0;
-        double PRAD = 0.0;
-        int pts = 40;                   // number of freq points in simulation
-
-        double[] DDB = new double[pts+2];
         double[] im_Zin = new double[pts+2];
         double[] re_Zin = new double[pts+2];
 
@@ -513,6 +511,22 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
             DDB[x] = (weight1 * Directivity_table[row] + weight2 * Directivity_table[row + 1]);
             freq_now = freq_now + freq_step;
             x = x + 1;
+        }
+    }
+
+    private void matrixIncrement(double[] lhs, double[] rhs) {
+        // matlab is 1-indexed
+        int i = 1;
+        for (; i < lhs.length; i++) {
+            lhs[i] += rhs[i];
+        }
+    }
+
+    private void matrixIncrement(double[] lhs, double rhs) {
+        // matlab is 1-indexed
+        int i = 1;
+        for (; i < lhs.length; i++) {
+            lhs[i] += rhs;
         }
     }
 }
