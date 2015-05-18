@@ -11,6 +11,9 @@ public class Circuit {
     private double substrateH;
     private double substrateP;
 
+    public Circuit() {
+    }
+
     public Circuit(double freq, double subH, double subP) {
         frequency = freq;
         substrateH = subH;

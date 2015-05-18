@@ -16,6 +16,11 @@
 
     <string name="simulating">Simulating circuit...</string>
 
+    <string name="circuit_parms">Circuit Parameters</string>
+    <string name="center_frequency">Center Frequency</string>
+    <string name="substrate_height">Substrate Height</string>
+    <string name="substrate_permittivity">Substrate Permittivity</string>
+
     <string name="antennas">Antennas</string>
     <string name="twoPortComponents">2-Port Components</string>
     <string name="onePortSources">1-Port Sources</string>

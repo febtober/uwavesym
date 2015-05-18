@@ -40,7 +40,7 @@ public class WorkspaceActivity extends Activity {
     Button saveButton;
     ProgressDialog progress_simulation;
 
-    Circuit circuit = new Circuit(1e9, 60e-3 * 25.4, 1);
+    Circuit circuit = new Circuit();
     Simulator sim;
     private BaseAdapter workspaceAdapter;
 
@@ -69,6 +69,8 @@ public class WorkspaceActivity extends Activity {
         progress_simulation.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progress_simulation.setProgress(0);
         progress_simulation.setMax(100);
+
+        showParametersFragment();
     }
 
     private void setUpComponentsDrawer() {
@@ -305,5 +307,25 @@ public class WorkspaceActivity extends Activity {
     public void simulationComplete() {
         progress_simulation.dismiss();
         resultsButton.setEnabled(true);
+    }
+
+    private void showParametersFragment() {
+        ParametersFragment pf = new ParametersFragment();
+//        getFragmentManager().beginTransaction().add(android.R.id.content, pf).commit();
+        pf.show(getFragmentManager(), "parameters");
+    }
+
+    public void onFragmentCancel() {
+        ParametersFragment pf = (ParametersFragment) getFragmentManager().findFragmentByTag("parameters");
+        pf.dismiss();
+    }
+
+    public void onFragmentUpdate() {
+        ParametersFragment pf = (ParametersFragment) getFragmentManager().findFragmentByTag("parameters");
+        double[] parms = pf.getParameters();
+        circuit.setFrequency(parms[0]);
+        circuit.setSubstrateH(parms[1]);
+        circuit.setSubstrateP(parms[2]);
+        pf.dismiss();
     }
 }
