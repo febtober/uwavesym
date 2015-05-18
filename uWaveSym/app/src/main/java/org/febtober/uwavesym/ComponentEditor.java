@@ -29,6 +29,7 @@ public class ComponentEditor extends Activity {
     Spinner sp_param2Units;
     TextView tv_info;
     ImageView iv_image;
+    ImageView iv_equation;
     Component comp;
 
     public static final int EDIT_COMPONENT = 0x20;
@@ -46,6 +47,7 @@ public class ComponentEditor extends Activity {
         sp_param2Units = (Spinner) findViewById(R.id.param2Units);
         tv_info = (TextView) findViewById(R.id.text_componentInfo);
         iv_image = (ImageView) findViewById(R.id.image_component);
+        iv_equation = (ImageView) findViewById(R.id.image_equation);
 
         button_update = (Button) findViewById(R.id.button_update);
         button_cancel = (Button) findViewById(R.id.button_cancel);
@@ -93,10 +95,14 @@ public class ComponentEditor extends Activity {
         tv_info.setText(Html.fromHtml(comp.getInfo()));
 
         Drawable drw_image = res.getDrawable(comp.getImgId());
-        Drawable drw_equation;
-        if (iv_image != null) {
+        Drawable drw_equation = res.getDrawable(comp.getEqId());
+        if (drw_image != null) {
             iv_image.setImageDrawable(drw_image);
         }
+        if (drw_equation != null) {
+            iv_equation.setImageDrawable(drw_equation);
+        }
+
 
         button_update.setOnClickListener(new OnClickListener() {
             @Override

@@ -28,23 +28,38 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="fill_parent"
             android:id="@+id/image_component"
-            android:layout_weight="2"
-            android:layout_marginRight="20dp" />
-        <ScrollView
+            android:layout_marginRight="20dp"
+            android:scaleType="centerInside"
+            android:layout_weight="1" />
+
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/scroll_componentInfo"
-            android:layout_weight="4" >
+            android:layout_weight="2" >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Component Info"
-                android:id="@+id/text_componentInfo" />
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/image_equation"
+                android:scaleType="centerInside"
+                android:layout_alignParentTop="true" />
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scroll_componentInfo"
+                android:layout_below="@id/image_equation" >
 
-        </ScrollView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Component Info"
+                    android:id="@+id/text_componentInfo" />
+
+            </ScrollView>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -66,10 +81,9 @@
             android:gravity="right" />
         <Spinner
             android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/param1Units"
             android:layout_gravity="bottom"
-
             android:spinnerMode="dropdown" />
         <EditText
             android:layout_width="0dp"
@@ -83,8 +97,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:id="@+id/param2Units"
-            android:layout_gravity="center_vertical"
-            />
+            android:layout_gravity="bottom" />
 
     </LinearLayout>
 

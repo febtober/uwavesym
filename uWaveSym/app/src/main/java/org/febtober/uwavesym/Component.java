@@ -27,6 +27,7 @@ public class Component implements Parcelable {
     public static final int CAPACITOR_SHUNT = 15;
 
     private int componentId = 0;
+    private int eqId = 0;
     private int imgId = 0;
     private int symId = 0;
     private int symViewId = 0;
@@ -65,6 +66,7 @@ public class Component implements Parcelable {
 
         switch (componentId) {
             case PATCH:
+                eqId = R.drawable.eq_patch;
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.patch);
@@ -79,6 +81,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_patch);
                 break;
             case DIPOLE:
+                eqId = R.drawable.eq_dipole;
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.dipole);
@@ -93,6 +96,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_dipole);
                 break;
             case MONOPOLE:
+                eqId = R.drawable.eq_monopole;
                 imgId = R.drawable.img_monopole;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.monopole);
@@ -107,6 +111,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_monopole);
                 break;
             case LOOP:
+                eqId = R.drawable.eq_loop;
                 imgId = R.drawable.img_loop;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.loop);
@@ -118,6 +123,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_loop);
                 break;
             case BALUN:
+//                eqId = R.drawable.sym_blank;
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_balun;
                 name = res.getString(R.string.balun);
@@ -125,6 +131,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_balun);
                 break;
             case QUARTER_TRANSFORMER:
+                eqId = R.drawable.eq_quarter_transformer;
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_quarter_transformer;
                 name = res.getString(R.string.quarterTransformer);
@@ -139,6 +146,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_quarterTransformer);
                 break;
             case T_LINE:
+                eqId = R.drawable.eq_tline;
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_tline;
                 name = res.getString(R.string.tLine);
@@ -153,6 +161,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_tLine);
                 break;
             case RESISTOR:
+                eqId = R.drawable.eq_resistor;
                 imgId = R.drawable.img_resistor;
                 symId = R.drawable.sym_resistor;
                 name = res.getString(R.string.resistor);
@@ -164,6 +173,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_resistor);
                 break;
             case RESISTOR_SHUNT:
+                eqId = R.drawable.eq_resistor_shunt;
                 imgId = R.drawable.img_resistor;
                 symId = R.drawable.sym_resistor_shunt;
                 name = res.getString(R.string.resistor_shunt);
@@ -175,6 +185,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_resistor);
                 break;
             case INDUCTOR:
+                eqId = R.drawable.eq_inductor;
                 imgId = R.drawable.img_inductor;
                 symId = R.drawable.sym_inductor;
                 name = res.getString(R.string.inductor);
@@ -186,6 +197,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_inductor);
                 break;
             case INDUCTOR_SHUNT:
+                eqId = R.drawable.eq_inductor_shunt;
                 imgId = R.drawable.img_inductor;
                 symId = R.drawable.sym_inductor_shunt;
                 name = res.getString(R.string.inductor_shunt);
@@ -197,6 +209,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_inductor);
                 break;
             case CAPACITOR:
+                eqId = R.drawable.eq_capacitor;
                 imgId = R.drawable.img_capacitor;
                 symId = R.drawable.sym_capacitor;
                 name = res.getString(R.string.capacitor);
@@ -208,6 +221,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_capacitor);
                 break;
             case CAPACITOR_SHUNT:
+                eqId = R.drawable.eq_capacitor_shunt;
                 imgId = R.drawable.img_capacitor;
                 symId = R.drawable.sym_capacitor_shunt;
                 name = res.getString(R.string.capacitor_shunt);
@@ -219,6 +233,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_capacitor);
                 break;
             case SUBSTRATE:
+//                eqId = R.drawable.sym_blank;
                 imgId = R.drawable.img_substrate;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.substrate);
@@ -233,6 +248,7 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_substrate);
                 break;
             case TERMINATION:
+                eqId = R.drawable.eq_termination;
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_termination;
                 name = res.getString(R.string.termination);
@@ -264,6 +280,7 @@ public class Component implements Parcelable {
         return units;
     }
 
+    public void setEqId(int a) {eqId = a;}
     public void setComponentId(int a) {componentId = a;}
     public void setImgId(int a) {imgId = a;}
     public void setSymId(int a) {symId = a;}
@@ -289,6 +306,7 @@ public class Component implements Parcelable {
     public void setConnection1(Component a) {connection1 = a;}
     public void setConnection2(Component a) {connection2 = a;}
 
+    public int getEqId() {return eqId;}
     public int getComponentId() {return componentId;}
     public int getImgId() {return imgId;}
     public int getSymId() {return symId;}
@@ -322,6 +340,7 @@ public class Component implements Parcelable {
     // Parcelling part. Pulled from parcelabler.com
     protected Component(Parcel in) {
         componentId = in.readInt();
+        eqId = in.readInt();
         imgId = in.readInt();
         symId = in.readInt();
         symViewId = in.readInt();
@@ -355,6 +374,7 @@ public class Component implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(componentId);
+        dest.writeInt(eqId);
         dest.writeInt(imgId);
         dest.writeInt(symId);
         dest.writeInt(symViewId);
