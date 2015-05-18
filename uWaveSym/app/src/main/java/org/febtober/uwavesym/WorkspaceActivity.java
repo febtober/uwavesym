@@ -195,19 +195,16 @@ public class WorkspaceActivity extends Activity {
                     case 5: // Capacitor
                         compId = Component.CAPACITOR;
                         break;
-                    case 6: // Termination
-                        compId = Component.TERMINATION;
-                        break;
-                    case 7: // Shunt resistor
+                    case 6: // Shunt resistor
                         compId = Component.RESISTOR_SHUNT;
                         break;
-                    case 8: // Shunt inductor
+                    case 7: // Shunt inductor
                         compId = Component.INDUCTOR_SHUNT;
                         break;
-                    case 9: // Shunt capacitor
+                    case 8: // Shunt capacitor
                         compId = Component.CAPACITOR_SHUNT;
                         break;
-                    case 10: // Substrate
+                    case 9: // Substrate
                         compId = Component.SUBSTRATE;
                         break;
                     default: // Error code
@@ -216,7 +213,8 @@ public class WorkspaceActivity extends Activity {
                 break;
             case 2: // One-port components
                 switch (childPosition) {
-                    case 0: // empty
+                    case 0: // Termination
+                        compId = Component.TERMINATION;
                         break;
                     default:
                         break;

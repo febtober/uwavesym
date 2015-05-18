@@ -12,6 +12,7 @@
     <string name="components">Components</string>
     <string name="drawer_open">Components open</string>
     <string name="drawer_close">Components close</string>
+    <string name="empty">empty</string>
 
     <string name="simulating">Simulating circuit...</string>
 
@@ -61,13 +62,12 @@
     <string name="balun">Balun</string>
     <string name="quarterTransformer">\u03BB/4 transformer</string>
     <string name="tLine">Transmission line</string>
-    <string name="resistor">Resistor</string>
+    <string name="resistor">Series Resistor</string>
     <string name="resistor_shunt">Shunt Resistor</string>
-    <string name="inductor">Inductor</string>
+    <string name="inductor">Series Inductor</string>
     <string name="inductor_shunt">Shunt Inductor</string>
-    <string name="capacitor">Capacitor</string>
+    <string name="capacitor">Series Capacitor</string>
     <string name="capacitor_shunt">Shunt Capacitor</string>
-    <string name="termination">Termination (50 \u03A9)</string>
     <string name="substrate">Substrate</string>
     <string-array name="drawer_twoPortComponents">
         <item>@string/balun</item>
@@ -76,7 +76,6 @@
         <item>@string/resistor</item>
         <item>@string/inductor</item>
         <item>@string/capacitor</item>
-        <item>@string/termination</item>
         <item>@string/resistor_shunt</item>
         <item>@string/inductor_shunt</item>
         <item>@string/capacitor_shunt</item>
@@ -138,7 +137,6 @@
         between its plates.
         ]]>
     </string>
-    <string name="info_termination">I\'ll be back...</string>
     <string name="info_substrate">
         <![CDATA[
         A <b>substrate</b> is the mechanical support of a printed circuit board (PCB). Substrates have
@@ -149,9 +147,10 @@
         ]]>
     </string>
 
-    <string name="empty">empty</string>
+    <string name="termination">Termination (50 \u03A9)</string>
+    <string name="info_termination">I\'ll be back...</string>
     <string-array name="drawer_onePortComponents">
-        <item>@string/empty</item>
+        <item>@string/termination</item>
     </string-array>
 
     <string name="blank"></string>

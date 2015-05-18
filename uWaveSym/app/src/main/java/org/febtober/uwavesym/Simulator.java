@@ -119,7 +119,7 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
                 case Component.SUBSTRATE:
                     break;
                 case Component.TERMINATION:
-                    this.termination(param1);
+                    this.termination(param1, i == 0);
                     break;
                 default:
                     break;
@@ -151,8 +151,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     private void resistorShunt(double param1) {
         // inputs
         double R = param1;                    // Resistance in ohms
-        double re_Zin = impedance_r[0];                // Real Zout from previous component in ohms
-        double im_Zin = impedance_i[0];                 // Imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[1];                // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[1];                 // Imaginary Zout from previous component in ohms
 
         // Calculation
         double Yr = 1/R;                   // Given the inputs this is 0.01
@@ -179,8 +179,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     private void capacitorShunt(double param1) {
         double freq = frequency;        // frequency in Hertz
         double C = param1;              // Capacitance in farads
-        double re_Zin = impedance_r[0];    // Real Zout from previous component in ohms
-        double im_Zin = impedance_i[0];    // Imaginary Zout from previous component
+        double re_Zin = impedance_r[1];    // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[1];    // Imaginary Zout from previous component
                 
 //        w = 2*Math.PI*freq;              // frequency in radians (automatic)
         double Yc = w*C;                   // Given the inputs this is j6.283 mS
@@ -207,8 +207,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     private void inductorShunt(double param1) {
         double freq = frequency;        // frequency in Hertz
         double L = param1;              // Inductance in Henrys
-        double re_Zin = impedance_r[0];    // Real Zout from previous component in ohms
-        double im_Zin = impedance_i[0];    // Imaginary Zout from previous component
+        double re_Zin = impedance_r[1];    // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[1];    // Imaginary Zout from previous component
 
         // Calculation
         w = 2*Math.PI*freq;             // frequency in radians (automatic)
@@ -235,8 +235,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double freq = frequency;        // frequency in Hertz
         double l = param1;              // Length of xmfr in meters
         double W = param2;              // Width in meters
-        double re_Zin = impedance_r[0];    // real Zout from previous component in ohms
-        double im_Zin = impedance_i[0];    // Imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[1];    // real Zout from previous component in ohms
+        double im_Zin = impedance_i[1];    // Imaginary Zout from previous component in ohms
 
         // Calculations
 //        w = 2*pi*freq;              // frequency in radians
@@ -280,10 +280,10 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         matrixIncrement(impedance_i, im_Zout);
     }
     
-    private void termination(double param1) {
+    private void termination(double param1, boolean isFirstComponent) {
         // inputs
-        double re_Zin = impedance_r[0];    // real Zout from previous component in ohms
-        double im_Zin = impedance_i[0];    // imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[1];    // real Zout from previous component in ohms
+        double im_Zin = impedance_i[1];    // imaginary Zout from previous component in ohms
         double re_Zo = param1;          // real Impedance of termination (50 ohms)
         double im_Zo = 0;               // imaginary Impedance of termination
 
@@ -304,6 +304,10 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double VSWR = 1+mag_S11/(1-mag_S11);
         double ang_S11 = top_ang-bot_ang;
         double S11_dB = 20*Math.log10(mag_S11);         // Return Loss
+
+        // Does not affect impedance if not first component
+        if (isFirstComponent)
+            matrixIncrement(impedance_r, re_Zo);
     }
 
     // param1 = length, param2 = radius
@@ -374,6 +378,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
             freq_now = freq_now + freq_step;
             x = x + 1;
         }
+        matrixIncrement(impedance_r, RIN);
+        matrixIncrement(impedance_i, Xin);
     }
 
     // helper function for dipole()
@@ -512,6 +518,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
             freq_now = freq_now + freq_step;
             x = x + 1;
         }
+        matrixIncrement(impedance_r, re_Zin);
+        matrixIncrement(impedance_i, im_Zin);
     }
 
     private void matrixIncrement(double[] lhs, double[] rhs) {
