@@ -140,7 +140,7 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     }
 
     public double[][] getResults() {
-        return new double[][] {impedance_r, impedance_i};
+        return new double[][] {impedance_r, impedance_i, {frequency}};
     }
 
     private void resistor(double param1) {

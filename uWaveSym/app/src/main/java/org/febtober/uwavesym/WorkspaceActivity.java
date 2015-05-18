@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,7 +40,7 @@ public class WorkspaceActivity extends Activity {
     Button saveButton;
     ProgressDialog progress_simulation;
 
-    Circuit circuit = new Circuit(500000, 0, 0);
+    Circuit circuit = new Circuit(1e9, 60e-3 * 25.4, 1);
     Simulator sim;
     private BaseAdapter workspaceAdapter;
 
@@ -239,12 +240,14 @@ public class WorkspaceActivity extends Activity {
         resultsButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-//                List<Double> results = sim.getResults();
-//                Toast.makeText(
-//                        getApplicationContext(),
-//                        "Real: " + results.get(0) + " Imag: " + results.get(1),
-//                        Toast.LENGTH_LONG
-//                ).show();
+                double[][] results = sim.getResults();
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Real: " + results[0][1] +
+                            "\nImag: " + results[1][1] +
+                            "\nFreq: " + results[2][0],
+                        Toast.LENGTH_LONG
+                ).show();
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
