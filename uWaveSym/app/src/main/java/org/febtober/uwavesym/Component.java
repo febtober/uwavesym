@@ -240,6 +240,9 @@ public class Component implements Parcelable {
                 param1MinPrefix = 2;
                 param1MaxPrefix = 4;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_ohm));
+                param1 = 50;
+                param1Valid = true;
+                param1Prefix = 2;
                 param2Exists = false;
                 info = res.getString(R.string.info_termination);
                 break;
