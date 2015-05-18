@@ -22,7 +22,6 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     private double substrateH;
     private double substrateP;
 
-
     private Circuit circuit;
     private double[] impedance_r = new double[pts+2];;
     private double[] impedance_i = new double[pts+2];;
@@ -323,11 +322,11 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double lambda = c/freq;
         // l = input('\nLength of dipole in meters = ','s');
         // l = str2num(l);
-        double l = 0.15;
+        double l = param1;
         double L_fc = l/lambda;
 
         // R = input('Radius of dipole in meters = ');
-        double R = param1;
+        double R = param2;
         double r = R/lambda;
 //        fprintf(1,'I have the inputs set as 1 GHz, l = 0.15, r = 0.001');
 
