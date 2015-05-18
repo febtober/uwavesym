@@ -195,5 +195,16 @@
     <string name="diameter">Diameter</string>
     <string name="circumference">Circumference</string>
     <string name="permittivity">Permittivity</string>
+    <string name="title_activity_results">ResultsActivity</string>
+
+    <string name="simulation_results">Simulation Results</string>
+    <string name="mag_s11">mag(S11)</string>
+    <string name="vswr">VSWR</string>
+    <string name="ang_s11">angle(S11)</string>
+    <string name="s11_db">dB(S11)</string>
+    <string name="gain_db">dB(Gain)</string>
+    <string name="title_activity_results_plot">ResultsPlotActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 
 </resources>

@@ -25,5 +25,14 @@
             android:name=".ComponentEditor"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".ResultsActivity"
+            android:label="@string/title_activity_results" >
+        </activity>
+        <activity
+            android:name=".ResultsPlotActivity"
+            android:label="@string/title_activity_results_plot" >
+        </activity>
     </application>
+
 </manifest>

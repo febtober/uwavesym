@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -241,13 +240,8 @@ public class WorkspaceActivity extends Activity {
             @Override
             public void onClick(View view) {
                 double[][] results = sim.getResults();
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Real: " + results[0][1] +
-                            "\nImag: " + results[1][1] +
-                            "\nFreq: " + results[2][0],
-                        Toast.LENGTH_LONG
-                ).show();
+                Intent intent = new Intent(view.getContext(), ResultsActivity.class);
+                startActivity(intent);
             }
         });
         saveButton.setOnClickListener(new View.OnClickListener() {
