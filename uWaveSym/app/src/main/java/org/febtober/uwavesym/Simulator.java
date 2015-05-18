@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     // Constants
     private double w;
-    private double c = 2.99792458e8;        // Speed of light
+    private double c = 3e8;        // Speed of light
     private double Zfo = 120*Math.PI;       // Free space impedance
     private double t = 1.4 * 2.54e-5;       // Conductor thickness for 1 oz copper
     private double e = Math.exp(1);
@@ -370,8 +370,8 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
             double k = 2 * Math.PI;                 // 2pi/lambda; lambda = 1
 
 //            if exist('cosint') ~ = 2,  // I don't imagine sinint is a func you can use.
-            double Xm = 30 * (2 * si(k * L) + Math.cos(k * L) * (2 * si(k * L) - si(2 * k * L)));
-            Xm -= Math.sin(k * L) * (2 * ci(k * L) - ci(2 * k * L) - ci(2 * k * Math.pow(r, 2) / L));
+            double Xm = 30 * (2 * si(k * L) + Math.cos(k * L) * (2 * si(k * L) - si(2 * k * L)) -
+                Math.sin(k * L) * (2 * ci(k * L) - ci(2 * k * L) - ci(2 * k * Math.pow(r, 2) / L)));
             Xin[x] = Xm / Math.pow(Math.sin(k * L / 2), 2);     // OUTPUT! Input reactance
 
             freq_now = freq_now + freq_step;
@@ -392,7 +392,11 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         // loop is sum(sinc(x))
         for(; i < linspace_pts+1; i++) {
             // sinc(x) = sin(x) / x
-            double sinc = Math.sin(v[i]) / v[i];
+            double sinc;
+            if (v[i] == 0)
+                sinc = 1;
+            else
+                sinc = Math.sin(Math.PI*v[i]) / (Math.PI*v[i]);
             sinc *= dv;
             sum += sinc;
         }
@@ -411,7 +415,11 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         // loop is sum(sinc(v) .* sin(pi * v) * dv)
         for(; i < linspace_pts+1; i++) {
             // sinc(x) = sin(x) / x
-            double sinc = Math.sin(v[i]) / v[i];
+            double sinc;
+            if (v[i] == 0)
+                sinc = 1;
+            else
+                sinc = Math.sin(Math.PI*v[i]) / (Math.PI*v[i]);
             sinc *= Math.sin(Math.PI * v[i]);
             sinc *= dv;
             sum += sinc;
