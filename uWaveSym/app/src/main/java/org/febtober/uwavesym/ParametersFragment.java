@@ -69,7 +69,7 @@ public class ParametersFragment extends DialogFragment {
     }
 
     public double[] getParameters() {
-        return new double[] {frequency, substrateHeight, substratePermittivity};
+        return new double[] {frequency * 1e9, substrateHeight * 1e-3, substratePermittivity};
     }
 
 //    // TODO: Rename method, update argument and hook method into UI event

@@ -10,6 +10,7 @@
     <string name="button_update">Update</string>
     <string name="button_cancel">Cancel</string>
     <string name="components">Components</string>
+    <string name="component_name">Component Name</string>
     <string name="drawer_open">Components open</string>
     <string name="drawer_close">Components close</string>
     <string name="empty">empty</string>
@@ -17,8 +18,8 @@
     <string name="simulating">Simulating circuit...</string>
 
     <string name="circuit_parms">Circuit Parameters</string>
-    <string name="center_frequency">Center Frequency</string>
-    <string name="substrate_height">Substrate Height</string>
+    <string name="center_frequency">Center Frequency (GHz)</string>
+    <string name="substrate_height">Substrate Height (mm)</string>
     <string name="substrate_permittivity">Substrate Permittivity</string>
 
     <string name="antennas">Antennas</string>
@@ -40,8 +41,33 @@
         <item>@string/monopole</item>
         <item>@string/loop</item>
     </string-array>
-    <string name="info_patch">Patch antenna info.</string>
-    <string name="info_dipole">Dipole antenna info.</string>
+    <string name="info_patch">
+        <![CDATA[
+        A patch antenna is a type of radio antenna with a low profile, which can be mounted on a
+        flat surface. It consists of a flat rectangular sheet or "patch" of metal, mounted over a
+        larger sheet of metal called a ground plane. The two metal sheets together form a resonant
+        piece of microstrip transmission line with a length of approximately one-half wavelength of
+        the radio waves. The radiation mechanism arises from discontinuities at each truncated edge
+        of the microstrip transmission line.
+        ]]>
+    </string>
+    <string name="info_dipole">
+        <![CDATA[
+        A dipole antenna is the simplest and most widely used class of antenna. It consists of two
+        identical conductive elements such as metal wires or rods, which are usually bilaterally
+        symmetrical. A common example of a dipole is the "rabbit ears" television antenna found on
+        broadcast television sets.
+        <br><br>
+        The most common form of dipole is two straight rods or wires oriented end to end on the same
+        axis, with the feedline connected to the two adjacent ends. This is the simplest type of
+        antenna from a theoretical point of view. Dipoles are resonant antennas, meaning that the
+        elements serve as resonators, with standing waves of current flowing back and forth between
+        their ends. Due to this current distribution a balun must be used to connect to a microstrip
+        transmission line (more information about a balun can be seen in the balun component
+        information box). So the length of the dipole elements is determined by the wavelength of the
+        radio waves used.
+        ]]>
+    </string>
     <string name="info_monopole">
         <![CDATA[
         A <b>monopole</b> antenna is a very popular and commonly used antenna due to it’s compact size and
@@ -103,7 +129,16 @@
         wavelength (\u03BB) long and terminated in some known impedance.
         ]]>
     </string>
-    <string name="info_tLine">Transmission line info.</string>
+    <string name="info_tLine">
+        <![CDATA[
+        In communications and electronic engineering, a <b>transmission line<b> is a specialized cable or
+        other structure designed to carry alternating current of radio frequency, that is, currents
+        with a frequency high enough that their wave nature must be taken into account. Transmission
+        lines are used for purposes such as connecting radio transmitters and receivers with their
+        antennas, distributing cable television signals, trunklines routing calls between telephone
+        switching centers, computer network connections and high speed computer data buses.
+       ]]>
+    </string>
     <string name="info_resistor">
         <![CDATA[
         A <b>resistor</b> is a passive two-terminal electrical component that implements electrical
@@ -153,7 +188,14 @@
     </string>
 
     <string name="termination">Termination (50 \u03A9)</string>
-    <string name="info_termination">I\'ll be back...</string>
+    <string name="info_termination">
+        <![CDATA[
+        The termination is the reference plane for the simulation that is being conducted. Before
+        the simulation can be carried out at least one termination must be included. In a two port
+        system two terminations must be included and performance such as insertion loss and return
+        loss can be simulated.
+        ]]>
+    </string>
     <string-array name="drawer_onePortComponents">
         <item>@string/termination</item>
     </string-array>

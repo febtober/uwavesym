@@ -32,6 +32,7 @@ public class Component implements Parcelable {
     private int symId = 0;
     private int symViewId = 0;
     private static int currSymViewId = 1;
+    private int fieldId = 0;
     private String name;
     private float param1 = 0;
     private float param2 = 0;
@@ -67,8 +68,9 @@ public class Component implements Parcelable {
         switch (componentId) {
             case PATCH:
                 eqId = R.drawable.eq_patch;
-                imgId = R.drawable.img_blank;
+                imgId = R.drawable.img_patch;
                 symId = R.drawable.sym_blank;
+                fieldId = R.drawable.field_patch;
                 name = res.getString(R.string.patch);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
@@ -82,8 +84,9 @@ public class Component implements Parcelable {
                 break;
             case DIPOLE:
                 eqId = R.drawable.eq_dipole;
-                imgId = R.drawable.img_blank;
-                symId = R.drawable.sym_blank;
+                imgId = R.drawable.img_dipole;
+                symId = R.drawable.sym_dipole;
+                fieldId = R.drawable.field_dipole;
                 name = res.getString(R.string.dipole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.radius);
@@ -98,7 +101,8 @@ public class Component implements Parcelable {
             case MONOPOLE:
                 eqId = R.drawable.eq_monopole;
                 imgId = R.drawable.img_monopole;
-                symId = R.drawable.sym_blank;
+                symId = R.drawable.sym_monopole;
+                fieldId = R.drawable.field_monopole;
                 name = res.getString(R.string.monopole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.radius);
@@ -285,6 +289,7 @@ public class Component implements Parcelable {
     public void setImgId(int a) {imgId = a;}
     public void setSymId(int a) {symId = a;}
     public void setSymViewId(int a) {symViewId = a;}
+    public void setFieldId(int a) {fieldId = a;}
     public void setName(String a) {name = a;}
     public void setParam1(float a) {param1 = a; param1Valid = true;}
     public void setParam2(float a) {param2 = a; param2Valid = true;}
@@ -311,6 +316,7 @@ public class Component implements Parcelable {
     public int getImgId() {return imgId;}
     public int getSymId() {return symId;}
     public int getSymViewId() {return symViewId;}
+    public int getFieldId() {return fieldId;}
     public String getName() {return name;}
     public float getParam1() {return param1;}
     public float getParam2() {return param2;}
@@ -344,6 +350,7 @@ public class Component implements Parcelable {
         imgId = in.readInt();
         symId = in.readInt();
         symViewId = in.readInt();
+        fieldId = in.readInt();
         name = in.readString();
         param1 = in.readFloat();
         param2 = in.readFloat();
@@ -378,6 +385,7 @@ public class Component implements Parcelable {
         dest.writeInt(imgId);
         dest.writeInt(symId);
         dest.writeInt(symViewId);
+        dest.writeInt(fieldId);
         dest.writeString(name);
         dest.writeFloat(param1);
         dest.writeFloat(param2);

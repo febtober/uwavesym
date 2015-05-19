@@ -30,6 +30,7 @@ public class ComponentEditor extends Activity {
     TextView tv_info;
     ImageView iv_image;
     ImageView iv_equation;
+    ImageView iv_field;
     Component comp;
 
     public static final int EDIT_COMPONENT = 0x20;
@@ -48,6 +49,7 @@ public class ComponentEditor extends Activity {
         tv_info = (TextView) findViewById(R.id.text_componentInfo);
         iv_image = (ImageView) findViewById(R.id.image_component);
         iv_equation = (ImageView) findViewById(R.id.image_equation);
+        iv_field = (ImageView) findViewById(R.id.image_idealField);
 
         button_update = (Button) findViewById(R.id.button_update);
         button_cancel = (Button) findViewById(R.id.button_cancel);
@@ -95,13 +97,18 @@ public class ComponentEditor extends Activity {
         tv_info.setText(Html.fromHtml(comp.getInfo()));
 
         Drawable drw_image = res.getDrawable(comp.getImgId());
-        Drawable drw_equation = res.getDrawable(comp.getEqId());
-        if (drw_image != null) {
+        if (drw_image != null)
             iv_image.setImageDrawable(drw_image);
-        }
-        if (drw_equation != null) {
+        Drawable drw_equation = res.getDrawable(comp.getEqId());
+        if (drw_equation != null)
             iv_equation.setImageDrawable(drw_equation);
+        int fieldId = comp.getFieldId();
+        if (fieldId != 0) {
+            Drawable drw_field = res.getDrawable(fieldId);
+            if (drw_field != null);
+                iv_field.setImageDrawable(drw_field);
         }
+
 
 
         button_update.setOnClickListener(new OnClickListener() {
