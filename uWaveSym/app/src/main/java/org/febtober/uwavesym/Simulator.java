@@ -18,16 +18,18 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     private int linspace_pts = 500;
 
     private double frequency;
+    private double currFrequency;
     private double freq_radian;
     private double substrateH;
     private double substrateP;
+    private int x = 0;
 
     private Circuit circuit;
     private double[] impedance_r = new double[pts+2];;
     private double[] impedance_i = new double[pts+2];;
     private double[] D = new double[pts+2];
     private double[] DDB = new double[pts+2];
-    private double[] I = new double[linspace_pts+2];
+    private double[] currDistribution = new double[linspace_pts+2];
     double[] mag_S11 = new double[pts+2];
     double[] VSWR = new double[pts+2];
     double[] ang_S11 = new double[pts+2];
@@ -43,87 +45,100 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     // params contains [Circuit]
     @Override
     protected Circuit doInBackground(Object... params) {
+	    substrateH = circuit.getSubstrateH();
+        substrateP = circuit.getSubstrateP();
         circuit = (Circuit) params[0];
         frequency = circuit.getFrequency();
-        // pts+2 for 1-indexing array (matlab compliance)
-        freq_radian = 2 * Math.PI * frequency;
-        w = 2 * Math.PI * frequency;
-        substrateH = circuit.getSubstrateH();
-        substrateP = circuit.getSubstrateP();
+		
+		double freq_low = frequency - frequency*0.25;            // define low frequency
+        double freq_high = frequency + frequency*0.25;			// define high frequency
+        double freq_step = (freq_high-freq_low)/pts;	// define frequency step
 
-        int numComps = circuit.size();
-        int i = 0;
-        for (; i < numComps; i++) {
-            Component currComp = circuit.getComponent(i);
-            double param1 = 0;
-            double param2 = 0;
-            if (currComp.getParam1Exists()) {
-                int param1Min = currComp.getParam1MinPrefix();
-                int param1Prefix = currComp.getParam1Prefix();
-                // normalize prefix index around 0. i.e. micro is -2, kilo is 1, etc.
-                double newParam1Prefix = param1Prefix - (4 - param1Min);
-                // new param = old param * 10e(newParam1Prefix*3)
-                param1 = Math.pow(10, newParam1Prefix*3) * currComp.getParam1();
-            }
-            if (currComp.getParam2Exists()) {
-                int param2Min = currComp.getParam2MinPrefix();
-                int param2Prefix = currComp.getParam2Prefix();
-                // normalize prefix index around 0. i.e. micro is -2, kilo is 1, etc.
-                double newParam2Prefix = param2Prefix - (4 - param2Min);
-                // new param = old param * 10e(newParam1Prefix*3)
-                param2 = Math.pow(10, newParam2Prefix*3) * currComp.getParam2();
-            }
+        x = 1;
 
-            publishProgress(i);
+        double currFrequency = freq_low;
+        for (; currFrequency <= freq_high; x++, currFrequency += freq_step) {				// START FREQUENCY SWEEPING LOOP HURRR
+			// pts+2 for 1-indexing array (matlab compliance)
+			freq_radian = 2 * Math.PI * currFrequency;		// same as w
+			w = 2 * Math.PI * currFrequency;				// same as freq_radian
 
-            switch (currComp.getComponentId()) {
-                case Component.PATCH:
-                    break;
-                case Component.DIPOLE:
-                    this.dipole(param1, param2);
-                    break;
-                case Component.MONOPOLE:
-                    // same function as dipole but with length doubled
-                    this.dipole(param1*2, param2);
-                    break;
-                case Component.LOOP:
-                    this.loop(param1);
-                    break;
-                case Component.BALUN:
-                    break;
-                case Component.QUARTER_TRANSFORMER:
-                    this.quarterTransformer(param1, param2);
-                    break;
-                case Component.T_LINE:
-                    this.quarterTransformer(param1, param2);
-                    break;
-                case Component.RESISTOR:
-                    this.resistor(param1);
-                    break;
-                case Component.RESISTOR_SHUNT:
-                    this.resistorShunt(param1);
-                    break;
-                case Component.INDUCTOR:
-                    this.inductor(param1);
-                    break;
-                case Component.INDUCTOR_SHUNT:
-                    this.inductorShunt(param1);
-                    break;
-                case Component.CAPACITOR:
-                    this.capacitor(param1);
-                    break;
-                case Component.CAPACITOR_SHUNT:
-                    this.capacitorShunt(param1);
-                    break;
-                case Component.SUBSTRATE:
-                    break;
-                case Component.TERMINATION:
-                    this.termination(param1, i == 0);
-                    break;
-                default:
-                    break;
+			int numComps = circuit.size();
+
+            int i = 0;
+            for (; i < numComps; i++) {
+                Component currComp = circuit.getComponent(i);
+                double param1 = 0;
+                double param2 = 0;
+                if (currComp.getParam1Exists()) {
+                    int param1Min = currComp.getParam1MinPrefix();
+                    int param1Prefix = currComp.getParam1Prefix();
+                    // normalize prefix index around 0. i.e. micro is -2, kilo is 1, etc.
+                    double newParam1Prefix = param1Prefix - (4 - param1Min);
+                    // new param = old param * 10e(newParam1Prefix*3)
+                    param1 = Math.pow(10, newParam1Prefix*3) * currComp.getParam1();
+                }
+                if (currComp.getParam2Exists()) {
+                    int param2Min = currComp.getParam2MinPrefix();
+                    int param2Prefix = currComp.getParam2Prefix();
+                    // normalize prefix index around 0. i.e. micro is -2, kilo is 1, etc.
+                    double newParam2Prefix = param2Prefix - (4 - param2Min);
+                    // new param = old param * 10e(newParam1Prefix*3)
+                    param2 = Math.pow(10, newParam2Prefix*3) * currComp.getParam2();
+                }
+
+                publishProgress(i);
+
+                switch (currComp.getComponentId()) {
+                    case Component.PATCH:
+                        break;
+                    case Component.DIPOLE:
+                        this.dipole(param1, param2);
+                        break;
+                    case Component.MONOPOLE:
+                        // same function as dipole but with length doubled
+                        this.dipole(param1*2, param2);
+                        break;
+                    case Component.LOOP:
+                        this.loop(param1);
+                        break;
+                    case Component.BALUN:
+                        break;
+                    case Component.QUARTER_TRANSFORMER:
+                        this.quarterTransformer(param1, param2);
+                        break;
+                    case Component.T_LINE:
+                        this.quarterTransformer(param1, param2);
+                        break;
+                    case Component.RESISTOR:
+                        this.resistor(param1);
+                        break;
+                    case Component.RESISTOR_SHUNT:
+                        this.resistorShunt(param1);
+                        break;
+                    case Component.INDUCTOR:
+                        this.inductor(param1);
+                        break;
+                    case Component.INDUCTOR_SHUNT:
+                        this.inductorShunt(param1);
+                        break;
+                    case Component.CAPACITOR:
+                        this.capacitor(param1);
+                        break;
+                    case Component.CAPACITOR_SHUNT:
+                        this.capacitorShunt(param1);
+                        break;
+                    case Component.SUBSTRATE:
+                        break;
+                    case Component.TERMINATION:
+                        this.termination(param1, i == 0);
+                        break;
+                    default:
+                        break;
+                }
             }
-        }
+        }			// END FREQUENCY SWEEPING HURR
+        
+
         return circuit;
     }
 
@@ -143,21 +158,22 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     }
 
     private void resistor(double param1) {
-        double r = param1;
-        matrixIncrement(impedance_r, r);
+		double r = param1;
+        impedance_r[x] += r;	
     }
     
     private void resistorShunt(double param1) {
         // inputs
         double R = param1;                    // Resistance in ohms
-        double re_Zin = impedance_r[1];                // Real Zout from previous component in ohms
-        double im_Zin = impedance_i[1];                 // Imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[x];                // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[x];                 // Imaginary Zout from previous component in ohms
 
         // Calculation
-        double Yr = 1/R;                   // Given the inputs this is 0.01
-
-        double re_Yin = 1/(Math.sqrt(Math.pow(re_Zin,2)+Math.pow(im_Zin,2)))*Math.cos(-Math.atan(im_Zin/re_Zin));
-        double im_Yin = 1/(Math.sqrt(Math.pow(re_Zin,2)+Math.pow(im_Zin,2)))*Math.sin(-Math.atan(im_Zin/re_Zin));
+        double Yr = 1/R;                   
+		double re_Yin;
+		double im_Yin;
+        re_Yin = 1/(Math.sqrt(Math.pow(re_Zin,2)+Math.pow(im_Zin,2)))*Math.cos(-Math.atan(im_Zin/re_Zin));
+        im_Yin = 1/(Math.sqrt(Math.pow(re_Zin,2)+Math.pow(im_Zin,2)))*Math.sin(-Math.atan(im_Zin/re_Zin));
         double A = re_Yin + Yr;
         double B = im_Yin;
 
@@ -165,21 +181,21 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.cos(-Math.atan(B/A));    // For given inputs 33
         double im_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.sin(-Math.atan(B/A));    // For given inputs j0
 
-        matrixIncrement(impedance_r, re_Zout);
-        matrixIncrement(impedance_i, im_Zout);
+        impedance_r[x] = re_Zout;	// my math does the increment
+        impedance_i[x] = im_Zout;	// my math does the increment
     }
 
     private void capacitor(double param1) {
         double c = param1;
         double z = -1 / (w * c);
-        matrixIncrement(impedance_i, z);
+        impedance_i[x] += z;		// need to increment
     }
     
     private void capacitorShunt(double param1) {
-        double freq = frequency;        // frequency in Hertz
+        //double freq = frequency;        // should be defined in 
         double C = param1;              // Capacitance in farads
-        double re_Zin = impedance_r[1];    // Real Zout from previous component in ohms
-        double im_Zin = impedance_i[1];    // Imaginary Zout from previous component
+        double re_Zin = impedance_r[x];    // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[x];    // Imaginary Zout from previous component
                 
 //        w = 2*Math.PI*freq;              // frequency in radians (automatic)
         double Yc = w*C;                   // Given the inputs this is j6.283 mS
@@ -193,24 +209,24 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.cos(-Math.atan(B/A));    // For given inputs 45
         double im_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.sin(-Math.atan(B/A));    // For given inputs -j14
 
-        matrixIncrement(impedance_r, re_Zout);
-        matrixIncrement(impedance_i, im_Zout);
+        impedance_r[x] = re_Zout;	// my math does the increment
+        impedance_i[x] = im_Zout;	// my math does the increment
     }
 
     private void inductor(double param1) {
         double l = param1;
         double z = w * l;
-        matrixIncrement(impedance_i, z);
+        impedance_i[x] += z;
     }
     
     private void inductorShunt(double param1) {
-        double freq = frequency;        // frequency in Hertz
+        //double freq = frequency;        // should be already defined in freq_sweep loop
         double L = param1;              // Inductance in Henrys
-        double re_Zin = impedance_r[1];    // Real Zout from previous component in ohms
-        double im_Zin = impedance_i[1];    // Imaginary Zout from previous component
+        double re_Zin = impedance_r[x];    // Real Zout from previous component in ohms
+        double im_Zin = impedance_i[x];    // Imaginary Zout from previous component
 
         // Calculation
-        w = 2*Math.PI*freq;             // frequency in radians (automatic)
+        //w = 2*Math.PI*freq;             // shouldn't need. defined in while loop on line 64
         double Yl = -1/(w*L);           // Given the inputs this is j6.2832
 
         double re_Yin = 1/(Math.sqrt(Math.pow(re_Zin,2)+Math.pow(im_Zin,2)))*Math.cos(-Math.atan(im_Zin/re_Zin));
@@ -222,20 +238,20 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.cos(-Math.atan(B/A));    // For given inputs 50
         double im_Zout = 1/(Math.sqrt(Math.pow(A,2)+Math.pow(B,2)))*Math.sin(-Math.atan(B/A));    // For given inputs j0.4
 
-        matrixIncrement(impedance_r, re_Zout);
-        matrixIncrement(impedance_i, im_Zout);
+        impedance_r[x] = re_Zout;	// my math does the increment
+        impedance_i[x] = im_Zout;	// my math does the increment
     }
 
     // param1 = length, param2 = width
     private void quarterTransformer(double param1, double param2) {
         // inputs
-        double H = substrateH;        // Substrate height in meters
-        double Er = substrateP;                  // Permittivity of substrate
-        double freq = frequency;        // frequency in Hertz
+        double H = substrateH;        // Substrate height in meters. should be defined in freq_sweep loop
+        double Er = substrateP;                  // Permittivity of substrate. should be defined in freq_sweep loop
+        double freq = frequency;        // frequency in Hertz. should be defined in freq_sweep loop
         double l = param1;              // Length of xmfr in meters
         double W = param2;              // Width in meters
-        double re_Zin = impedance_r[1];    // real Zout from previous component in ohms
-        double im_Zin = impedance_i[1];    // Imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[x];    // real Zout from previous component in ohms
+        double im_Zin = impedance_i[x];    // Imaginary Zout from previous component in ohms
 
         // Calculations
 //        w = 2*pi*freq;              // frequency in radians
@@ -275,14 +291,14 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double re_Zout = Zo*(top_mag/bot_mag*Math.cos(top_ang-bot_ang));
         double im_Zout = Zo*(top_mag/bot_mag*Math.sin(top_ang-bot_ang));
 
-        matrixIncrement(impedance_r, re_Zout);
-        matrixIncrement(impedance_i, im_Zout);
+        impedance_r[x] = re_Zout;	// my math does the increment
+        impedance_i[x] = im_Zout;	// my math does the increment
     }
     
     private void termination(double param1, boolean isFirstComponent) {
         // inputs
-        double re_Zin = impedance_r[1];    // real Zout from previous component in ohms
-        double im_Zin = impedance_i[1];    // imaginary Zout from previous component in ohms
+        double re_Zin = impedance_r[x];    // real Zout from previous component in ohms
+        double im_Zin = impedance_i[x];    // imaginary Zout from previous component in ohms
         double re_Zo = param1;          // real Impedance of termination (50 ohms)
         double im_Zo = 0;               // imaginary Impedance of termination
 
@@ -299,31 +315,35 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         double im_S11 = (top_mag/bot_mag)*Math.sin(top_ang-bot_ang);
 
         // Outputs
-        double mag_S11 = Math.sqrt(Math.pow(re_S11,2)+Math.pow(im_S11,2));
-        double VSWR = 1+mag_S11/(1-mag_S11);
-        double ang_S11 = top_ang-bot_ang;
-        double S11_dB = 20*Math.log10(mag_S11);         // Return Loss
+        mag_S11[x] = Math.sqrt(Math.pow(re_S11,2)+Math.pow(im_S11,2));
+        VSWR[x] = 1+mag_S11[x]/(1-mag_S11[x]);
+        ang_S11[x] = top_ang-bot_ang;
+        S11_dB[x] = 20*Math.log10(mag_S11[x]);      // Return Loss
+        Gain_dB[x] = 10*Math.log10((1-Math.pow(mag_S11[x], 2)) * D[x]);
 
         // Does not affect impedance if not first component
-        if (isFirstComponent)
-            matrixIncrement(impedance_r, re_Zo);
+        if (isFirstComponent) {
+            impedance_r[x] = re_Zo;
+            impedance_i[x] = im_Zo;
+        }
     }
 
     // param1 = length, param2 = radius
     private void dipole(double param1, double param2) {
-        double[] RIN = new double[pts+2];
-        double[] RR = new double[pts+2];
-        double[] Xin = new double[pts+2];
+        double RIN = 0;
+        double RR = 0;
+        double Xin = 0;
         double A = 0;
 
         // Input the length of the dipole---
         // freq = input('\nFrequency of operation in Hertz = ');
-        double freq = frequency;
-        double lambda = c/freq;
+        //double freq = frequency;				// should already be defined on line 60
+        double lambda_fc = c/frequency;
         // l = input('\nLength of dipole in meters = ','s');
         // l = str2num(l);
         double l = param1;
-        double L_fc = l/lambda;
+        double L_fc = l/lambda_fc;
+        double lambda = c / currFrequency;
 
         // R = input('Radius of dipole in meters = ');
         double R = param2;
@@ -331,16 +351,6 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
 //        fprintf(1,'I have the inputs set as 1 GHz, l = 0.15, r = 0.001');
 
         // Main program----------------------
-
-        double freq_low = freq - freq*0.25;            // 50// bandwidth
-        double freq_high = freq + freq*0.25;
-        double freq_step = (freq_high-freq_low)/pts;
-
-        int x = 1;
-
-        double freq_now = freq_low;
-        while (freq_now <= freq_high) {
-            lambda = c / freq_now;
             double L = l / lambda;
             r = R / lambda;
             // Calculate input resistance given length
@@ -359,11 +369,11 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
                 I = I + 1;
             }
             D[x] = (4.0 * Math.PI * UMAX) / PRAD;//directivity
-            DDB[x] = 10.0 * Math.log10(D[x]);//directivity in dB(this is our output)
-            RR[x] = 2.0 * PRAD;
+//            DDB[x] = 10.0 * Math.log10(D[x]);//directivity in dB(this is our output)
+            RR = 2.0 * PRAD;
             PRAD = 0;
             if (A != Math.PI)
-                RIN[x] = RR[x] / Math.pow(Math.sin(A), 2);//OUTPUT !Input resistance
+                RIN = RR / Math.pow(Math.sin(A), 2);//OUTPUT !Input resistance
 
             // calculate reactance given length and radius
 
@@ -372,13 +382,17 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
 //            if exist('cosint') ~ = 2,  // I don't imagine sinint is a func you can use.
             double Xm = 30 * (2 * si(k * L) + Math.cos(k * L) * (2 * si(k * L) - si(2 * k * L)) -
                 Math.sin(k * L) * (2 * ci(k * L) - ci(2 * k * L) - ci(2 * k * Math.pow(r, 2) / L)));
-            Xin[x] = Xm / Math.pow(Math.sin(k * L / 2), 2);     // OUTPUT! Input reactance
+            Xin = Xm / Math.pow(Math.sin(k * L / 2), 2);     // OUTPUT! Input reactance
 
-            freq_now = freq_now + freq_step;
-            x = x + 1;
+        double[] z=linspace(-L_fc/2,L_fc/2,500);
+        k=2*Math.PI;
+        int j = 0;
+        for (; j < z.length; j++) {
+            currDistribution[j] = Math.sin(k * (L_fc / 2 - Math.abs(z[j])));
         }
-        matrixIncrement(impedance_r, RIN);
-        matrixIncrement(impedance_i, Xin);
+
+        impedance_r[x] = RIN;
+        impedance_i[x] = Xin;
     }
 
     // helper function for dipole()
@@ -444,13 +458,12 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     }
 
     private void loop(double param1) {
-        double[] im_Zin = new double[pts+2];
-        double[] re_Zin = new double[pts+2];
+        double im_Zin;
+        double re_Zin;
 
         // Inputs
         // freq = input('\nFrequency of operation in Hertz = ');
-        double freq = frequency;
-        double lambda = c/freq;
+        double lambda = c/currFrequency;
         // l = input('\nRadius of loop in meters = ','s');
         // l = str2num(l);
         double r = param1;
@@ -505,28 +518,27 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         // -----------------------------------------------------
 
         // Calculations ----------------------
-        double freq_low = freq - freq*0.25;            // 50// bandwidth
-        double freq_high = freq + freq*0.25;
-        double freq_step = (freq_high-freq_low)/pts;
+        //double freq_low = freq - freq*0.25;            // 50// bandwidth
+        //double freq_high = freq + freq*0.25;
+        //double freq_step = (freq_high-freq_low)/pts;
 
-        int x = 1;
-        double freq_now = freq_low;
-        while (freq_now <= freq_high) {
+        //int x = 1;
+        //double freq_now = freq_low;
+        //while (freq_now <= freq_high) {
 
-            lambda = c / freq_now;
-            double cir_lambda = (2 * Math.PI * r) / lambda;           // Circumference / lambda
-            int adjust = (int) Math.floor(cir_lambda / 0.05);
-            int row = adjust - 8;
-            double weight2 = (cir_lambda - adjust * 0.05) / 0.05;    // weighted average b/w data points
-            double weight1 = 1 - weight2;
-            re_Zin[x] = (weight1 * impedance_table[row][1] + weight2 * impedance_table[row + 1][1]);
-            im_Zin[x] = (weight1 * impedance_table[row][2] + weight2 * impedance_table[row + 1][2]);
-            DDB[x] = (weight1 * Directivity_table[row] + weight2 * Directivity_table[row + 1]);
-            freq_now = freq_now + freq_step;
-            x = x + 1;
-        }
-        matrixIncrement(impedance_r, re_Zin);
-        matrixIncrement(impedance_i, im_Zin);
+        double cir_lambda = (2 * Math.PI * r) / lambda;           // Circumference / lambda
+        int adjust = (int) Math.floor(cir_lambda / 0.05);
+        int row = adjust - 8;
+        double weight2 = (cir_lambda - adjust * 0.05) / 0.05;    // weighted average b/w data points
+        double weight1 = 1 - weight2;
+        re_Zin = (weight1 * impedance_table[row][1] + weight2 * impedance_table[row + 1][1]);
+        im_Zin = (weight1 * impedance_table[row][2] + weight2 * impedance_table[row + 1][2]);
+        DDB[x] = (weight1 * Directivity_table[row] + weight2 * Directivity_table[row + 1]);
+        //    freq_now = freq_now + freq_step;
+        //    x = x + 1;
+        //}
+        impedance_r[x] = re_Zin;
+        impedance_i[x] = im_Zin;
     }
 
     private void matrixIncrement(double[] lhs, double[] rhs) {
