@@ -10,12 +10,25 @@ import android.widget.Button;
 
 
 public class ResultsActivity extends Activity {
+    Button button_impedance;
     Button button_magS11;
     Button button_vswr;
     Button button_angS11;
     Button button_s11Db;
     Button button_gainDb;
     Button button_radPattern;
+
+    private double[] impedance_r;
+    private double[] impedance_i;
+    private double[] D;
+    private double[] DDB;
+    private double[] currDistribution;
+    double[] mag_S11;
+    double[] VSWR;
+    double[] ang_S11;
+    double[] S11_dB;
+    double[] Gain_dB;
+    double[] frequencySweep;
 
     int radPatternResId = 0;
 
@@ -24,6 +37,7 @@ public class ResultsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        button_impedance = (Button) findViewById(R.id.button_impedance);
         button_magS11 = (Button) findViewById(R.id.button_magS11);
         button_vswr = (Button) findViewById(R.id.button_vswr);
         button_angS11 = (Button) findViewById(R.id.button_angS11);
@@ -31,16 +45,36 @@ public class ResultsActivity extends Activity {
         button_gainDb = (Button) findViewById(R.id.button_gainDb);
         button_radPattern = (Button) findViewById(R.id.button_radiationPattern);
 
-        radPatternResId = getIntent().getIntExtra("radPatternResId", 0);
+        Bundle bundle = getIntent().getExtras();
+        radPatternResId = bundle.getInt("radPatternResId", 0);
+        impedance_r     = bundle.getDoubleArray("impedance_r");
+        impedance_i     = bundle.getDoubleArray("impedance_i");
+        D               = bundle.getDoubleArray("D");
+        DDB             = bundle.getDoubleArray("DDB");
+        currDistribution= bundle.getDoubleArray("currDistribution");
+        mag_S11         = bundle.getDoubleArray("mag_S11");
+        VSWR            = bundle.getDoubleArray("VSWR");
+        ang_S11         = bundle.getDoubleArray("ang_S11");
+        S11_dB          = bundle.getDoubleArray("S11_dB");
+        Gain_dB         = bundle.getDoubleArray("Gain_dB");
+        frequencySweep  = bundle.getDoubleArray("frequencySweep");
 
+        button_impedance.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), ResultsPlotActivity.class);
+                intent.putExtra("y1", impedance_r);
+                intent.putExtra("y2", impedance_i);
+                intent.putExtra("x", frequencySweep);
+                startActivity(intent);
+            }
+        });
         button_magS11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ResultsPlotActivity.class);
-                double[] x = new double[]{1,2,3,4,5,6,7,8,9,10};
-                double[] y = new double[]{1,2,3,4,5,6,7,8,9,10};
-                intent.putExtra("x_values", x);
-                intent.putExtra("y_values", y);
+                intent.putExtra("y1", mag_S11);
+                intent.putExtra("x", frequencySweep);
                 startActivity(intent);
             }
         });
@@ -48,7 +82,8 @@ public class ResultsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ResultsPlotActivity.class);
-//                intent.putExtra();
+                intent.putExtra("y1", VSWR);
+                intent.putExtra("x", frequencySweep);
                 startActivity(intent);
             }
         });
@@ -56,7 +91,8 @@ public class ResultsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ResultsPlotActivity.class);
-//                intent.putExtra();
+                intent.putExtra("y1", ang_S11);
+                intent.putExtra("x", frequencySweep);
                 startActivity(intent);
             }
         });
@@ -64,7 +100,8 @@ public class ResultsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ResultsPlotActivity.class);
-//                intent.putExtra();
+                intent.putExtra("y1", S11_dB);
+                intent.putExtra("x", frequencySweep);
                 startActivity(intent);
             }
         });
@@ -72,7 +109,9 @@ public class ResultsActivity extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ResultsPlotActivity.class);
-//                intent.putExtra();
+                intent.putExtra("y1", Gain_dB);
+                intent.putExtra("y2", DDB);
+                intent.putExtra("x", frequencySweep);
                 startActivity(intent);
             }
         });

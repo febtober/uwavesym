@@ -23,33 +23,38 @@
         android:orientation="vertical">
 
         <Button
+            android:id="@+id/button_impedance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/input_impedance" />
+        <Button
             android:id="@+id/button_magS11"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/mag_s11" />
         <Button
             android:id="@+id/button_vswr"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/vswr" />
         <Button
             android:id="@+id/button_angS11"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/ang_s11" />
         <Button
             android:id="@+id/button_s11Db"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/s11_db" />
         <Button
             android:id="@+id/button_gainDb"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/gain_db" />
         <Button
             android:id="@+id/button_radiationPattern"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/radiation_pattern"/>
 

@@ -240,6 +240,7 @@
     <string name="title_activity_results">ResultsActivity</string>
 
     <string name="simulation_results">Simulation Results</string>
+    <string name="input_impedance">Input Impedance</string>
     <string name="mag_s11">mag(S11)</string>
     <string name="vswr">VSWR</string>
     <string name="ang_s11">angle(S11)</string>

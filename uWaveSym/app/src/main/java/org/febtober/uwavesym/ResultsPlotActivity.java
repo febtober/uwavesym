@@ -11,11 +11,16 @@ import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
 public class ResultsPlotActivity extends Activity {
     private XYPlot v_plot;
+    SimpleXYSeries xy1Series;
+    SimpleXYSeries xy2Series;
+    LineAndPointFormatter lpf1;
+    LineAndPointFormatter lpf2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,22 +29,37 @@ public class ResultsPlotActivity extends Activity {
 
         v_plot = (XYPlot) findViewById(R.id.xyplot_results);
         Bundle extras = getIntent().getExtras();
-        double[] x = extras.getDoubleArray("x_values");
-        double[] y = extras.getDoubleArray("y_values");
+        double[] x = extras.getDoubleArray("x");
+        double[] y1 = extras.getDoubleArray("y1");
+        double[] y2 = extras.getDoubleArray("y2"); // will be null if y2 does not exist
 
-        List<Number> xVals = doubleArrayToNumberList(x);
-        List<Number> yVals = doubleArrayToNumberList(y);
+        // remove item at index 0 (is always 0 for compliance with original matlab code
+        List<Number> xVals = doubleArrayToNumberList(Arrays.copyOfRange(x, 1, x.length));
+        List<Number> y1Vals = doubleArrayToNumberList(Arrays.copyOfRange(y1, 1, y1.length));
+        List<Number> y2Vals;
+        if (y2 != null) {
+            y2Vals = doubleArrayToNumberList(Arrays.copyOfRange(y2, 1, y2.length));
+            xy2Series = new SimpleXYSeries(xVals, y2Vals, "plot2");
+        }
 
-        SimpleXYSeries xySeries = new SimpleXYSeries(xVals, yVals, "plot");
+        xy1Series = new SimpleXYSeries(xVals, y1Vals, "plot1");
 
-        LineAndPointFormatter formatter = new LineAndPointFormatter(
+        lpf1 = new LineAndPointFormatter(
                 Color.RED,
                 Color.BLUE,
-                Color.WHITE,
+                null,
+                null
+        );
+        lpf2 = new LineAndPointFormatter(
+                Color.GREEN,
+                Color.YELLOW,
+                null,
                 null
         );
 
-        v_plot.addSeries(xySeries, formatter);
+        v_plot.addSeries(xy1Series, lpf1);
+        if (y2 != null)
+            v_plot.addSeries(xy2Series, lpf2);
     }
 
     @Override

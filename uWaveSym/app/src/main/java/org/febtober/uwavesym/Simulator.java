@@ -2,6 +2,9 @@ package org.febtober.uwavesym;
 
 import android.os.AsyncTask;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     // Constants
     private double w;
@@ -35,6 +38,7 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     double[] ang_S11 = new double[pts+2];
     double[] S11_dB = new double[pts+2];
     double[] Gain_dB = new double[pts+2];
+    double[] frequencySweep = new double[pts+2];
 
     private WorkspaceActivity parentActivity;
 
@@ -45,10 +49,10 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
     // params contains [Circuit]
     @Override
     protected Circuit doInBackground(Object... params) {
-	    substrateH = circuit.getSubstrateH();
-        substrateP = circuit.getSubstrateP();
         circuit = (Circuit) params[0];
         frequency = circuit.getFrequency();
+        substrateH = circuit.getSubstrateH();
+        substrateP = circuit.getSubstrateP();
 		
 		double freq_low = frequency - frequency*0.25;            // define low frequency
         double freq_high = frequency + frequency*0.25;			// define high frequency
@@ -56,11 +60,12 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
 
         x = 1;
 
-        double currFrequency = freq_low;
+        currFrequency = freq_low;
         for (; currFrequency <= freq_high; x++, currFrequency += freq_step) {				// START FREQUENCY SWEEPING LOOP HURRR
 			// pts+2 for 1-indexing array (matlab compliance)
 			freq_radian = 2 * Math.PI * currFrequency;		// same as w
 			w = 2 * Math.PI * currFrequency;				// same as freq_radian
+            frequencySweep[x] = currFrequency;
 
 			int numComps = circuit.size();
 
@@ -153,8 +158,21 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         super.onPostExecute(c);
     }
 
-    public double[][] getResults() {
-        return new double[][] {impedance_r, impedance_i, {frequency}};
+    public Map<String, double[]> getResults() {
+        Map<String, double[]> res = new HashMap<>();
+        res.put("impedance_r", impedance_r);
+        res.put("impedance_i", impedance_i);
+        res.put("D", D);
+        res.put("DDB", DDB);
+        res.put("currDistribution", currDistribution);
+        res.put("mag_S11", mag_S11);
+        res.put("VSWR", VSWR);
+        res.put("ang_S11", ang_S11);
+        res.put("S11_dB", S11_dB);
+        res.put("Gain_dB", Gain_dB);
+        res.put("frequencySweep", frequencySweep);
+
+        return res;
     }
 
     private void resistor(double param1) {
