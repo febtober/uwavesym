@@ -264,18 +264,18 @@ public class WorkspaceActivity extends Activity {
                     // Don't need to check that this is non-zero.
                     // This is checked in ImageViewFragment when image is drawn.
                     intent.putExtra("radPatternResId", resId);
-                    intent.putExtra("impedance_r", results.get("impedance_r"));
-                    intent.putExtra("impedance_i", results.get("impedance_i"));
-                    intent.putExtra("D", results.get("D"));
-                    intent.putExtra("DDB", results.get("DDB"));
-                    intent.putExtra("currDistribution", results.get("currDistribution"));
-                    intent.putExtra("mag_S11", results.get("mag_S11"));
-                    intent.putExtra("VSWR", results.get("VSWR"));
-                    intent.putExtra("ang_S11", results.get("ang_S11"));
-                    intent.putExtra("S11_dB", results.get("S11_dB"));
-                    intent.putExtra("Gain_dB", results.get("Gain_dB"));
-                    intent.putExtra("frequencySweep", results.get("frequencySweep"));
                 }
+                intent.putExtra("impedance_r", results.get("impedance_r"));
+                intent.putExtra("impedance_i", results.get("impedance_i"));
+                intent.putExtra("D", results.get("D"));
+                intent.putExtra("DDB", results.get("DDB"));
+                intent.putExtra("currDistribution", results.get("currDistribution"));
+                intent.putExtra("mag_S11", results.get("mag_S11"));
+                intent.putExtra("VSWR", results.get("VSWR"));
+                intent.putExtra("ang_S11", results.get("ang_S11"));
+                intent.putExtra("S11_dB", results.get("S11_dB"));
+                intent.putExtra("Gain_dB", results.get("Gain_dB"));
+                intent.putExtra("frequencySweep", results.get("frequencySweep"));
 
                 startActivity(intent);
             }

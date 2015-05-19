@@ -387,7 +387,7 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
                 I = I + 1;
             }
             D[x] = (4.0 * Math.PI * UMAX) / PRAD;//directivity
-//            DDB[x] = 10.0 * Math.log10(D[x]);//directivity in dB(this is our output)
+            DDB[x] = 10.0 * Math.log10(D[x]);//directivity in dB(this is our output)
             RR = 2.0 * PRAD;
             PRAD = 0;
             if (A != Math.PI)

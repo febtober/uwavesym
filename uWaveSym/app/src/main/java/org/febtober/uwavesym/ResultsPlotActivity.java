@@ -10,6 +10,7 @@ import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.SimpleXYSeries;
 import com.androidplot.xy.XYPlot;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +57,9 @@ public class ResultsPlotActivity extends Activity {
                 null,
                 null
         );
+
+        v_plot.setDomainValueFormat(new DecimalFormat("##0.###E0"));
+        v_plot.setTicksPerDomainLabel(5);
 
         v_plot.addSeries(xy1Series, lpf1);
         if (y2 != null)

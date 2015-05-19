@@ -12,6 +12,10 @@
     <com.androidplot.xy.XYPlot
         android:id="@+id/xyplot_results"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        androidPlot.graphWidget.domainLabelPaint.textSize="12dp"
+        androidPlot.graphWidget.rangeLabelPaint.textSize="12dp"
+        androidPlot.graphWidget.marginLeft="20dp"
+        androidPlot.graphWidget.marginBottom="20dp" />
 
 </RelativeLayout>
