@@ -33,6 +33,7 @@ public class Component implements Parcelable {
     private int symViewId = 0;
     private static int currSymViewId = 1;
     private int fieldId = 0;
+    private int radPatternId = 0;
     private String name;
     private float param1 = 0;
     private float param2 = 0;
@@ -87,6 +88,7 @@ public class Component implements Parcelable {
                 imgId = R.drawable.img_dipole;
                 symId = R.drawable.sym_dipole;
                 fieldId = R.drawable.field_dipole;
+                radPatternId = R.drawable.rad_pattern_dipole;
                 name = res.getString(R.string.dipole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.radius);
@@ -103,6 +105,7 @@ public class Component implements Parcelable {
                 imgId = R.drawable.img_monopole;
                 symId = R.drawable.sym_monopole;
                 fieldId = R.drawable.field_monopole;
+                radPatternId = R.drawable.rad_pattern_monopole;
                 name = res.getString(R.string.monopole);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.radius);
@@ -288,6 +291,7 @@ public class Component implements Parcelable {
     public void setSymId(int a) {symId = a;}
     public void setSymViewId(int a) {symViewId = a;}
     public void setFieldId(int a) {fieldId = a;}
+    public void setRadPatternId(int a) {radPatternId = a;}
     public void setName(String a) {name = a;}
     public void setParam1(float a) {param1 = a; param1Valid = true;}
     public void setParam2(float a) {param2 = a; param2Valid = true;}
@@ -315,6 +319,7 @@ public class Component implements Parcelable {
     public int getSymId() {return symId;}
     public int getSymViewId() {return symViewId;}
     public int getFieldId() {return fieldId;}
+    public int getRadPatternId() {return radPatternId;}
     public String getName() {return name;}
     public float getParam1() {return param1;}
     public float getParam2() {return param2;}
@@ -349,6 +354,7 @@ public class Component implements Parcelable {
         symId = in.readInt();
         symViewId = in.readInt();
         fieldId = in.readInt();
+        radPatternId = in.readInt();
         name = in.readString();
         param1 = in.readFloat();
         param2 = in.readFloat();
@@ -384,6 +390,7 @@ public class Component implements Parcelable {
         dest.writeInt(symId);
         dest.writeInt(symViewId);
         dest.writeInt(fieldId);
+        dest.writeInt(radPatternId);
         dest.writeString(name);
         dest.writeFloat(param1);
         dest.writeFloat(param2);

@@ -246,7 +246,6 @@
     <string name="s11_db">dB(S11)</string>
     <string name="gain_db">dB(Gain)</string>
     <string name="title_activity_results_plot">ResultsPlotActivity</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="radiation_pattern">3D Radiation Pattern</string>
 
 </resources>

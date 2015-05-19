@@ -244,6 +244,27 @@ public class WorkspaceActivity extends Activity {
             public void onClick(View view) {
                 double[][] results = sim.getResults();
                 Intent intent = new Intent(view.getContext(), ResultsActivity.class);
+                int i = 0;
+                boolean antennaFound = false;
+                // find antenna in order to get radiation pattern image resource ID
+                for (; i < circuit.size(); i++) {
+                    int compType = circuit.getComponent(i).getComponentId();
+                    if (compType == Component.PATCH ||
+                            compType == Component.DIPOLE ||
+                            compType == Component.MONOPOLE ||
+                            compType == Component.LOOP) {
+                        antennaFound = true;
+                        break;
+                    }
+                }
+
+                if (antennaFound) {
+                    int resId = circuit.getComponent(i).getRadPatternId();
+                    intent.putExtra("radPatternResId", resId);
+                    // Don't need to check that this is non-zero.
+                    // This is checked in ImageViewFragment when image is drawn.
+                }
+
                 startActivity(intent);
             }
         });
