@@ -96,20 +96,24 @@ public class ComponentEditor extends Activity {
 
         tv_info.setText(Html.fromHtml(comp.getInfo()));
 
-        Drawable drw_image = res.getDrawable(comp.getImgId());
-        if (drw_image != null)
-            iv_image.setImageDrawable(drw_image);
-        Drawable drw_equation = res.getDrawable(comp.getEqId());
-        if (drw_equation != null)
-            iv_equation.setImageDrawable(drw_equation);
+        int imgId = comp.getImgId();
+        if (imgId != 0) {
+            Drawable drw_image = res.getDrawable(imgId);
+            if (drw_image != null)
+                iv_image.setImageDrawable(drw_image);
+        }
+        int eqId = comp.getEqId();
+        if (eqId != 0) {
+            Drawable drw_equation = res.getDrawable(eqId);
+            if (drw_equation != null)
+                iv_equation.setImageDrawable(drw_equation);
+        }
         int fieldId = comp.getFieldId();
         if (fieldId != 0) {
             Drawable drw_field = res.getDrawable(fieldId);
-            if (drw_field != null);
+            if (drw_field != null)
                 iv_field.setImageDrawable(drw_field);
         }
-
-
 
         button_update.setOnClickListener(new OnClickListener() {
             @Override

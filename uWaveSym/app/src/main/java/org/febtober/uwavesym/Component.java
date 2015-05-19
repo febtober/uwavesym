@@ -127,7 +127,6 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_loop);
                 break;
             case BALUN:
-//                eqId = R.drawable.sym_blank;
                 imgId = R.drawable.img_blank;
                 symId = R.drawable.sym_balun;
                 name = res.getString(R.string.balun);
@@ -136,7 +135,7 @@ public class Component implements Parcelable {
                 break;
             case QUARTER_TRANSFORMER:
                 eqId = R.drawable.eq_quarter_transformer;
-                imgId = R.drawable.img_blank;
+                imgId = R.drawable.img_quarter_transformer;
                 symId = R.drawable.sym_quarter_transformer;
                 name = res.getString(R.string.quarterTransformer);
                 param1String = res.getString(R.string.length);
@@ -151,7 +150,7 @@ public class Component implements Parcelable {
                 break;
             case T_LINE:
                 eqId = R.drawable.eq_tline;
-                imgId = R.drawable.img_blank;
+                imgId = R.drawable.img_tline;
                 symId = R.drawable.sym_tline;
                 name = res.getString(R.string.tLine);
                 param1String = res.getString(R.string.length);
@@ -237,7 +236,6 @@ public class Component implements Parcelable {
                 info = res.getString(R.string.info_capacitor);
                 break;
             case SUBSTRATE:
-//                eqId = R.drawable.sym_blank;
                 imgId = R.drawable.img_substrate;
                 symId = R.drawable.sym_blank;
                 name = res.getString(R.string.substrate);
@@ -245,15 +243,15 @@ public class Component implements Parcelable {
                 param2String = res.getString(R.string.height);
                 param1MinPrefix = 4;
                 param1MaxPrefix = 4;
-                param2MinPrefix = 4;
-                param2MaxPrefix = 4;
+                param2MinPrefix = 3;
+                param2MaxPrefix = 3;
                 param1Units = appendUnit(res.getString(R.string.blank));
-                param2Units = appendUnit(res.getString(R.string.blank));
+                param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_substrate);
                 break;
             case TERMINATION:
                 eqId = R.drawable.eq_termination;
-                imgId = R.drawable.img_blank;
+                imgId = R.drawable.img_termination;
                 symId = R.drawable.sym_termination;
                 name = res.getString(R.string.termination);
                 param1String = res.getString(R.string.resistance);

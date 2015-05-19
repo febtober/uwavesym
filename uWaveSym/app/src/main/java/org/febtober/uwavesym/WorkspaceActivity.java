@@ -123,8 +123,10 @@ public class WorkspaceActivity extends Activity {
                     return false;
                 }
 
+
                 Component comp = new Component(compId);
-                circuit.addComponent(comp);
+                if (compId != Component.SUBSTRATE)
+                    circuit.addComponent(comp);
                 workspaceAdapter.notifyDataSetChanged();
                 componentsDrawer.closeDrawer(componentsListView);
                 return true;
@@ -139,14 +141,15 @@ public class WorkspaceActivity extends Activity {
                     long packedPos = ((ExpandableListView) parent).getExpandableListPosition(position);
                     int groupPosition = ExpandableListView.getPackedPositionGroup(packedPos);
                     int childPosition = ExpandableListView.getPackedPositionChild(packedPos);
-                    Component comp = new Component(componentIdFromPositions(groupPosition, childPosition));
-                    componentsDrawer.closeDrawer(componentsListView);
                     int compId = componentIdFromPositions(groupPosition, childPosition);
                     if (compId == 0) {
                         return false;
                     }
+
+                    Component comp = new Component(componentIdFromPositions(groupPosition, childPosition));
                     Intent intent = new Intent(getApplicationContext(), ComponentEditor.class);
                     intent.putExtra("component", comp);
+                    componentsDrawer.closeDrawer(componentsListView);
                     startActivityForResult(intent, ComponentEditor.EDIT_COMPONENT);
                     return true;
                 }
