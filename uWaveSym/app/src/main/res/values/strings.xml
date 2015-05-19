@@ -13,6 +13,7 @@
     <string name="component_name">Component Name</string>
     <string name="drawer_open">Components open</string>
     <string name="drawer_close">Components close</string>
+    <string name="teach_me">Teach Me</string>
     <string name="empty">empty</string>
 
     <string name="simulating">Simulating circuit...</string>
