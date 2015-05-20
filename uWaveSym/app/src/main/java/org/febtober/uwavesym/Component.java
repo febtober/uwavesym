@@ -16,7 +16,7 @@ public class Component implements Parcelable {
     public static final int LOOP = 4;
     public static final int BALUN = 5;
     public static final int QUARTER_TRANSFORMER = 6;
-    public static final int T_LINE = 7;
+    public static final int MICROSTRIP = 7;
     public static final int RESISTOR = 8;
     public static final int INDUCTOR = 9;
     public static final int CAPACITOR = 10;
@@ -151,11 +151,11 @@ public class Component implements Parcelable {
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 info = res.getString(R.string.info_quarterTransformer);
                 break;
-            case T_LINE:
-                eqId = R.drawable.eq_tline;
-                imgId = R.drawable.img_tline;
-                symId = R.drawable.sym_tline;
-                name = res.getString(R.string.tLine);
+            case MICROSTRIP:
+                eqId = R.drawable.eq_microstrip;
+                imgId = R.drawable.img_microstrip;
+                symId = R.drawable.sym_microstrip;
+                name = res.getString(R.string.microstrip);
                 param1String = res.getString(R.string.length);
                 param2String = res.getString(R.string.width);
                 param1MinPrefix = 2;
@@ -164,7 +164,7 @@ public class Component implements Parcelable {
                 param2MaxPrefix = 4;
                 param1Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
                 param2Units = appendUnit(res.getString(R.string.unit_abbrev_meter));
-                info = res.getString(R.string.info_tLine);
+                info = res.getString(R.string.info_microstrip);
                 break;
             case RESISTOR:
                 eqId = R.drawable.eq_resistor;

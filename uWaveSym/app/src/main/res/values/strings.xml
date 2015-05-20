@@ -93,7 +93,7 @@
 
     <string name="balun">Balun</string>
     <string name="quarterTransformer">\u03BB/4 transformer</string>
-    <string name="tLine">Transmission line</string>
+    <string name="microstrip">Microstrip</string>
     <string name="resistor">Series Resistor</string>
     <string name="resistor_shunt">Shunt Resistor</string>
     <string name="inductor">Series Inductor</string>
@@ -104,7 +104,7 @@
     <string-array name="drawer_twoPortComponents">
         <item>@string/balun</item>
         <item>@string/quarterTransformer</item>
-        <item>@string/tLine</item>
+        <item>@string/microstrip</item>
         <item>@string/resistor</item>
         <item>@string/inductor</item>
         <item>@string/capacitor</item>
@@ -130,12 +130,12 @@
         wavelength (\u03BB) long and terminated in some known impedance.
         ]]>
     </string>
-    <string name="info_tLine">
+    <string name="info_microstrip">
         <![CDATA[
-        In communications and electronic engineering, a <b>transmission line<b> is a specialized cable or
+        In communications and electronic engineering, a <b>microstrip</b> is a specialized cable or
         other structure designed to carry alternating current of radio frequency, that is, currents
-        with a frequency high enough that their wave nature must be taken into account. Transmission
-        lines are used for purposes such as connecting radio transmitters and receivers with their
+        with a frequency high enough that their wave nature must be taken into account. Microstrips
+        are used for purposes such as connecting radio transmitters and receivers with their
         antennas, distributing cable television signals, trunklines routing calls between telephone
         switching centers, computer network connections and high speed computer data buses.
        ]]>

@@ -102,6 +102,13 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
                     case Component.MONOPOLE:
                         // same function as dipole but with length doubled
                         this.dipole(param1*2, param2);
+                        // halve impedance, double D (compared to dipole
+                        int j = 0;
+                        for (; j < pts+2; j++) {
+                            impedance_r[j] /= 2;
+                            impedance_i[j] /= 2;
+                            D[j] *= 2;
+                        }
                         break;
                     case Component.LOOP:
                         this.loop(param1);
@@ -111,7 +118,7 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
                     case Component.QUARTER_TRANSFORMER:
                         this.quarterTransformer(param1, param2);
                         break;
-                    case Component.T_LINE:
+                    case Component.MICROSTRIP:
                         this.quarterTransformer(param1, param2);
                         break;
                     case Component.RESISTOR:
@@ -265,7 +272,7 @@ public class Simulator extends AsyncTask<Object, Integer, Circuit> {
         // inputs
         double H = substrateH;        // Substrate height in meters. should be defined in freq_sweep loop
         double Er = substrateP;                  // Permittivity of substrate. should be defined in freq_sweep loop
-        double freq = frequency;        // frequency in Hertz. should be defined in freq_sweep loop
+        double freq = currFrequency;        // frequency in Hertz. should be defined in freq_sweep loop
         double l = param1;              // Length of xmfr in meters
         double W = param2;              // Width in meters
         double re_Zin = impedance_r[x];    // real Zout from previous component in ohms

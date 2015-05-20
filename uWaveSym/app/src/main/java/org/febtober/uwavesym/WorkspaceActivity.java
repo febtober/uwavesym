@@ -188,8 +188,8 @@ public class WorkspaceActivity extends Activity {
                     case 1: // pi/4 transformer
                         compId = Component.QUARTER_TRANSFORMER;
                         break;
-                    case 2: // T-line
-                        compId = Component.T_LINE;
+                    case 2: // Microstrip
+                        compId = Component.MICROSTRIP;
                         break;
                     case 3: // Resistor
                         compId = Component.RESISTOR;
